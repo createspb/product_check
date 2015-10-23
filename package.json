@@ -1,27 +1,5 @@
 {
-  "name": "react-redux-universal-hot-example",
-  "description": "Example of an isomorphic (universal) webapp using react redux and hot reloading",
-  "author": "Erik Rasmussen <rasmussenerik@gmail.com> (http://github.com/erikras)",
-  "license": "MIT",
-  "version": "0.0.5",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/erikras/react-redux-universal-hot-example"
-  },
-  "homepage": "https://github.com/erikras/react-redux-universal-hot-example",
-  "keywords": [
-    "react",
-    "isomorphic",
-    "universal",
-    "webpack",
-    "express",
-    "hot reloading",
-    "react-hot-reloader",
-    "redux",
-    "starter",
-    "boilerplate",
-    "babel"
-  ],
+  "private": true,
   "main": "bin/server.js",
   "scripts": {
     "start": "concurrent --kill-others \"npm run start-prod\" \"npm run start-prod-api\"",
@@ -97,6 +75,8 @@
     "compression": "1.6.0",
     "concurrently": "^0.1.1",
     "css-loader": "^0.20.1",
+    "db-migrate": "^0.10.0-beta.4",
+    "db-migrate-pg": "^0.1.5",
     "eslint": "1.7.3",
     "eslint-config-airbnb": "0.1.0",
     "eslint-loader": "^1.0.0",

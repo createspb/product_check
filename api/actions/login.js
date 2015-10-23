@@ -21,7 +21,7 @@ export default function login(req) {
 
 
   return new Promise((resolve, reject) => {
-    models.User.findOne({
+    models.user.findOne({
       where: {
         username: req.body.username,
         password: md5(req.body.password)

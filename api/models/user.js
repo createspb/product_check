@@ -2,13 +2,13 @@ import 'babel/polyfill';
 import md5 from 'md5';
 
 module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define("User", {
+  var user = sequelize.define("user", {
     username: { type: DataTypes.STRING, unique: true },
     password: DataTypes.STRING
   });
   (async function() {
-    await User.drop();
-    await User.sync();
+    // await User.drop();
+    // await User.sync();
     await User.findOne({
       where: {username: 'admin'}
     }).then((user) => {
@@ -17,5 +17,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     });
   }());
-  return User;
+  return user;
 };
