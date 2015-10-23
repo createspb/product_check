@@ -7,8 +7,8 @@ var env       = process.env.NODE_ENV || "development";
 // var config    = require(__dirname + '/../config/config.json')[env];
 
 
-if (process.env.HEROKU_POSTGRESQL_BRONZE_URL) {
-  sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL, {
+if (process.env.DATABASE_URL) {
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect:  'postgres',
     protocol: 'postgres',
     port:     match[4],
