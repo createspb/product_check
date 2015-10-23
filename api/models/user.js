@@ -9,11 +9,11 @@ module.exports = function(sequelize, DataTypes) {
   (async function() {
     // await User.drop();
     // await User.sync();
-    await User.findOne({
+    await user.findOne({
       where: {username: 'admin'}
-    }).then((user) => {
-      if (!user) {
-        User.create({username: 'admin', password: md5(process.env.PASSWORD)})
+    }).then((res) => {
+      if (!res) {
+        user.create({username: 'admin', password: md5(process.env.PASSWORD)})
       }
     });
   }());
