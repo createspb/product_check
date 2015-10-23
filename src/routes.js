@@ -6,7 +6,7 @@ import {
     Home,
     Login,
     LoginSuccess
-  } from 'containers';
+  } from 'components';
 
 export default (store) => {
 
