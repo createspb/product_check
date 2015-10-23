@@ -65,6 +65,7 @@
     "start-dev-api": {
       "command": "node ./bin/api.js",
       "env": {
+        "PASSWORD": "admin",
         "NODE_PATH": "./api",
         "NODE_ENV": "development",
         "APIPORT": 3030
@@ -122,6 +123,7 @@
     "less-loader": "2.2.1",
     "lru-memoize": "1.0.0",
     "map-props": "1.0.0",
+    "md5": "2.0.0",
     "mocha": "^2.3.3",
     "multireducer": "1.0.2",
     "node-sass": "^3.3.3",

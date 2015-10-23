@@ -3,32 +3,39 @@ import {connect} from 'react-redux';
 import * as authActions from 'redux/modules/auth';
 
 @connect(
-  state => ({user: state.auth.user}),
+  state => ({user: state.auth.user, loginError: state.auth.loginError}),
   authActions)
 export default class Login extends Component {
 
   static propTypes = {
     user: PropTypes.object,
     login: PropTypes.func,
-    logout: PropTypes.func
+    logout: PropTypes.func,
+    loginError: PropTypes.bool
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const input = this.refs.username;
-    this.props.login(input.value);
-    input.value = '';
+    const name = this.refs.username;
+    const pass = this.refs.password;
+    this.props.login(name.value, pass.value);
+    name.value = '';
+    pass.value = '';
   }
 
   render() {
-    const {user, logout} = this.props;
+    const {user, logout, loginError} = this.props;
     return (
       <div>
         <h2>Login</h2>
         {!user &&
         <div>
+          {loginError &&
+          <p>Error</p>
+          }
           <form onSubmit={::this.handleSubmit}>
-            <input type="text" ref="username" placeholder="Enter a username"/>
+            <input type="text" ref="username" placeholder="Enter a username" />
+            <input type="password" ref="password" placeholder="Enter a password" />
             <button onClick={::this.handleSubmit}>Log In</button>
           </form>
         </div>
