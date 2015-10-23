@@ -8,12 +8,16 @@ var env       = process.env.NODE_ENV || "development";
 
 
 if (process.env.DATABASE_URL) {
+  match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
   sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect:  'postgres',
+    dialect: 'postgres',
     protocol: 'postgres',
-    port:     match[4],
-    host:     match[3],
-    logging:  true
+    host: match[3],
+    logging: false,
+    port: match[4],
+    dialectOptions: {
+      ssl: true
+    }
   })
 } else {
   var sequelize = new Sequelize('obsvtr', 'postgres', '', {
