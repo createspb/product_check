@@ -6,15 +6,16 @@ var Sequelize = require("sequelize");
 var env       = process.env.NODE_ENV || "development";
 // var config    = require(__dirname + '/../config/config.json')[env];
 
-
+console.log('!!!!!!' + process.env.DATABASE_URL);
 if (process.env.DATABASE_URL) {
-  match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
+  var match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
+  console.log(match);
+  var sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
     protocol: 'postgres',
     host: match[3],
-    logging: false,
     port: match[4],
+    logging: false,
     dialectOptions: {
       ssl: true
     }

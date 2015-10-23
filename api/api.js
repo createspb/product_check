@@ -35,35 +35,39 @@ app.use((req, res) => {
   let apiActions = actions;
   let sliceIndex = 0;
 
-  for (const actionName of matcher) {
+  try {
+    for (const actionName of matcher) {
 
-    if (apiActions[actionName]) {
-      action = apiActions[actionName];
-    }
+      if (apiActions[actionName]) {
+        action = apiActions[actionName];
+      }
 
-    if (typeof action === 'function') {
-      params = matcher.slice(++sliceIndex);
-      break;
+      if (typeof action === 'function') {
+        params = matcher.slice(++sliceIndex);
+        break;
+      }
+      apiActions = action;
+      ++sliceIndex;
     }
-    apiActions = action;
-    ++sliceIndex;
+    if (action && typeof action === 'function') {
+      action(req, params)
+        .then((result) => {
+          res.json(result);
+        }, (reason) => {
+          if (reason && reason.redirect) {
+            res.redirect(reason.redirect);
+          } else {
+            console.error('API ERROR:', pretty.render(reason));
+            res.status(reason.status || 500).json(reason);
+          }
+        });
+    } else {
+      res.status(404).end('NOT FOUND');
+    }
+  } catch (err) {
+    console.log(err);
   }
 
-  if (action && typeof action === 'function') {
-    action(req, params)
-      .then((result) => {
-        res.json(result);
-      }, (reason) => {
-        if (reason && reason.redirect) {
-          res.redirect(reason.redirect);
-        } else {
-          console.error('API ERROR:', pretty.render(reason));
-          res.status(reason.status || 500).json(reason);
-        }
-      });
-  } else {
-    res.status(404).end('NOT FOUND');
-  }
 });
 
 
