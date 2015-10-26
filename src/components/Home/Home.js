@@ -1,10 +1,54 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { pushState } from 'redux-router';
+import { connect } from 'react-redux';
+
+@connect(
+  state => state,
+  {pushState})
 export default class Home extends Component {
+
+  static propTypes = {
+    params: PropTypes.object,
+    children: PropTypes.object,
+    pushState: PropTypes.func.isRequired
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      questionId: props.params.questionId
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      questionId: nextProps.params.questionId
+    });
+  }
+
+  handleLogout(event) {
+    event.preventDefault();
+    let questionId;
+    if (this.state.questionId) {
+      questionId = this.state.questionId;
+    } else {
+      questionId = 0;
+    }
+    this.props.pushState(null, '/questions/' + (parseInt(questionId, 10) + 1));
+  }
+
   render() {
+    console.log(this.state, this.props);
+    const { children } = this.props;
     return (
-      <div><h2>Home</h2></div>
+      <div>
+        <h2>Home</h2>
+        {children}
+        <button onClick={::this.handleLogout}>next</button>
+      </div>
     );
   }
+
 }
 
 // import React, { Component } from 'react';

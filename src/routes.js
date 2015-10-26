@@ -6,7 +6,8 @@ import {
     App,
     Home,
     Login,
-    // LoginSuccess
+    Question,
+    NotFound
   } from 'components';
 
 export default (store) => {
@@ -46,10 +47,14 @@ export default (store) => {
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
+      <Route component={Home}>
+        <Route path="questions/:questionId" component={Question} />
+      </Route>
       <Route onEnter={requireLogin} path="admin">
         <IndexRoute component={Admin} />
       </Route>
-      <Route onEnter={requireUnlogin} path="login" component={Login}/>
+      <Route onEnter={requireUnlogin} path="login" component={Login} />
+      <Route path="*" component={NotFound} />
     </Route>
   );
 
