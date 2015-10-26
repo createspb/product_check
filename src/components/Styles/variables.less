@@ -9,12 +9,15 @@
   box-shadow: 0px 1px 3px 0px rgba(24, 28, 39, .3);
 }
 ._box_shadow_hover {
-  box-shadow: 0px 4px 10px 0px rgba(24, 28, 39, .3);
+  box-shadow: 0px 4px 14px 0px rgba(24, 28, 39, .5);
 }
 
 @width: 940px;
 @leftWidth: 540px;
 
+._diagonal_gradiend(@startColor: #fff, @endColor: #000) {
+  background-image: linear-gradient(135deg, @startColor 0%, @endColor 100%);
+}
 ._container {
   position: relative;
   width: @width;

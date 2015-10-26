@@ -46,7 +46,7 @@ export default class Question extends Component {
     const question = this.props.questions[questionId - 1];
     const styles = require('./Question.less');
     return (
-      <div className={styles.question}>
+      <div className={styles.question + ' ' + styles[question.colorClass]}>
         <Carcas>
           <QuestionInformation
             {...question}
