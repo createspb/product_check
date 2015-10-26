@@ -7,7 +7,7 @@ export default {
           'вопросов, ответы на которые определяют успех или провал вашей идеи.',
     button: 'Поехали'
   },
-  question: {
+  questionCaptions: {
     yes: 'Да',
     no: 'Нет'
   }

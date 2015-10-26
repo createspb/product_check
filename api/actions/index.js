@@ -1,5 +1,6 @@
 // export loadInfo from './loadInfo';
+// export * as widget from './widget/index';
 export loadAuth from './loadAuth';
 export login from './login';
 export logout from './logout';
-// export * as widget from './widget/index';
+export questions from './questions';
