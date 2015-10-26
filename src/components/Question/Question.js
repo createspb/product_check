@@ -3,6 +3,7 @@ import { isLoaded, load } from 'redux/modules/questions';
 import Carcas from '../Carcas/Carcas';
 import Buttons from '../Buttons/Buttons';
 import QuestionInformation from '../QuestionInformation/QuestionInformation';
+// import jQuery from 'jquery';
 
 import { pushState } from 'redux-router';
 import { connect } from 'react-redux';
@@ -18,7 +19,17 @@ export default class Question extends Component {
     pushState: PropTypes.func.isRequired
   };
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.refs.carcas.animateFromBottom();
+    }, 0);
+  }
+
   componentWillReceiveProps(nextProps) {
+    this.refs.carcas.moveToBottom();
+    setTimeout(() => {
+      this.refs.carcas.animateFromBottom();
+    }, 0);
     this.setState({
       questionId: nextProps.params.questionId
     });
@@ -34,10 +45,13 @@ export default class Question extends Component {
 
   handleButton(event) {
     event.stopPropagation();
-    const { questionId } = this.props.params;
-    const next = parseInt(questionId, 10) + 1;
+    const next = parseInt(this.props.params.questionId, 10) + 1;
     if (next - 1 < this.props.questions.count) {
-      this.props.pushState(null, '/questions/' + next);
+      this.refs.carcas.animateToTop();
+      setTimeout(() => {
+        // this.refs.carcas.moveToBottom();
+        this.props.pushState(null, '/questions/' + next);
+      }, 300);
     }
   }
 
@@ -46,8 +60,8 @@ export default class Question extends Component {
     const question = this.props.questions[questionId - 1];
     const styles = require('./Question.less');
     return (
-      <div className={styles.question + ' ' + styles[question.colorClass]}>
-        <Carcas>
+      <div className={styles.question + ' ' + styles['c' + question.id]}>
+        <Carcas ref="carcas">
           <QuestionInformation
             {...question}
           />

@@ -2,6 +2,8 @@
 
 .container {
   ._container;
+  top: 0;
+  .moveToBottom;
 }
 .containerRow {
   ._containerRow;
@@ -14,4 +16,19 @@
 }
 .containerRight {
   ._containerRight;
+}
+.animateToTop {
+  transition: top .7s, opacity .5s;
+  top: -2000px;
+  opacity: 0;
+}
+.moveToBottom {
+  transition: none;
+  top: 1000px;
+  opacity: 0;
+}
+.animateFromBottom {
+  transition: top .3s, opacity .5s;
+  top: 0;
+  opacity: 1;
 }

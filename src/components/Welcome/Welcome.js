@@ -13,9 +13,18 @@ export default class Welcome extends Component {
     pushState: PropTypes.func.isRequired
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.refs.carcas.animateFromBottom();
+    }, 0);
+  }
+
   handleButton(event) {
     event.stopPropagation();
-    this.props.pushState(null, '/questions/1');
+    this.refs.carcas.animateToTop();
+    setTimeout(() => {
+      this.props.pushState(null, '/questions/1');
+    }, 300);
   }
 
   render() {
@@ -24,7 +33,7 @@ export default class Welcome extends Component {
     const icons = require('../Styles/icons.less');
     return (
       <div className={styles.welcome}>
-        <Carcas>
+        <Carcas ref="carcas">
           <h1 className={styles.h1}>{welcome.h1}</h1>
           <div className={styles.company}>
             {welcome.from}
