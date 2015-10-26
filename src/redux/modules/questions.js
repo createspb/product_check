@@ -18,7 +18,7 @@ export default function questions(state = initialState, action = {}) {
         ...state,
         loading: false,
         loaded: true,
-        data: action.result
+        questions: action.result
       };
     case LOAD_FAIL:
       return {

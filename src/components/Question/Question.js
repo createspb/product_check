@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
-// import captions from '../../data/captions';
 import { isLoaded, load } from 'redux/modules/questions';
 import Carcas from '../Carcas/Carcas';
 import Buttons from '../Buttons/Buttons';
+import QuestionInformation from '../QuestionInformation/QuestionInformation';
 
 import { pushState } from 'redux-router';
 import { connect } from 'react-redux';
 
 @connect(
-  state => ({questions: state.questions.data}),
+  state => ({questions: state.questions.questions}),
   {pushState, isLoaded, load})
 export default class Question extends Component {
 
@@ -42,22 +42,15 @@ export default class Question extends Component {
   }
 
   render() {
-    // const { questionCaptions } = captions;
     const { questionId } = this.props.params;
     const question = this.props.questions[questionId - 1];
     const styles = require('./Question.less');
-    const icons = require('../Styles/icons.less');
     return (
       <div className={styles.question}>
         <Carcas>
-          <div className={styles.h2}>{question.title}</div>
-          <p className={styles.p}>{question.subtitle}</p>
-          {question.information &&
-            <div className={styles.info}>
-              <i className={icons.info}></i>
-              {question.information}
-            </div>
-          }
+          <QuestionInformation
+            {...question}
+          />
           <Buttons
             handleYes={::this.handleButton}
             handleNo={::this.handleButton}
