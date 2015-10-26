@@ -5,12 +5,11 @@ export default class App extends Component {
 
   static propTypes = {
     children: PropTypes.object.isRequired
-  };
+  }
 
   static contextTypes = {
     store: PropTypes.object.isRequired
-  };
-
+  }
 
   static fetchData(getState, dispatch) {
     const promises = [];

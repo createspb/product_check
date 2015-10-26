@@ -6,7 +6,7 @@ export default class Buttons extends Component {
   static propTypes = {
     handleYes: PropTypes.func.isRequired,
     handleNo: PropTypes.func.isRequired
-  };
+  }
 
   handleButton(event) {
     event.stopPropagation();

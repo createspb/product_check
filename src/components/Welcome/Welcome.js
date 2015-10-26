@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import captions from '../../data/captions';
 import { pushState } from 'redux-router';
 import { connect } from 'react-redux';
-import Carcas from '../Carcas/Carcas';
+import { Carcas } from '..';
 
 @connect(
   state => state,
@@ -15,13 +15,13 @@ export default class Welcome extends Component {
 
   componentDidMount() {
     setTimeout(() => {
-      this.refs.carcas.animateFromBottom();
+      this.carcas.animateFromBottom();
     }, 0);
   }
 
   handleButton(event) {
     event.stopPropagation();
-    this.refs.carcas.animateToTop();
+    this.carcas.animateToTop();
     setTimeout(() => {
       this.props.pushState(null, '/questions/1');
     }, 300);
@@ -33,7 +33,7 @@ export default class Welcome extends Component {
     const icons = require('../Styles/icons.less');
     return (
       <div className={styles.welcome}>
-        <Carcas ref="carcas">
+        <Carcas ref={(ref) => this.carcas = ref}>
           <h1 className={styles.h1}>{welcome.h1}</h1>
           <div className={styles.company}>
             {welcome.from}

@@ -6,7 +6,7 @@ export default class Question extends Component {
     title: PropTypes.string,
     subtitle: PropTypes.string,
     information: PropTypes.string
-  };
+  }
 
   render() {
     const styles = require('./QuestionInformation.less');

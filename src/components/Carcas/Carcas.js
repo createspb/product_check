@@ -1,40 +1,41 @@
 import React, { Component, PropTypes } from 'react';
-import jQuery from 'jquery';
+import $ from 'jquery';
 
 export default class Carcas extends Component {
+
   static propTypes = {
     children: PropTypes.any
   };
+
+  constructor(props) {
+    super(props);
+    this.styles = require('./Carcas.less');
+  }
+
   animateToTop() {
-    const styles = require('./Carcas.less');
-    jQuery(this.container)
-      .removeClass(styles.moveToBottom)
-      .removeClass(styles.animateFromBottom)
-      .removeClass(styles.animateToTop)
-      .addClass(styles.animateToTop);
+    this.clear();
+    $(this.container).addClass(this.styles.animateToTop);
   }
+
   moveToBottom() {
-    const styles = require('./Carcas.less');
-    jQuery(this.container)
-    .removeClass(styles.moveToBottom)
-    .removeClass(styles.animateFromBottom)
-    .removeClass(styles.animateToTop)
-      .addClass(styles.moveToBottom);
+    this.clear();
+    $(this.container).addClass(this.styles.moveToBottom);
   }
+
   animateFromBottom() {
-    const styles = require('./Carcas.less');
-    jQuery(this.container)
-      .removeClass(styles.moveToBottom)
-      .removeClass(styles.animateFromBottom)
-      .removeClass(styles.animateToTop)
-      .addClass(styles.animateFromBottom);
+    this.clear();
+    $(this.container).addClass(this.styles.animateFromBottom);
   }
+
   clear() {
-    const styles = require('./Carcas.less');
-    jQuery(this.container).removeClass(styles.animateToTop);
+    $(this.container)
+      .removeClass(this.styles.moveToBottom)
+      .removeClass(this.styles.animateFromBottom)
+      .removeClass(this.styles.animateToTop);
   }
+
   render() {
-    const styles = require('./Carcas.less');
+    const { styles } = this;
     const icons = require('../Styles/icons.less');
     return (
       <div ref={(ref) => this.container = ref} className={styles.container}>
@@ -51,4 +52,5 @@ export default class Carcas extends Component {
       </div>
     );
   }
+
 }
