@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="14px" height="20px" viewBox="0 0 14 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#82BFAA" offset="0%"></stop>
+            <stop stop-color="#47888D" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Анкета" sketch:type="MSArtboardGroup" transform="translate(-232.000000, -414.000000)" fill="url(#linearGradient-1)">
+            <path d="M240,430.085786 L240,415.617647 C240,415.000388 239.552285,414.5 239,414.5 C238.447715,414.5 238,415.000388 238,415.617647 L238,430.085786 L238,430.085786 L234.04044,426.126227 C233.649916,425.735702 233.016751,425.735702 232.626227,426.126227 C232.235702,426.516751 232.235702,427.149916 232.626227,427.54044 L237.81703,432.731244 C237.911561,432.825775 238.02031,432.897424 238.136393,432.94619 C238.309927,433.277489 238.631713,433.5 239,433.5 C239.368287,433.5 239.690073,433.277489 239.863607,432.94619 C239.97969,432.897424 240.088439,432.825775 240.18297,432.731244 L245.373773,427.54044 C245.764298,427.149916 245.764298,426.516751 245.373773,426.126227 C244.983249,425.735702 244.350084,425.735702 243.95956,426.126227 L240,430.085786 Z" id="Shape" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

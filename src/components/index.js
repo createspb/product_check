@@ -5,3 +5,4 @@ export Login from './Login/Login';
 export LoginSuccess from './LoginSuccess/LoginSuccess';
 export NotFound from './NotFound/NotFound';
 export Question from './Question/Question';
+export Welcome from './Welcome/Welcome';

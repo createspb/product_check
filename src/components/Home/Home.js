@@ -11,12 +11,13 @@ export default class Home extends Component {
     params: PropTypes.object,
     children: PropTypes.object,
     pushState: PropTypes.func.isRequired
-  };
+  }
 
   constructor(props) {
     super(props);
     this.state = {
-      questionId: props.params.questionId
+      questionId: props.params.questionId,
+      background: '#000'
     };
   }
 
@@ -28,25 +29,19 @@ export default class Home extends Component {
 
   handleLogout(event) {
     event.preventDefault();
-    let questionId;
-    if (this.state.questionId) {
-      questionId = this.state.questionId;
-    } else {
-      questionId = 0;
-    }
+    const questionId = this.state.questionId || 0;
     this.props.pushState(null, '/questions/' + (parseInt(questionId, 10) + 1));
   }
 
   render() {
-    console.log(this.state, this.props);
     const { children } = this.props;
+    const styles = require('./Home.less');
     return (
-      <div>
-        <h2>Home</h2>
+      <div className={styles.home}>
         {children}
-        <button onClick={::this.handleLogout}>next</button>
       </div>
     );
+    // <button onClick={::this.handleLogout}>next</button>
   }
 
 }

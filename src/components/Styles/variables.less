@@ -4,3 +4,56 @@
 ._proxima_light   { font-family: "ProximaNovaLight"; }
 ._proxima_thin    { font-family: "ProximaNovaLight"; }
 ._proxima_regular { font-family: "ProximaNovaRegular"; }
+
+._box_shadow {
+  box-shadow: 0px 1px 3px 0px rgba(24, 28, 39, .3);
+}
+._box_shadow_hover {
+  box-shadow: 0px 4px 10px 0px rgba(24, 28, 39, .3);
+}
+
+._h1 {
+  ._proxima_regular;
+  font-size: 32px;
+  line-height: 39px;
+  letter-spacing: .9px;
+  color: #fff;
+}
+._p {
+  ._proxima_light;
+  font-size: 16px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, .7);
+}
+._big {
+  ._p;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, .8);
+}
+._a {
+  color: rgba(162, 213, 180, .7);
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
+._button {
+  ._p;
+  padding: 0;
+  margin: 0;
+  border: none;
+  color: #181c27;
+  height: 50px;
+  line-height: 50px;
+  background: #fff;
+  padding: 0 45px 0 18px;
+  border-radius: 2px;
+  cursor: pointer;
+  ._box_shadow;
+  transition: box-shadow .3s;
+  i { margin: 0 25px 0 0; }
+  &:focus { outline: none; }
+  &:hover { ._box_shadow_hover; }
+
+}
