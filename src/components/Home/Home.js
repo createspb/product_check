@@ -1,37 +1,36 @@
 import React, { Component, PropTypes } from 'react';
-import { pushState } from 'redux-router';
-import { connect } from 'react-redux';
+// import { pushState } from 'redux-router';
+// import { connect } from 'react-redux';
 
-@connect(
-  state => state,
-  {pushState})
+// @connect(
+//   state => state,
+//   {pushState})
 export default class Home extends Component {
 
   static propTypes = {
     params: PropTypes.object,
     children: PropTypes.object,
-    pushState: PropTypes.func.isRequired
+    // pushState: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
-    this.state = {
-      questionId: props.params.questionId,
-      background: '#000'
-    };
+    // this.state = {
+    //   questionId: props.params.questionId,
+    // };
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      questionId: nextProps.params.questionId
-    });
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     questionId: nextProps.params.questionId
+  //   });
+  // }
 
-  handleLogout(event) {
-    event.preventDefault();
-    const questionId = this.state.questionId || 0;
-    this.props.pushState(null, '/questions/' + (parseInt(questionId, 10) + 1));
-  }
+  // handleNext(event) {
+  //   event.preventDefault();
+  //   const questionId = this.state.questionId || 0;
+  //   this.props.pushState(null, '/questions/' + (parseInt(questionId, 10) + 1));
+  // }
 
   render() {
     const { children } = this.props;
