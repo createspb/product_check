@@ -12,6 +12,31 @@
   box-shadow: 0px 4px 10px 0px rgba(24, 28, 39, .3);
 }
 
+@width: 940px;
+@leftWidth: 540px;
+
+._container {
+  position: relative;
+  width: @width;
+  height: 100%;
+  margin: 0 auto;
+  display: table;
+}
+._containerRow {
+  display: table-row;
+}
+._containerCell {
+  display: table-cell;
+  vertical-align: middle;
+}
+._containerLeft {
+  width: @leftWidth;
+  float: left;
+}
+._containerRight {
+  float: right;
+  width: @width - @leftWidth;
+}
 ._h1 {
   ._proxima_regular;
   font-size: 32px;
@@ -55,5 +80,4 @@
   i { margin: 0 25px 0 0; }
   &:focus { outline: none; }
   &:hover { ._box_shadow_hover; }
-
 }

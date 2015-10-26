@@ -2,19 +2,46 @@
 
 .welcome {
   height: 100%;
-  background: #666;
+  background-image: linear-gradient(135deg, #B5E1BC 0%, #7BC8AC 29%, #498A8E 54%, #385872 77%, #273B53 100%);
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(24, 28, 39, .8);
+  }
+}
+.container {
+  ._container;
+}
+.containerRow {
+  ._containerRow;
+}
+.containerCell {
+  ._containerCell;
+}
+.containerLeft {
+  ._containerLeft;
+}
+.containerRight {
+  ._containerRight;
+  margin-top: -40px;
 }
 .h1 {
   ._h1;
+  margin: 0 0 5px;
 }
 .company {
-
+  margin: 0 0 45px;
 }
 .a {
   ._a;
 }
 .p {
   ._big;
+  margin: 0 0 25px;
 }
 .button {
   ._button;
