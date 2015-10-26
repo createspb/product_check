@@ -13,39 +13,37 @@ export default class Carcas extends Component {
   }
 
   animateToTop() {
-    this.clear();
-    $(this.container).addClass(this.styles.animateToTop);
+    $(this.container).attr('class', [this.styles.containerLeft,
+                                     this.styles.animateToTop].join(' '));
   }
 
   moveToBottom() {
-    this.clear();
-    $(this.container).addClass(this.styles.moveToBottom);
+    $(this.container).attr('class', [this.styles.containerLeft,
+                                     this.styles.moveToBottom].join(' '));
   }
 
   animateFromBottom() {
-    this.clear();
-    $(this.container).addClass(this.styles.animateFromBottom);
-  }
-
-  clear() {
-    $(this.container)
-      .removeClass(this.styles.moveToBottom)
-      .removeClass(this.styles.animateFromBottom)
-      .removeClass(this.styles.animateToTop);
+    $(this.container).attr('class', [this.styles.containerLeft,
+                                     this.styles.animateFromBottom].join(' '));
   }
 
   render() {
     const { styles } = this;
     const icons = require('../Styles/icons.less');
     return (
-      <div className={styles.container}>
-        <div className={styles.containerRow}>
-          <div className={styles.containerCell}>
-            <div className={styles.containerRight}>
-              <div className={icons.main}></div>
-            </div>
-            <div ref={(ref) => this.container = ref} className={styles.containerLeft}>
-              {this.props.children}
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
+          <div className={styles.containerRow}>
+            <div className={styles.containerCell}>
+              <div className={styles.containerRight}>
+                <div className={icons.main}></div>
+              </div>
+              <div
+                ref={(ref) => this.container = ref}
+                className={styles.containerLeft}
+              >
+                {this.props.children}
+              </div>
             </div>
           </div>
         </div>

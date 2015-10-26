@@ -15,6 +15,28 @@ export default class Question extends Component {
     pushState: PropTypes.func.isRequired
   };
 
+  constructor(props) {
+    super(props);
+    const { questions } = this.props;
+    const questionId = parseInt(this.props.params.questionId, 10);
+    const { count } = questions;
+    let next = false;
+    if (count > questionId) {
+      next = questionId + 1;
+    }
+    this.state.questionsCount = count;
+    this.state.questionId = questionId;
+    this.state.question = questions[questionId - 1];
+    this.state.next = next;
+  }
+
+  state = {
+    questionsCount: undefined,
+    question: undefined,
+    questionId: undefined,
+    next: undefined
+  };
+
   componentDidMount() {
     this.refs.carcas.moveToBottom();
     setTimeout(() => {
@@ -23,51 +45,56 @@ export default class Question extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { questions } = nextProps;
+    const questionId = parseInt(nextProps.params.questionId, 10);
+    const { count } = questions;
+    let next = false;
+    if (count > questionId) {
+      next = questionId + 1;
+    }
     const promises = [];
     promises.push(this.refs.carcas.moveToBottom());
     promises.push(
-      setTimeout(() => { this.refs.carcas.animateFromBottom(); },
-      10
-    ));
-    promises.push(this.setState({ questionId: nextProps.params.questionId }));
+      setTimeout(() => { this.refs.carcas.animateFromBottom(); }, 10)
+    );
+    promises.push(
+      this.setState({
+        questionsCount: count,
+        questionId: questionId,
+        question: questions[questionId - 1],
+        next: next
+      })
+    );
     Promise.all(promises);
   }
 
   static fetchData(getState, dispatch) {
-    const promises = [];
-    if (!isLoaded(getState())) {
-      promises.push(dispatch(load()));
-    }
-    return Promise.all(promises);
+    if (!isLoaded(getState())) return Promise.all([dispatch(load())]);
   }
 
   handleButton(event) {
     event.stopPropagation();
-    const next = parseInt(this.props.params.questionId, 10) + 1;
-    if (next - 1 < this.props.questions.count) {
+    if (this.state.next) {
       this.refs.carcas.animateToTop();
       setTimeout(() => {
-        this.props.pushState(null, '/questions/' + next);
+        this.props.pushState(null, '/questions/' + this.state.next);
       }, 300);
     }
   }
 
   render() {
-    const { questionId } = this.props.params;
-    const question = this.props.questions[questionId - 1];
-    const styles = require('./Question.less');
+    console.log(this.state);
+    const { question } = this.state;
     return (
-      <div className={[styles.question, styles['c' + question.id]].join(' ')}>
-        <Carcas ref="carcas">
-          <QuestionInformation
-            {...question}
-          />
-          <Buttons
-            handleYes={::this.handleButton}
-            handleNo={::this.handleButton}
-          />
-        </Carcas>
-      </div>
+      <Carcas ref="carcas">
+        <QuestionInformation
+          {...question}
+        />
+        <Buttons
+          handleYes={::this.handleButton}
+          handleNo={::this.handleButton}
+        />
+      </Carcas>
     );
   }
 

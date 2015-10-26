@@ -32,24 +32,22 @@ export default class Welcome extends Component {
     const styles = require('./Welcome.less');
     const icons = require('../Styles/icons.less');
     return (
-      <div className={styles.welcome}>
-        <Carcas ref={(ref) => this.carcas = ref}>
-          <h1 className={styles.h1}>{welcome.h1}</h1>
-          <div className={styles.company}>
-            {welcome.from}
-            <a
-              className={styles.a}
-              target="_blank"
-              href="http://createdigital.me/"
-            >{welcome.companyName}</a>
-          </div>
-          <p className={styles.p}>{welcome.text}</p>
-          <button onClick={::this.handleButton} className={styles.button}>
-            <i className={icons.go}></i>
-            {welcome.button}
-          </button>
-        </Carcas>
-      </div>
+      <Carcas ref={(ref) => this.carcas = ref}>
+        <h1 className={styles.h1}>{welcome.h1}</h1>
+        <div className={styles.company}>
+          {welcome.from}
+          <a
+            className={styles.a}
+            target="_blank"
+            href="http://createdigital.me/"
+          >{welcome.companyName}</a>
+        </div>
+        <p className={styles.p}>{welcome.text}</p>
+        <button onClick={::this.handleButton} className={styles.button}>
+          <i className={icons.go}></i>
+          {welcome.button}
+        </button>
+      </Carcas>
     );
   }
 
