@@ -23,13 +23,14 @@ export default class Question extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.refs.carcas.moveToBottom();
-    setTimeout(() => {
-      this.refs.carcas.animateFromBottom();
-    }, 5);
-    this.setState({
-      questionId: nextProps.params.questionId
-    });
+    const promises = [];
+    promises.push(this.refs.carcas.moveToBottom());
+    promises.push(
+      setTimeout(() => { this.refs.carcas.animateFromBottom(); },
+      10
+    ));
+    promises.push(this.setState({ questionId: nextProps.params.questionId }));
+    Promise.all(promises);
   }
 
   static fetchData(getState, dispatch) {
