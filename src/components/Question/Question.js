@@ -20,16 +20,17 @@ export default class Question extends Component {
   };
 
   componentDidMount() {
+    this.refs.carcas.moveToBottom();
     setTimeout(() => {
       this.refs.carcas.animateFromBottom();
-    }, 0);
+    }, 5);
   }
 
   componentWillReceiveProps(nextProps) {
     this.refs.carcas.moveToBottom();
     setTimeout(() => {
       this.refs.carcas.animateFromBottom();
-    }, 0);
+    }, 5);
     this.setState({
       questionId: nextProps.params.questionId
     });
