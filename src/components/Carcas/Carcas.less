@@ -4,18 +4,9 @@
   height: 100%;
   overflow: hidden;
 }
-.background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  transition: background 10s;
-}
 .container {
   ._container;
   top: 0;
-
 }
 .containerRow {
   ._containerRow;
@@ -32,6 +23,25 @@
 .containerRight {
   ._containerRight;
 }
+
+// Line
+.line {
+  position: fixed;
+  left: 50%;
+  width: 1px;
+  top: 0;
+  bottom: 0;
+  background: #8BCFB1;
+  margin: 0 0 0 -940px/2 - 39px;
+  opacity: 0;
+}
+.activeLine {
+  transition: opacity 1s;
+  opacity: 1;
+}
+
+
+// Animations
 .animateToTop {
   transition: top .7s, opacity .2s;
   top: -2000px;
@@ -50,6 +60,14 @@
 
 
 // Backgrounds
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  transition: background 10s;
+}
 .c0  { ._diagonal_gradiend(#374444, #26373e); }
 .c1  { ._diagonal_gradiend(#304042, #1f2f39); }
 .c2  { ._diagonal_gradiend(#273a3f, #1d2735); }

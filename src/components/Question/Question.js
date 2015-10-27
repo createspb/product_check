@@ -40,6 +40,7 @@ export default class Question extends Component {
   componentDidMount() {
     this.refs.carcas.bottomToCenter();
     this.refs.carcas.setBackgroundClass(this.state.questionId);
+    this.refs.carcas.showLine();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,10 +85,11 @@ export default class Question extends Component {
   }
 
   render() {
-    const { question } = this.state;
+    const { question, questionsCount } = this.state;
     return (
       <Carcas ref="carcas">
         <QuestionInformation
+          questionsCount={questionsCount}
           {...question}
         />
         <Buttons

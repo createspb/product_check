@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import captions from '../../data/captions';
+import { isLoaded, load } from 'redux/modules/questions';
 import { pushState } from 'redux-router';
 import { connect } from 'react-redux';
 import { Carcas } from '..';
 
 @connect(
-  state => state,
-  {pushState})
+  state => ({questions: state.questions.questions}),
+  {pushState, isLoaded, load})
 export default class Welcome extends Component {
 
   static propTypes = {
@@ -22,6 +23,10 @@ export default class Welcome extends Component {
     this.refs.carcas.animateToTop(
       () => this.props.pushState(null, '/questions/1')
     );
+  }
+
+  static fetchData(getState, dispatch) {
+    if (!isLoaded(getState())) return Promise.all([dispatch(load())]);
   }
 
   render() {

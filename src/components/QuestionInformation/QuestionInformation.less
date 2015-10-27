@@ -14,3 +14,22 @@
   margin: 20px 0 0 0;
   font-style: italic;
 }
+.numbers {
+  position: absolute;
+  right: @leftWidth + 80;
+  white-space: nowrap;
+  ._p;
+  line-height: 29px;
+  font-style: italic;
+  &:before {
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    right: -45px;
+    border-radius: 10px;
+    top: 50%;
+    margin: -3.5px 0 0 0;
+    content: ' ';
+    background: #b6e1bc;
+  }
+}

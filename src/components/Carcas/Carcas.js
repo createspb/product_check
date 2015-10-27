@@ -4,7 +4,7 @@ import $ from 'jquery';
 export default class Carcas extends Component {
 
   static propTypes = {
-    children: PropTypes.any
+    children: PropTypes.any,
   };
 
   constructor(props) {
@@ -12,10 +12,6 @@ export default class Carcas extends Component {
     this.styles = require('./Carcas.less');
     this.backgroundClass = this.styles.c0;
   }
-
-  state = {
-    backgroundClass: undefined
-  };
 
   setBackgroundClass(className) {
     $(this.refs.bgLayer1).css({
@@ -54,16 +50,27 @@ export default class Carcas extends Component {
     this.animateFromBottom(timeout);
   }
 
+  showLine() {
+    setTimeout(() => {
+      $(this.refs.line).addClass(this.styles.activeLine);
+    }, 200);
+  }
+
   render() {
     const { styles } = this;
     const icons = require('../Styles/icons.less');
+    const { children } = this.props;
     return (
       <div className={styles.wrapper}>
+
         <div
           ref="bgLayer0"
           className={[styles.background, this.backgroundClass].join(' ')}
         ></div>
         <div ref="bgLayer1" className={styles.background}></div>
+
+        <div ref="line" className={styles.line}></div>
+
         <div className={styles.container}>
           <div className={styles.containerRow}>
             <div className={styles.containerCell}>
@@ -74,11 +81,12 @@ export default class Carcas extends Component {
                 ref={(ref) => this.container = ref}
                 className={styles.containerLeft}
               >
-                {this.props.children}
+                {children}
               </div>
             </div>
           </div>
         </div>
+
       </div>
     );
   }

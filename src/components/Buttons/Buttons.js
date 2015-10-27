@@ -33,7 +33,7 @@ export default class Buttons extends Component {
         </button>
         <button
           onClick={::this.handleNo}
-          className={styles.button}
+          className={styles.transparentButton}
         >
           <i className={icons.no}></i>
           {questionCaptions.no}
