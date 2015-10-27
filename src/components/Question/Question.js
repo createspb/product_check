@@ -132,20 +132,17 @@ export default class Question extends Component {
   }
 
   handleButton() {
-    if (!this.lock) {
-      this.lock = true;
-      const { carcas } = this.refs;
-      if (this.state.next) {
-        if (this.state.nextQuestion && this.state.nextQuestion.firstOfType) {
-          carcas.setLineColor('transparent', 0);
-        }
-        carcas.animateToTop(
-          () => this.props.pushState(null, '/questions/' + this.state.next)
-        );
-      } else {
-        // results callback
-        console.log('results');
+    const { carcas } = this.refs;
+    if (this.state.next) {
+      if (this.state.nextQuestion && this.state.nextQuestion.firstOfType) {
+        carcas.setLineColor('transparent', 0);
       }
+      carcas.animateToTop(
+        () => this.props.pushState(null, '/questions/' + this.state.next)
+      );
+    } else {
+      // results callback
+      console.log('results');
     }
   }
 
