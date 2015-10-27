@@ -15,27 +15,17 @@ export default class Question extends Component {
     pushState: PropTypes.func.isRequired
   };
 
-  // TODO: refactor with cwrp
   constructor(props) {
     super(props);
-    const { questions } = this.props;
-    const questionId = parseInt(this.props.params.questionId, 10);
-    const { count } = questions;
-    let next = false;
-    let prev = false;
-    if (questionId > 0) {
-      prev = questionId - 1;
-      this.state.prevQuestion = questions[questionId - 2];
-    }
-    if (count > questionId) {
-      next = questionId + 1;
-      this.state.nextQuestion = questions[questionId];
-    }
-    this.state.questionsCount = count;
+    const { questionsCount, questionId, question, next, nextQuestion,
+            prev, prevQuestion } = this.constructParams(props);
+    this.state.questionsCount = questionsCount;
     this.state.questionId = questionId;
-    this.state.question = questions[questionId - 1];
+    this.state.question = question;
     this.state.next = next;
+    this.state.nextQuestion = nextQuestion;
     this.state.prev = prev;
+    this.state.prevQuestion = prevQuestion;
   }
 
   state = {
@@ -53,11 +43,27 @@ export default class Question extends Component {
     this.refs.carcas.showLine();
   }
 
-  // TODO: refactor with constructor
   componentWillReceiveProps(nextProps) {
-    const { questions } = nextProps;
-    const questionId = parseInt(nextProps.params.questionId, 10);
-    const { count } = questions;
+    const { questionsCount, questionId, question, next, nextQuestion,
+            prev, prevQuestion } = this.constructParams(nextProps);
+    this.setState({
+      questionsCount: questionsCount,
+      questionId: questionId,
+      question: question,
+      next: next,
+      nextQuestion: nextQuestion,
+      prev: prev,
+      prevQuestion: prevQuestion
+    }, () => {
+      this.changeQuestion();
+    });
+  }
+
+  constructParams(props) {
+    const { questions } = props;
+    const questionId = parseInt(props.params.questionId, 10);
+    const { count: questionsCount } = questions;
+    const question = questions[questionId - 1];
     let next = false;
     let prev = false;
     let prevQuestion = undefined;
@@ -66,21 +72,14 @@ export default class Question extends Component {
       prev = questionId - 1;
       prevQuestion = questions[questionId - 2];
     }
-    if (count > questionId) {
+    if (questionsCount > questionId) {
       next = questionId + 1;
       nextQuestion = questions[questionId];
     }
-    this.setState({
-      questionsCount: count,
-      questionId: questionId,
-      question: questions[questionId - 1],
-      next: next,
-      nextQuestion: nextQuestion,
-      prev: prev,
-      prevQuestion: prevQuestion
-    }, () => {
-      this.changeQuestion();
-    });
+    return {
+      questionsCount, questionId, question,
+      next, nextQuestion, prev, prevQuestion
+    };
   }
 
   changeQuestion() {
