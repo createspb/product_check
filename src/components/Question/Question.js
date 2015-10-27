@@ -1,18 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import { isLoaded, load } from 'redux/modules/questions';
+import { storeAnswer } from 'redux/modules/answers';
 import { Carcas, QuestionInformation, Buttons } from '..';
 import { pushState } from 'redux-router';
 import { connect } from 'react-redux';
 
 @connect(
-  state => ({questions: state.questions.questions}),
-  {pushState, isLoaded, load})
+  state => ({
+    questions: state.questions.questions,
+    answers: state.answers
+  }),
+  {pushState, isLoaded, load, storeAnswer})
 export default class Question extends Component {
 
   static propTypes = {
     params: PropTypes.object,
     questions: PropTypes.object,
-    pushState: PropTypes.func.isRequired
+    answers: PropTypes.object,
+    pushState: PropTypes.func.isRequired,
+    storeAnswer: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -46,17 +52,19 @@ export default class Question extends Component {
   componentWillReceiveProps(nextProps) {
     const { questionsCount, questionId, question, next, nextQuestion,
             prev, prevQuestion } = this.constructParams(nextProps);
-    this.setState({
-      questionsCount: questionsCount,
-      questionId: questionId,
-      question: question,
-      next: next,
-      nextQuestion: nextQuestion,
-      prev: prev,
-      prevQuestion: prevQuestion
-    }, () => {
-      this.changeQuestion();
-    });
+    if (questionId !== this.state.questionId) {
+      this.setState({
+        questionsCount: questionsCount,
+        questionId: questionId,
+        question: question,
+        next: next,
+        nextQuestion: nextQuestion,
+        prev: prev,
+        prevQuestion: prevQuestion
+      }, () => {
+        this.changeQuestion();
+      });
+    }
   }
 
   constructParams(props) {
@@ -109,19 +117,31 @@ export default class Question extends Component {
   storeValue(value) {
     switch (value) {
       case 0:
-        console.log('no');
+        this.props.storeAnswer({
+          id: this.state.questionId,
+          value: 'no'
+        });
         break;
       case 1:
-        console.log('yes');
+        this.props.storeAnswer({
+          id: this.state.questionId,
+          value: 'yes'
+        });
         break;
       default:
         console.log('error');
     }
   }
 
-  handleButton(button) {
-    const { carcas } = this.refs;
+  handleButtonWithTimeout(button) {
     this.storeValue(button);
+    setTimeout(() => {
+      this.handleButton();
+    }, 300);
+  }
+
+  handleButton() {
+    const { carcas } = this.refs;
     if (this.state.next) {
       if (this.state.nextQuestion && this.state.nextQuestion.firstOfType) {
         carcas.setLineColor('transparent', 0);
@@ -149,6 +169,7 @@ export default class Question extends Component {
   }
 
   render() {
+    const answer = this.props.answers[this.state.questionId];
     const { question, questionsCount, prev } = this.state;
     return (
       <Carcas ref="carcas">
@@ -159,8 +180,9 @@ export default class Question extends Component {
           {...question}
         />
         <Buttons
-          handleYes={::this.handleButton}
-          handleNo={::this.handleButton}
+          answer={answer}
+          handleYes={::this.handleButtonWithTimeout}
+          handleNo={::this.handleButtonWithTimeout}
         />
       </Carcas>
     );

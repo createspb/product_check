@@ -18,20 +18,24 @@
   height: 316px;
   background: url("@{i}main.svg") no-repeat center;
 }
-.yes {
+
+.yes, .yesActive {
   display: inline-block;
   width: 18px;
   height: 14px;
   vertical-align: -2px;
-  background: url("@{i}yes.svg") no-repeat center;
 }
-.no {
+.yes { background: url("@{i}yes.svg") no-repeat center; }
+.yesActive { background: url("@{i}yesActive.svg") no-repeat center; }
+.no, .noActive {
   display: inline-block;
   width: 14px;
   height: 14px;
   vertical-align: -2px;
-  background: url("@{i}no.svg") no-repeat center;
 }
+.no { background: url("@{i}no.svg") no-repeat center; }
+.noActive { background: url("@{i}noActive.svg") no-repeat center; }
+
 .info {
   display: inline-block;
   width: 14px;

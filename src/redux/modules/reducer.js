@@ -4,21 +4,11 @@ import { routerStateReducer } from 'redux-router';
 
 import auth from './auth';
 import questions from './questions';
-// import counter from './counter';
-// import {reducer as form} from 'redux-form';
-// import info from './info';
-// import widgets from './widgets';
+import answers from './answers';
 
 export default combineReducers({
   router: routerStateReducer,
   auth,
-  questions
-  // form,
-  // multireducer: multireducer({
-  //   counter1: counter,
-  //   counter2: counter,
-  //   counter3: counter
-  // }),
-  // info,
-  // widgets
+  questions,
+  answers
 });

@@ -1,23 +1,23 @@
-const INCREMENT = 'redux-example/counter/INCREMENT';
+const STORE = 'answers/STORE';
 
 const initialState = {
-  count: 0
 };
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case INCREMENT:
-      const {count} = state;
+    case STORE:
+      state[action.id] = {id: action.id, value: action.value};
       return {
-        count: count + 1
+        ...state
       };
     default:
       return state;
   }
 }
 
-export function increment() {
+export function storeAnswer(data) {
   return {
-    type: INCREMENT
+    type: STORE,
+    ...data
   };
 }
