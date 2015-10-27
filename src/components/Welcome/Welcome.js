@@ -14,17 +14,14 @@ export default class Welcome extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.carcas.animateFromBottom();
-    }, 0);
+    this.refs.carcas.bottomToCenter();
   }
 
   handleButton(event) {
     event.stopPropagation();
-    this.carcas.animateToTop();
-    setTimeout(() => {
-      this.props.pushState(null, '/questions/1');
-    }, 300);
+    this.refs.carcas.animateToTop(
+      () => this.props.pushState(null, '/questions/1')
+    );
   }
 
   render() {
@@ -32,7 +29,7 @@ export default class Welcome extends Component {
     const styles = require('./Welcome.less');
     const icons = require('../Styles/icons.less');
     return (
-      <Carcas ref={(ref) => this.carcas = ref}>
+      <Carcas ref="carcas">
         <h1 className={styles.h1}>{welcome.h1}</h1>
         <div className={styles.company}>
           {welcome.from}

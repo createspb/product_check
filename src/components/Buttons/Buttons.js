@@ -8,26 +8,31 @@ export default class Buttons extends Component {
     handleNo: PropTypes.func.isRequired
   }
 
-  handleButton(event) {
+  handleYes(event) {
     event.stopPropagation();
+    this.props.handleYes(1);
+  }
+  handleNo(event) {
+    event.stopPropagation();
+    this.props.handleNo(0);
   }
 
   render() {
-    const { handleYes, handleNo } = this.props;
+    // const { handleYes, handleNo } = this.props;
     const { questionCaptions } = captions;
     const styles = require('./Buttons.less');
     const icons = require('../Styles/icons.less');
     return (
       <div className={styles.buttons}>
         <button
-          onClick={handleYes}
+          onClick={::this.handleYes}
           className={styles.transparentButton}
         >
           <i className={icons.yes}></i>
           {questionCaptions.yes}
         </button>
         <button
-          onClick={handleNo}
+          onClick={::this.handleNo}
           className={styles.button}
         >
           <i className={icons.no}></i>

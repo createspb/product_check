@@ -12,9 +12,10 @@ export default class Carcas extends Component {
     this.styles = require('./Carcas.less');
   }
 
-  animateToTop() {
+  animateToTop(callback, timeout = 300) {
     $(this.container).attr('class', [this.styles.containerLeft,
                                      this.styles.animateToTop].join(' '));
+    setTimeout(callback, timeout);
   }
 
   moveToBottom() {
@@ -22,9 +23,16 @@ export default class Carcas extends Component {
                                      this.styles.moveToBottom].join(' '));
   }
 
-  animateFromBottom() {
-    $(this.container).attr('class', [this.styles.containerLeft,
-                                     this.styles.animateFromBottom].join(' '));
+  animateFromBottom(timeout) {
+    setTimeout(() => {
+      $(this.container).attr('class', [this.styles.containerLeft,
+                                       this.styles.animateFromBottom].join(' '));
+    }, timeout);
+  }
+
+  bottomToCenter(timeout = 10) {
+    this.moveToBottom();
+    this.animateFromBottom(timeout);
   }
 
   render() {

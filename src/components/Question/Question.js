@@ -38,10 +38,7 @@ export default class Question extends Component {
   };
 
   componentDidMount() {
-    this.refs.carcas.moveToBottom();
-    setTimeout(() => {
-      this.refs.carcas.animateFromBottom();
-    }, 5);
+    this.refs.carcas.bottomToCenter();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -52,38 +49,39 @@ export default class Question extends Component {
     if (count > questionId) {
       next = questionId + 1;
     }
-    const promises = [];
-    promises.push(this.refs.carcas.moveToBottom());
-    promises.push(
-      setTimeout(() => { this.refs.carcas.animateFromBottom(); }, 10)
-    );
-    promises.push(
-      this.setState({
-        questionsCount: count,
-        questionId: questionId,
-        question: questions[questionId - 1],
-        next: next
-      })
-    );
-    Promise.all(promises);
+    this.refs.carcas.bottomToCenter();
+    this.setState({
+      questionsCount: count,
+      questionId: questionId,
+      question: questions[questionId - 1],
+      next: next
+    });
   }
 
   static fetchData(getState, dispatch) {
     if (!isLoaded(getState())) return Promise.all([dispatch(load())]);
   }
 
-  handleButton(event) {
-    event.stopPropagation();
+  handleButton(button) {
+    if (button === 1) {
+      // store yes
+      console.log('yes');
+    }
+    if (button === 0) {
+      // store no
+      console.log('no');
+    }
     if (this.state.next) {
-      this.refs.carcas.animateToTop();
-      setTimeout(() => {
-        this.props.pushState(null, '/questions/' + this.state.next);
-      }, 300);
+      this.refs.carcas.animateToTop(
+        () => this.props.pushState(null, '/questions/' + this.state.next)
+      );
+    } else {
+      // results callback
+      console.log('results');
     }
   }
 
   render() {
-    console.log(this.state);
     const { question } = this.state;
     return (
       <Carcas ref="carcas">
