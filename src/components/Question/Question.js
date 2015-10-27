@@ -15,6 +15,7 @@ export default class Question extends Component {
     pushState: PropTypes.func.isRequired
   };
 
+  // TODO: refactor with cwrp
   constructor(props) {
     super(props);
     const { questions } = this.props;
@@ -24,9 +25,11 @@ export default class Question extends Component {
     let prev = false;
     if (questionId > 0) {
       prev = questionId - 1;
+      this.state.prevQuestion = questions[questionId - 2];
     }
     if (count > questionId) {
       next = questionId + 1;
+      this.state.nextQuestion = questions[questionId];
     }
     this.state.questionsCount = count;
     this.state.questionId = questionId;
@@ -40,7 +43,9 @@ export default class Question extends Component {
     question: undefined,
     questionId: undefined,
     prev: undefined,
-    next: undefined
+    prevQuestion: undefined,
+    next: undefined,
+    nextQuestion: undefined
   };
 
   componentDidMount() {
@@ -48,24 +53,31 @@ export default class Question extends Component {
     this.refs.carcas.showLine();
   }
 
+  // TODO: refactor with constructor
   componentWillReceiveProps(nextProps) {
     const { questions } = nextProps;
     const questionId = parseInt(nextProps.params.questionId, 10);
     const { count } = questions;
     let next = false;
     let prev = false;
+    let prevQuestion = undefined;
+    let nextQuestion = undefined;
     if (questionId > 0) {
       prev = questionId - 1;
+      prevQuestion = questions[questionId - 2];
     }
     if (count > questionId) {
       next = questionId + 1;
+      nextQuestion = questions[questionId];
     }
     this.setState({
       questionsCount: count,
       questionId: questionId,
       question: questions[questionId - 1],
       next: next,
-      prev: prev
+      nextQuestion: nextQuestion,
+      prev: prev,
+      prevQuestion: prevQuestion
     }, () => {
       this.changeQuestion();
     });
@@ -85,7 +97,7 @@ export default class Question extends Component {
     } else {
       carcas.showBottomOfLine();
     }
-    carcas.setLineColor(question.color);
+    carcas.setLineColor(question.color, 200);
     carcas.bottomToCenter();
     carcas.setBackgroundClass(questionId);
     carcas.showLine();
@@ -95,17 +107,27 @@ export default class Question extends Component {
     if (!isLoaded(getState())) return Promise.all([dispatch(load())]);
   }
 
+  storeValue(value) {
+    switch (value) {
+      case 0:
+        console.log('no');
+        break;
+      case 1:
+        console.log('yes');
+        break;
+      default:
+        console.log('error');
+    }
+  }
+
   handleButton(button) {
-    if (button === 1) {
-      // store yes
-      console.log('yes');
-    }
-    if (button === 0) {
-      // store no
-      console.log('no');
-    }
+    const { carcas } = this.refs;
+    this.storeValue(button);
     if (this.state.next) {
-      this.refs.carcas.animateToTop(
+      if (this.state.nextQuestion && this.state.nextQuestion.firstOfType) {
+        carcas.setLineColor('transparent', 0);
+      }
+      carcas.animateToTop(
         () => this.props.pushState(null, '/questions/' + this.state.next)
       );
     } else {
@@ -115,7 +137,12 @@ export default class Question extends Component {
   }
 
   handleBack() {
+    const { carcas } = this.refs;
+    const { question } = this.state;
     if (this.state.prev) {
+      if (question.firstOfType) {
+        carcas.setLineColor('transparent', 0);
+      }
       this.refs.carcas.animateToTop(
         () => this.props.pushState(null, '/questions/' + this.state.prev)
       );

@@ -27,13 +27,12 @@ export default class Carcas extends Component {
     });
   }
 
-  setLineColor(color) {
-    $(this.refs.line).css({
-      background: color
-    });
-    // $(this.refs.back).css({
-    //   background: color
-    // });
+  setLineColor(color, timeout) {
+    setTimeout(() => {
+      $(this.refs.line).css({
+        background: color
+      });
+    }, timeout);
   }
 
   animateToTop(callback, timeout = 300) {

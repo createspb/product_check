@@ -35,11 +35,25 @@ export default class Question extends Component {
     );
   }
 
+  renderBack(styles, icons) {
+    const { back, color } = this.props;
+    if (!back) return false;
+    return (
+      <div
+        ref="back"
+        onClick={::this.handleBack}
+        className={styles.back}
+        style={{background: color}}
+      >
+        <i className={icons.top}></i>
+      </div>
+    );
+  }
+
   render() {
     const styles = require('./QuestionInformation.less');
     const icons = require('../Styles/icons.less');
-    const { id, title, subtitle, information, questionsCount, back } = this.props;
-    console.log(back);
+    const { id, title, subtitle, information, questionsCount } = this.props;
     const number = parseInt(id, 10) + 1;
     return (
       <div>
@@ -56,16 +70,7 @@ export default class Question extends Component {
             {information}
           </div>
         }
-        {back &&
-          <div
-            ref="back"
-            onClick={::this.handleBack}
-            className={styles.back}
-            style={{background: this.props.color}}
-          >
-            <i className={icons.top}></i>
-          </div>
-        }
+        {this.renderBack(styles, icons)}
       </div>
     );
   }
