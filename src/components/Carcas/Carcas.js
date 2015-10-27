@@ -10,6 +10,25 @@ export default class Carcas extends Component {
   constructor(props) {
     super(props);
     this.styles = require('./Carcas.less');
+    this.backgroundClass = this.styles.c0;
+  }
+
+  state = {
+    backgroundClass: undefined
+  };
+
+  setBackgroundClass(className) {
+    $(this.refs.bgLayer1).css({
+      opacity: 0
+    }).attr('class', [this.styles.background,
+                      this.styles['c' + className]].join(' ')
+    ).animate({
+      opacity: 1
+    }, 300, () => {
+      $(this.refs.bgLayer0)
+        .attr('class', [this.styles.background,
+                        this.styles['c' + className]].join(' '));
+    });
   }
 
   animateToTop(callback, timeout = 300) {
@@ -40,6 +59,11 @@ export default class Carcas extends Component {
     const icons = require('../Styles/icons.less');
     return (
       <div className={styles.wrapper}>
+        <div
+          ref="bgLayer0"
+          className={[styles.background, this.backgroundClass].join(' ')}
+        ></div>
+        <div ref="bgLayer1" className={styles.background}></div>
         <div className={styles.container}>
           <div className={styles.containerRow}>
             <div className={styles.containerCell}>

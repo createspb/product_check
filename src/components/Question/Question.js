@@ -39,6 +39,7 @@ export default class Question extends Component {
 
   componentDidMount() {
     this.refs.carcas.bottomToCenter();
+    this.refs.carcas.setBackgroundClass(this.state.questionId);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,6 +51,7 @@ export default class Question extends Component {
       next = questionId + 1;
     }
     this.refs.carcas.bottomToCenter();
+    this.refs.carcas.setBackgroundClass(questionId);
     this.setState({
       questionsCount: count,
       questionId: questionId,
