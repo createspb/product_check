@@ -38,8 +38,7 @@ export default class Question extends Component {
   };
 
   componentDidMount() {
-    this.refs.carcas.bottomToCenter();
-    this.refs.carcas.setBackgroundClass(this.state.questionId);
+    this.changeQuestion();
     this.refs.carcas.showLine();
   }
 
@@ -51,14 +50,26 @@ export default class Question extends Component {
     if (count > questionId) {
       next = questionId + 1;
     }
-    this.refs.carcas.bottomToCenter();
-    this.refs.carcas.setBackgroundClass(questionId);
     this.setState({
       questionsCount: count,
       questionId: questionId,
       question: questions[questionId - 1],
       next: next
+    }, () => {
+      this.changeQuestion();
     });
+  }
+
+  changeQuestion() {
+    const { carcas } = this.refs;
+    if (this.state.question.firstOfType) {
+      carcas.hideTopOfLine();
+    } else {
+      carcas.showTopOfLine();
+    }
+    carcas.bottomToCenter();
+    carcas.setBackgroundClass(this.state.questionId);
+    carcas.showLine();
   }
 
   static fetchData(getState, dispatch) {
@@ -83,6 +94,7 @@ export default class Question extends Component {
       console.log('results');
     }
   }
+
 
   render() {
     const { question, questionsCount } = this.state;

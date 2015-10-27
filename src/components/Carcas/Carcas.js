@@ -28,6 +28,7 @@ export default class Carcas extends Component {
   }
 
   animateToTop(callback, timeout = 300) {
+    this.showTopOfLine();
     $(this.container).attr('class', [this.styles.containerLeft,
                                      this.styles.animateToTop].join(' '));
     setTimeout(callback, timeout);
@@ -54,6 +55,14 @@ export default class Carcas extends Component {
     setTimeout(() => {
       $(this.refs.line).addClass(this.styles.activeLine);
     }, 200);
+  }
+
+  hideTopOfLine() {
+    $(this.refs.line).addClass(this.styles.htol);
+  }
+
+  showTopOfLine() {
+    $(this.refs.line).removeClass(this.styles.htol);
   }
 
   render() {

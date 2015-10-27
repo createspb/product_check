@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import $ from 'jquery';
 
 export default class Question extends Component {
 
@@ -7,7 +8,24 @@ export default class Question extends Component {
     title: PropTypes.string,
     subtitle: PropTypes.string,
     information: PropTypes.string,
+    firstOfType: PropTypes.string,
+    color: PropTypes.string,
+    icon: PropTypes.string,
     questionsCount: PropTypes.number
+  }
+
+  getDotOffsetTop() {
+    return $(this.refs.numbers);
+  }
+
+  renderLabel(styles, icons) {
+    if (!this.props.firstOfType) return false;
+    return (
+      <div className={styles.firstOfType}>
+        <i className={icons[this.props.icon]}></i>
+        {this.props.firstOfType}
+      </div>
+    );
   }
 
   render() {
@@ -17,7 +35,8 @@ export default class Question extends Component {
     const number = parseInt(id, 10) + 1;
     return (
       <div>
-        <div className={styles.numbers}>{number} / {questionsCount}</div>
+        {this.renderLabel(styles, icons)}
+        <div ref="numbers" className={styles.numbers}>{number} / {questionsCount}</div>
         <div className={styles.h2}>{title}</div>
         <p className={styles.p}>{subtitle}</p>
         {information &&

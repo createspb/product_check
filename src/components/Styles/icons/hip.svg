@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>centre_of_gravity</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#F9B185" offset="0%"></stop>
+            <stop stop-color="#EF6E7B" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Анкета" sketch:type="MSArtboardGroup" transform="translate(-149.000000, -2620.000000)">
+            <image id="centre_of_gravity" sketch:type="MSBitmapLayer" x="149" y="2620" width="50" height="50" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABGdBTUEAA1teXP8meAAAAv9JREFUaAXtmEuPDFEUxwc98dhYSoTxiD1hIRELhsFY+BAWItggLNiw4CvwDawsLY1Fj8VkEhJEQjAkg7Cz8+b/m9wjnUrXzDmqb3X3pP7JP1V969zzuOe+To+M5EdbJuDQ448igFmxMqv2GpU3gdQ42C5TTUZcw1SjUJORGgfbZWrZZKTlCtcvNCrRcfG4uEfcIRre6QU+FKfE++JvcaCwXt5cFT+LdpIv9ZyT7CVxrTgQmJAX86I5/kTv18TD4gbR2sf0fky8Ib7saH+j90mxr2jJ+lcRZ5kyB8QiLJDO9hX6cVR8JPL9h7hG7CsuyPo5cVWJF90CMVH6nBLPW0Pdz8i8XiyQbn6v69aYo425/1286FQeCYTM/BRPOHX/E4ueI8zjW+KoyNroNb5IIdPttshOmA2XpZkRZmdioXsQyQgDOy3Sh7WXBRhhq8TIkYCFSCCo5TClz1uxbAPRp/8HawMDr0S2Ty+igTBgL0T6sUW7EFkjh5LGO3piJBe4ttxNyvd7jUQC2ZWUznqVV5CbSX33VtBR2nVeX8jE1lKJ7h+iUwstm0X6YdONtiTN2LA+25Gp5R6ZQRd8nzK3KeioZTnSbXuyRf3iQiQjz5PG3S7N1YR2pu4cvC5EAsm6kxS8tcF6WmjvyU+KIqYJh1VkAKJTi8P2dbJlZ5d+9g44bwa4RngRDYTTnD5chyID5vVnQY6LHEa42HmNRAJpSS/rgj7U89nA1fqDiKGTTiuRQM4m3dT0q536F8S8o2o6qRdOi7/EHPUC9Q71+xnxm5gdkXI0khEcj5TRPQ2U8pQ/EMpqh8UCoQ9/XLD2+gqbCjj7WGSLLtYqZYEclCx/IfGdspmF3ldMyrpVjjjFQr0p0r5FtEA26n1CvC4+62jnhkv7QIB5zXY5J5rjSz0/SfaK2JNNozgNpLcS2AXHE/fpuU0cE8FHkTKZKXhPfCCyQw0NLDNZHY6eI1mdqaK8CaTK6OXo22Qkx6hW0dlkpMro5ei7bDJSx0VtOkcGijr/Apfy4Isb27rpAAAAAElFTkSuQmCC"></image>
+        </g>
+    </g>
+</svg>
