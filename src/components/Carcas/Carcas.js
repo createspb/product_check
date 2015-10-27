@@ -27,6 +27,12 @@ export default class Carcas extends Component {
     });
   }
 
+  setLineColor(color) {
+    $(this.refs.line).css({
+      background: color
+    });
+  }
+
   animateToTop(callback, timeout = 300) {
     this.showTopOfLine();
     $(this.container).attr('class', [this.styles.containerLeft,
@@ -63,6 +69,14 @@ export default class Carcas extends Component {
 
   showTopOfLine() {
     $(this.refs.line).removeClass(this.styles.htol);
+  }
+
+  hideBottomOfLine() {
+    $(this.refs.line).addClass(this.styles.hbol);
+  }
+
+  showBottomOfLine() {
+    $(this.refs.line).removeClass(this.styles.hbol);
   }
 
   render() {

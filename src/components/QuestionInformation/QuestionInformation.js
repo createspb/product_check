@@ -21,7 +21,7 @@ export default class Question extends Component {
   renderLabel(styles, icons) {
     if (!this.props.firstOfType) return false;
     return (
-      <div className={styles.firstOfType}>
+      <div className={styles.firstOfType} style={{color: this.props.color}}>
         <i className={icons[this.props.icon]}></i>
         {this.props.firstOfType}
       </div>
@@ -36,7 +36,10 @@ export default class Question extends Component {
     return (
       <div>
         {this.renderLabel(styles, icons)}
-        <div ref="numbers" className={styles.numbers}>{number} / {questionsCount}</div>
+        <div ref="numbers" className={styles.numbers}>
+          {number} / {questionsCount}
+          <i ref="dot" style={{background: this.props.color}}></i>
+        </div>
         <div className={styles.h2}>{title}</div>
         <p className={styles.p}>{subtitle}</p>
         {information &&

@@ -62,13 +62,21 @@ export default class Question extends Component {
 
   changeQuestion() {
     const { carcas } = this.refs;
-    if (this.state.question.firstOfType) {
+    const { question, questionId } = this.state;
+    const nextQuestion = this.props.questions[questionId];
+    if (question.firstOfType) {
       carcas.hideTopOfLine();
     } else {
       carcas.showTopOfLine();
     }
+    if (!nextQuestion || nextQuestion.firstOfType) {
+      carcas.hideBottomOfLine();
+    } else {
+      carcas.showBottomOfLine();
+    }
+    carcas.setLineColor(question.color);
     carcas.bottomToCenter();
-    carcas.setBackgroundClass(this.state.questionId);
+    carcas.setBackgroundClass(questionId);
     carcas.showLine();
   }
 
