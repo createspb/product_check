@@ -51,7 +51,12 @@
 // Animations
 .animateToTop {
   transition: top .7s, opacity .2s;
-  top: -2000px;
+  top: -1000px;
+  opacity: 0;
+}
+.animateToBottom {
+  transition: top .7s, opacity .2s;
+  top: 1000px;
   opacity: 0;
 }
 .moveToBottom {
@@ -59,8 +64,18 @@
   top: 1000px;
   opacity: 0;
 }
+.moveToTop {
+  transition: none;
+  top: -1000px;
+  opacity: 0;
+}
 .animateFromBottom {
-  transition: top .3s, opacity .2s ease-out .1s;
+  transition: top .3s ease-in, opacity .2s ease-in .1s;
+  top: 0;
+  opacity: 1;
+}
+.animateFromTop {
+  transition: top .3s linear, opacity .1s ease-out .2s;
   top: 0;
   opacity: 1;
 }

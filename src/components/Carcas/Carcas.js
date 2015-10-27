@@ -35,28 +35,51 @@ export default class Carcas extends Component {
     }, timeout);
   }
 
+  setContainerClass(className) {
+    $(this.container).attr('class', [this.styles.containerLeft,
+                                     className].join(' '));
+  }
+
   animateToTop(callback, timeout = 300) {
     this.showTopOfLine();
-    $(this.container).attr('class', [this.styles.containerLeft,
-                                     this.styles.animateToTop].join(' '));
+    this.setContainerClass(this.styles.animateToTop);
+    setTimeout(callback, timeout);
+  }
+
+  animateToBottom(callback, timeout = 300) {
+    this.showTopOfLine();
+    this.setContainerClass(this.styles.animateToBottom);
     setTimeout(callback, timeout);
   }
 
   moveToBottom() {
-    $(this.container).attr('class', [this.styles.containerLeft,
-                                     this.styles.moveToBottom].join(' '));
+    this.setContainerClass(this.styles.moveToBottom);
+  }
+
+  moveToTop() {
+    this.setContainerClass(this.styles.moveToTop);
   }
 
   animateFromBottom(timeout) {
     setTimeout(() => {
-      $(this.container).attr('class', [this.styles.containerLeft,
-                                       this.styles.animateFromBottom].join(' '));
+      this.setContainerClass(this.styles.animateFromBottom);
+    }, timeout);
+  }
+
+  animateFromTop(timeout) {
+    setTimeout(() => {
+      this.setContainerClass(this.styles.animateFromTop);
     }, timeout);
   }
 
   bottomToCenter(timeout = 10) {
     this.moveToBottom();
     this.animateFromBottom(timeout);
+  }
+
+  topToCenter(timeout = 10) {
+    this.moveToTop();
+    this.animateFromTop(timeout);
   }
 
   showLine() {

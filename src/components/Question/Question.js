@@ -24,7 +24,7 @@ export default class Question extends Component {
   constructor(props) {
     super(props);
     const { questionsCount, questionId, question, next, nextQuestion,
-            prev, prevQuestion } = this.constructParams(props);
+            prev, prevQuestion, back } = this.constructParams(props);
     this.state.questionsCount = questionsCount;
     this.state.questionId = questionId;
     this.state.question = question;
@@ -32,6 +32,7 @@ export default class Question extends Component {
     this.state.nextQuestion = nextQuestion;
     this.state.prev = prev;
     this.state.prevQuestion = prevQuestion;
+    this.state.back = back;
   }
 
   state = {
@@ -51,16 +52,11 @@ export default class Question extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { questionsCount, questionId, question, next, nextQuestion,
-            prev, prevQuestion } = this.constructParams(nextProps);
+            prev, prevQuestion, back } = this.constructParams(nextProps);
     if (questionId !== this.state.questionId) {
       this.setState({
-        questionsCount: questionsCount,
-        questionId: questionId,
-        question: question,
-        next: next,
-        nextQuestion: nextQuestion,
-        prev: prev,
-        prevQuestion: prevQuestion
+        questionsCount, questionId, question, back, next, nextQuestion,
+        prev, prevQuestion
       }, () => {
         this.changeQuestion();
       });
@@ -74,8 +70,12 @@ export default class Question extends Component {
     const question = questions[questionId - 1];
     let next = false;
     let prev = false;
+    let back = false;
     let prevQuestion = undefined;
     let nextQuestion = undefined;
+    if (props.params.back) {
+      back = true;
+    }
     if (questionId > 0) {
       prev = questionId - 1;
       prevQuestion = questions[questionId - 2];
@@ -85,14 +85,14 @@ export default class Question extends Component {
       nextQuestion = questions[questionId];
     }
     return {
-      questionsCount, questionId, question,
-      next, nextQuestion, prev, prevQuestion
+      questionsCount, questionId, question, next,
+      nextQuestion, prev, prevQuestion, back
     };
   }
 
   changeQuestion() {
     const { carcas } = this.refs;
-    const { question, questionId } = this.state;
+    const { question, questionId, back } = this.state;
     const nextQuestion = this.props.questions[questionId];
     if (question.firstOfType) {
       carcas.hideTopOfLine();
@@ -105,7 +105,11 @@ export default class Question extends Component {
       carcas.showBottomOfLine();
     }
     carcas.setLineColor(question.color, 200);
-    carcas.bottomToCenter();
+    if (back) {
+      carcas.topToCenter();
+    } else {
+      carcas.bottomToCenter();
+    }
     carcas.setBackgroundClass(questionId);
     carcas.showLine();
   }
@@ -162,8 +166,8 @@ export default class Question extends Component {
       if (question.firstOfType) {
         carcas.setLineColor('transparent', 0);
       }
-      this.refs.carcas.animateToTop(
-        () => this.props.pushState(null, '/questions/' + this.state.prev)
+      carcas.animateToBottom(
+        () => this.props.pushState(null, '/questions/' + this.state.prev + '/back')
       );
     }
   }

@@ -38,14 +38,24 @@
   ._h3;
 }
 .back {
-  background: #97D4B4;
-  width: 78px;
-  height: 78px;
   position: fixed;
-  border-radius: 78px;
-  clip: rect(78px/2, 78px, 78px, 0);
-  margin-top: -78px/2;
-  margin-left: -78px;
-  bottom: 100px;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
   cursor: pointer;
+  padding: 100px 0 0 0;
+  opacity: .15;
+  transition: opacity .3s;
+  &:hover { opacity: .4; }
+  // background: #97D4B4;
+  // width: 78px;
+  // height: 78px;
+  // position: fixed;
+  // border-radius: 78px;
+  // clip: rect(78px/2, 78px, 78px, 0);
+  // margin-top: -78px/2;
+  // margin-left: -78px;
+  // bottom: 100px;
+  // cursor: pointer;
 }

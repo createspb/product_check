@@ -49,6 +49,7 @@ export default (store) => {
     <Route component={App}>
       <Route component={Home}>
         <Route path="/" component={Welcome} />
+        <Route path="questions/:questionId/:back" component={Question} />
         <Route path="questions/:questionId" component={Question} />
       </Route>
       <Route onEnter={requireLogin} path="admin">
