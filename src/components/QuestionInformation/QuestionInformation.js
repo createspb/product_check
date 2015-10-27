@@ -11,11 +11,18 @@ export default class Question extends Component {
     firstOfType: PropTypes.string,
     color: PropTypes.string,
     icon: PropTypes.string,
-    questionsCount: PropTypes.number
+    questionsCount: PropTypes.number,
+    back: PropTypes.any,
+    handleBack: PropTypes.func.isRequired
   }
 
   getDotOffsetTop() {
     return $(this.refs.numbers);
+  }
+
+  handleBack(event) {
+    event.stopPropagation();
+    this.props.handleBack();
   }
 
   renderLabel(styles, icons) {
@@ -31,7 +38,8 @@ export default class Question extends Component {
   render() {
     const styles = require('./QuestionInformation.less');
     const icons = require('../Styles/icons.less');
-    const { id, title, subtitle, information, questionsCount } = this.props;
+    const { id, title, subtitle, information, questionsCount, back } = this.props;
+    console.log(back);
     const number = parseInt(id, 10) + 1;
     return (
       <div>
@@ -46,6 +54,16 @@ export default class Question extends Component {
           <div className={styles.info}>
             <i className={icons.info}></i>
             {information}
+          </div>
+        }
+        {back &&
+          <div
+            ref="back"
+            onClick={::this.handleBack}
+            className={styles.back}
+            style={{background: this.props.color}}
+          >
+            <i className={icons.top}></i>
           </div>
         }
       </div>

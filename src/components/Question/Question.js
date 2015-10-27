@@ -21,6 +21,10 @@ export default class Question extends Component {
     const questionId = parseInt(this.props.params.questionId, 10);
     const { count } = questions;
     let next = false;
+    let prev = false;
+    if (questionId > 0) {
+      prev = questionId - 1;
+    }
     if (count > questionId) {
       next = questionId + 1;
     }
@@ -28,12 +32,14 @@ export default class Question extends Component {
     this.state.questionId = questionId;
     this.state.question = questions[questionId - 1];
     this.state.next = next;
+    this.state.prev = prev;
   }
 
   state = {
     questionsCount: undefined,
     question: undefined,
     questionId: undefined,
+    prev: undefined,
     next: undefined
   };
 
@@ -47,6 +53,10 @@ export default class Question extends Component {
     const questionId = parseInt(nextProps.params.questionId, 10);
     const { count } = questions;
     let next = false;
+    let prev = false;
+    if (questionId > 0) {
+      prev = questionId - 1;
+    }
     if (count > questionId) {
       next = questionId + 1;
     }
@@ -54,7 +64,8 @@ export default class Question extends Component {
       questionsCount: count,
       questionId: questionId,
       question: questions[questionId - 1],
-      next: next
+      next: next,
+      prev: prev
     }, () => {
       this.changeQuestion();
     });
@@ -103,12 +114,21 @@ export default class Question extends Component {
     }
   }
 
+  handleBack() {
+    if (this.state.prev) {
+      this.refs.carcas.animateToTop(
+        () => this.props.pushState(null, '/questions/' + this.state.prev)
+      );
+    }
+  }
 
   render() {
-    const { question, questionsCount } = this.state;
+    const { question, questionsCount, prev } = this.state;
     return (
       <Carcas ref="carcas">
         <QuestionInformation
+          handleBack={::this.handleBack}
+          back={prev}
           questionsCount={questionsCount}
           {...question}
         />

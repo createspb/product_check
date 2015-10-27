@@ -31,6 +31,9 @@ export default class Carcas extends Component {
     $(this.refs.line).css({
       background: color
     });
+    // $(this.refs.back).css({
+    //   background: color
+    // });
   }
 
   animateToTop(callback, timeout = 300) {
