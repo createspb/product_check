@@ -13,6 +13,7 @@ export default class Carcas extends Component {
     this.backgroundClass = this.styles.c0;
   }
 
+  // Animations
   setBackgroundClass(className) {
     $(this.refs.bgLayer1).css({
       opacity: 0
@@ -35,9 +36,16 @@ export default class Carcas extends Component {
     }, timeout);
   }
 
-  setContainerClass(className) {
-    $(this.container).attr('class', [this.styles.containerLeft,
-                                     className].join(' '));
+  setContainerClass(className, timeout = false) {
+    if (timeout) {
+      setTimeout(() => {
+        $(this.container).attr('class', [this.styles.containerLeft,
+                                         className].join(' '));
+      }, timeout);
+    } else {
+      $(this.container).attr('class', [this.styles.containerLeft,
+                                       className].join(' '));
+    }
   }
 
   animateToTop(callback, timeout = 300) {
@@ -47,41 +55,22 @@ export default class Carcas extends Component {
   }
 
   animateToBottom(callback, timeout = 300) {
-    this.showTopOfLine();
+    this.showBottomOfLine();
     this.setContainerClass(this.styles.animateToBottom);
     setTimeout(callback, timeout);
   }
 
-  moveToBottom() {
-    this.setContainerClass(this.styles.moveToBottom);
-  }
-
-  moveToTop() {
-    this.setContainerClass(this.styles.moveToTop);
-  }
-
-  animateFromBottom(timeout) {
-    setTimeout(() => {
-      this.setContainerClass(this.styles.animateFromBottom);
-    }, timeout);
-  }
-
-  animateFromTop(timeout) {
-    setTimeout(() => {
-      this.setContainerClass(this.styles.animateFromTop);
-    }, timeout);
-  }
-
   bottomToCenter(timeout = 10) {
-    this.moveToBottom();
-    this.animateFromBottom(timeout);
+    this.setContainerClass(this.styles.moveToBottom);
+    this.setContainerClass(this.styles.animateFromBottom, timeout);
   }
 
   topToCenter(timeout = 10) {
-    this.moveToTop();
-    this.animateFromTop(timeout);
+    this.setContainerClass(this.styles.moveToTop);
+    this.setContainerClass(this.styles.animateFromTop, timeout);
   }
 
+  // Left line animations
   showLine() {
     setTimeout(() => {
       $(this.refs.line).addClass(this.styles.activeLine);

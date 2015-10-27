@@ -25,25 +25,11 @@ export default class Question extends Component {
     super(props);
     const { questionsCount, questionId, question, next, nextQuestion,
             prev, prevQuestion, back } = this.constructParams(props);
-    this.state.questionsCount = questionsCount;
-    this.state.questionId = questionId;
-    this.state.question = question;
-    this.state.next = next;
-    this.state.nextQuestion = nextQuestion;
-    this.state.prev = prev;
-    this.state.prevQuestion = prevQuestion;
-    this.state.back = back;
+    this.state = {
+      questionsCount, questionId, question, next, nextQuestion,
+      prev, prevQuestion, back
+    };
   }
-
-  state = {
-    questionsCount: undefined,
-    question: undefined,
-    questionId: undefined,
-    prev: undefined,
-    prevQuestion: undefined,
-    next: undefined,
-    nextQuestion: undefined
-  };
 
   componentDidMount() {
     this.changeQuestion();
@@ -54,6 +40,7 @@ export default class Question extends Component {
     const { questionsCount, questionId, question, next, nextQuestion,
             prev, prevQuestion, back } = this.constructParams(nextProps);
     if (questionId !== this.state.questionId) {
+      this.lock = false;
       this.setState({
         questionsCount, questionId, question, back, next, nextQuestion,
         prev, prevQuestion
@@ -104,12 +91,12 @@ export default class Question extends Component {
     } else {
       carcas.showBottomOfLine();
     }
-    carcas.setLineColor(question.color, 200);
     if (back) {
       carcas.topToCenter();
     } else {
       carcas.bottomToCenter();
     }
+    carcas.setLineColor(question.color, 200);
     carcas.setBackgroundClass(questionId);
     carcas.showLine();
   }
@@ -145,30 +132,36 @@ export default class Question extends Component {
   }
 
   handleButton() {
-    const { carcas } = this.refs;
-    if (this.state.next) {
-      if (this.state.nextQuestion && this.state.nextQuestion.firstOfType) {
-        carcas.setLineColor('transparent', 0);
+    if (!this.lock) {
+      this.lock = true;
+      const { carcas } = this.refs;
+      if (this.state.next) {
+        if (this.state.nextQuestion && this.state.nextQuestion.firstOfType) {
+          carcas.setLineColor('transparent', 0);
+        }
+        carcas.animateToTop(
+          () => this.props.pushState(null, '/questions/' + this.state.next)
+        );
+      } else {
+        // results callback
+        console.log('results');
       }
-      carcas.animateToTop(
-        () => this.props.pushState(null, '/questions/' + this.state.next)
-      );
-    } else {
-      // results callback
-      console.log('results');
     }
   }
 
   handleBack() {
-    const { carcas } = this.refs;
-    const { question } = this.state;
-    if (this.state.prev) {
-      if (question.firstOfType) {
-        carcas.setLineColor('transparent', 0);
+    if (!this.lock) {
+      this.lock = true;
+      const { carcas } = this.refs;
+      const { question } = this.state;
+      if (this.state.prev) {
+        if (question.firstOfType) {
+          carcas.setLineColor('transparent', 0);
+        }
+        carcas.animateToBottom(
+          () => this.props.pushState(null, '/questions/' + this.state.prev + '/back')
+        );
       }
-      carcas.animateToBottom(
-        () => this.props.pushState(null, '/questions/' + this.state.prev + '/back')
-      );
     }
   }
 
