@@ -34,12 +34,12 @@ export default class Buttons extends Component {
   }
 
   renderButton(handler, caption, active, styles, icons) {
-    let i;
-    if (active) {
-      i = 0;
-    } else {
-      i = 1;
-    }
+    const i = active ? 0 : 1;
+    // if (active) {
+    //   i = 0;
+    // } else {
+    //   i = 1;
+    // }
     return (
       <button
         onClick={handler}

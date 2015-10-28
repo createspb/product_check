@@ -11,6 +11,13 @@
 ._box_shadow_hover {
   box-shadow: 0px 4px 14px 0px rgba(24, 28, 39, .5);
 }
+._clearfix {
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
 
 @width: 940px;
 @leftWidth: 540px;
@@ -68,6 +75,12 @@
   font-size: 16px;
   line-height: 20px;
   color: rgba(255, 255, 255, .7);
+}
+._little {
+  ._proxima_light;
+  font-size: 12px;
+  line-height: 15px;
+  color: rgba(255, 255, 255, .5);
 }
 ._big {
   ._proxima_light;
