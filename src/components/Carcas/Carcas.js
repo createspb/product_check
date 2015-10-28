@@ -5,12 +5,14 @@ export default class Carcas extends Component {
 
   static propTypes = {
     children: PropTypes.any,
+    full: PropTypes.bool
   };
 
   constructor(props) {
     super(props);
     this.styles = require('./Carcas.less');
     this.backgroundClass = this.styles.c0;
+    this.wrapClass = this.styles.containerLeft;
   }
 
   // Animations
@@ -39,11 +41,11 @@ export default class Carcas extends Component {
   setContainerClass(className, timeout = false) {
     if (timeout) {
       setTimeout(() => {
-        $(this.container).attr('class', [this.styles.containerLeft,
+        $(this.container).attr('class', [this.wrapClass,
                                          className].join(' '));
       }, timeout);
     } else {
-      $(this.container).attr('class', [this.styles.containerLeft,
+      $(this.container).attr('class', [this.wrapClass,
                                        className].join(' '));
     }
   }
@@ -93,37 +95,47 @@ export default class Carcas extends Component {
     $(this.refs.line).removeClass(this.styles.hbol);
   }
 
+  renderBackgrounds(styles) {
+    return (
+      <div>
+        <div
+          ref="bgLayer0"
+          className={[styles.background, this.backgroundClass].join(' ')}
+        ></div>
+        <div ref="bgLayer1" className={styles.background}></div>
+        <div ref="line" className={styles.line}></div>
+      </div>
+    );
+  }
+
+  renderCell(styles, icons, children) {
+    return (
+      <div className={styles.containerCell}>
+        <div className={styles.containerRight}>
+          <div className={icons.main}></div>
+        </div>
+        <div
+          ref={(ref) => this.container = ref}
+          className={this.wrapClass}
+        >
+          {children}
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { styles } = this;
     const icons = require('../Styles/icons.less');
     const { children } = this.props;
     return (
       <div className={styles.wrapper}>
-
-        <div
-          ref="bgLayer0"
-          className={[styles.background, this.backgroundClass].join(' ')}
-        ></div>
-        <div ref="bgLayer1" className={styles.background}></div>
-
-        <div ref="line" className={styles.line}></div>
-
+        {this.renderBackgrounds(styles)}
         <div className={styles.container}>
           <div className={styles.containerRow}>
-            <div className={styles.containerCell}>
-              <div className={styles.containerRight}>
-                <div className={icons.main}></div>
-              </div>
-              <div
-                ref={(ref) => this.container = ref}
-                className={styles.containerLeft}
-              >
-                {children}
-              </div>
-            </div>
+            {this.renderCell(styles, icons, children)}
           </div>
         </div>
-
       </div>
     );
   }

@@ -23,12 +23,7 @@ export default class Question extends Component {
 
   constructor(props) {
     super(props);
-    const { questionsCount, questionId, question, next, nextQuestion,
-            prev, prevQuestion, back } = this.constructParams(props);
-    this.state = {
-      questionsCount, questionId, question, next, nextQuestion,
-      prev, prevQuestion, back
-    };
+    this.state = this.constructParams(props);
   }
 
   componentDidMount() {
@@ -37,14 +32,10 @@ export default class Question extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { questionsCount, questionId, question, next, nextQuestion,
-            prev, prevQuestion, back } = this.constructParams(nextProps);
-    if (questionId !== this.state.questionId) {
+    const constructedProps = this.constructParams(nextProps);
+    if (constructedProps.questionId !== this.state.questionId) {
       this.lock = false;
-      this.setState({
-        questionsCount, questionId, question, back, next, nextQuestion,
-        prev, prevQuestion
-      }, () => {
+      this.setState(constructedProps, () => {
         this.changeQuestion();
       });
     }
@@ -53,24 +44,13 @@ export default class Question extends Component {
   constructParams(props) {
     const { questions } = props;
     const questionId = parseInt(props.params.questionId, 10);
-    const { count: questionsCount } = questions;
+    const questionsCount = questions.count;
     const question = questions[questionId - 1];
-    let next = false;
-    let prev = false;
-    let back = false;
-    let prevQuestion = undefined;
-    let nextQuestion = undefined;
-    if (props.params.back) {
-      back = true;
-    }
-    if (questionId > 0) {
-      prev = questionId - 1;
-      prevQuestion = questions[questionId - 2];
-    }
-    if (questionsCount > questionId) {
-      next = questionId + 1;
-      nextQuestion = questions[questionId];
-    }
+    const back = props.params.back && true;
+    const prev = questionId > 0 && questionId - 1;
+    const prevQuestion = prev && questions[questionId - 2];
+    const next = questionsCount > questionId && questionId + 1;
+    const nextQuestion = next && questions[questionId];
     return {
       questionsCount, questionId, question, next,
       nextQuestion, prev, prevQuestion, back
@@ -81,24 +61,19 @@ export default class Question extends Component {
     const { carcas } = this.refs;
     const { question, questionId, back } = this.state;
     const nextQuestion = this.props.questions[questionId];
-    if (question.firstOfType) {
-      carcas.hideTopOfLine();
-    } else {
+    const topOfLine = question.firstOfType ?
+      carcas.hideTopOfLine() :
       carcas.showTopOfLine();
-    }
-    if (!nextQuestion || nextQuestion.firstOfType) {
-      carcas.hideBottomOfLine();
-    } else {
+    const bottomOfLine = !nextQuestion || nextQuestion.firstOfType ?
+      carcas.hideBottomOfLine() :
       carcas.showBottomOfLine();
-    }
-    if (back) {
-      carcas.topToCenter();
-    } else {
+    const animation = back ?
+      carcas.topToCenter() :
       carcas.bottomToCenter();
-    }
     carcas.setLineColor(question.color, 200);
     carcas.setBackgroundClass(questionId);
     carcas.showLine();
+    return { topOfLine, bottomOfLine, animation };
   }
 
   static fetchData(getState, dispatch) {
@@ -106,22 +81,11 @@ export default class Question extends Component {
   }
 
   storeValue(value) {
-    switch (value) {
-      case 0:
-        this.props.storeAnswer({
-          id: this.state.questionId,
-          value: 'no'
-        });
-        break;
-      case 1:
-        this.props.storeAnswer({
-          id: this.state.questionId,
-          value: 'yes'
-        });
-        break;
-      default:
-        console.log('error');
-    }
+    const storedVal = value === 0 ? 'no' : 'yes';
+    this.props.storeAnswer({
+      id: this.state.questionId,
+      value: storedVal
+    });
   }
 
   handleButtonWithTimeout(button) {
@@ -141,8 +105,9 @@ export default class Question extends Component {
         () => this.props.pushState(null, '/questions/' + this.state.next)
       );
     } else {
-      // results callback
-      console.log('results');
+      carcas.animateToTop(
+        () => this.props.pushState(null, '/results')
+      );
     }
   }
 

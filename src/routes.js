@@ -8,7 +8,8 @@ import {
     Login,
     Question,
     NotFound,
-    Welcome
+    Welcome,
+    Results
   } from 'components';
 
 export default (store) => {
@@ -51,6 +52,7 @@ export default (store) => {
         <Route path="/" component={Welcome} />
         <Route path="questions/:questionId/:back" component={Question} />
         <Route path="questions/:questionId" component={Question} />
+        <Route path="results" component={Results} />
       </Route>
       <Route onEnter={requireLogin} path="admin">
         <IndexRoute component={Admin} />

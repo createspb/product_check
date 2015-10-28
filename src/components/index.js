@@ -8,4 +8,6 @@ export Question from './Question/Question';
 export Welcome from './Welcome/Welcome';
 export Carcas from './Carcas/Carcas';
 export Buttons from './Buttons/Buttons';
+export Results from './Results/Results';
+export ResultsCarcas from './ResultsCarcas/ResultsCarcas';
 export QuestionInformation from './QuestionInformation/QuestionInformation';
