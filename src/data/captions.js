@@ -21,5 +21,9 @@ export default {
     articleDescription: 'Блог Create Digital',
     from: 'от ',
     companyName: 'Create',
+  },
+  matrix: {
+    progressCaption: 'Готовность',
+    nice: 'Тут все хорошо'
   }
 };

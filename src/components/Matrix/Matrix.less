@@ -1,7 +1,10 @@
+@import "../Styles/variables.less";
+
 .matrix {
   background: rgba(24, 28, 39, .2);
   float: right;
   position: relative;
+  margin: 0 -76px 0 0;
 }
 .column {
   float: left;
@@ -28,10 +31,11 @@
   }
 }
 .label {
+  ._big;
+  ._proxima_regular;
   height: 52px;
   line-height: 52px;
-  font-size: 18px;
-  color: #181C27;
+  color: #181c27;
   background: #EBEBEB;
   text-align: center;
   margin: 0 0 17px;
@@ -46,9 +50,8 @@
   position: relative;
 }
 .blockLabel {
+  ._p;
   padding: 0 20px 0 20px;
-  font-size: 16px;
-  line-height: 20px;
   color: #F9B185;
   margin: 0 0 23px;
 }
@@ -63,6 +66,7 @@
   &:last-child {margin: 0;}
 }
 .after {
+  ._proxima_regular;
   position: absolute;
   bottom: 35px;
   background: #F7AF84;
@@ -78,24 +82,72 @@
   pointer-events: none;
 }
 .summary {
-  background: #d6d0d7;
+  background: #fff;
   margin-right: -1px;
   border-right: 1px solid #EDDFD7;
-  color: #181C27;
   padding: 0 20px;
   transition: all .3s;
 }
 .summaryLabel {
   padding: 25px 0 15px 0;
-  font-size: 18px;
-  line-height: 22px;
+  ._big;
+  ._proxima_regular;
+  color: #181c27;
 }
 .summaryContent {
+  ._proxima_light;
   font-size: 14px;
   line-height: 17px;
   padding: 0 0 24px;
+  color: rgba(24, 28, 39, .7);
+}
+.left {
+  position: absolute;
+  width: 180px;
+  pointer-events: none;
+  margin: 0 0 0 -215px;
+}
+.leftLabel {
+  position: relative;
+  ._h4;
+  margin: 0 0 32px;
 }
 
+.progressWrap {
+
+}
+.progressCaption {
+  float: left;
+  ._proxima_light;
+  font-size: 14px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 1);
+}
+.progressPercent {
+  float: right;
+  ._h4;
+}
+.progressTop {
+  ._clearfix;
+}
+.progress {
+  clear: both;
+  margin: 10px 0 20px;
+  height: 4px;
+  background: #181C27;
+  border-radius: 100px;
+}
+.progressActive {
+  height: 4px;
+  background: #F9B185;
+  border-radius: 100px;
+}
+.progressP {
+  ._proxima_light;
+  font-size: 14px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, .7);
+}
 /*
 .b_market_table {
   position: relative;

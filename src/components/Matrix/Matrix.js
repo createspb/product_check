@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 import { map } from 'underscore';
 import $ from 'jquery';
+import captions from '../../data/captions';
 
 @connect(
   state => ({
@@ -21,8 +22,10 @@ export default class Matrix extends Component {
 
   constructor(props) {
     super(props);
+    this.icons = require('../Styles/icons.less');
     this.styles = require('./Matrix.less');
     this.customRefs = {};
+    this.captions = captions.matrix;
   }
 
   componentDidMount() {
@@ -45,29 +48,60 @@ export default class Matrix extends Component {
   }
 
   renderElem(elem, key) {
+    const { styles } = this;
     return (
-      <div className={this.styles.elem} key={key}>{elem}</div>
+      <div className={styles.elem} key={key}>{elem}</div>
+    );
+  }
+
+  renderLeft(block) {
+    const { styles } = this;
+    return (
+      <div className={styles.left}>
+        <div className={styles.leftLabel}>
+          <i className={this.icons[block.left.icon]}></i>
+          {block.left.label}
+        </div>
+        <div className={styles.progressWrap}>
+          <div className={styles.progressTop}>
+            <div className={styles.progressCaption}>
+              {this.captions.progressCaption}
+            </div>
+            <div className={styles.progressPercent}>
+              70%
+            </div>
+          </div>
+          <div className={styles.progress}>
+            <div className={styles.progressActive} style={{width: '70%'}}></div>
+          </div>
+          <div className={styles.progressP}>
+            {this.captions.nice}
+          </div>
+        </div>
+      </div>
     );
   }
 
   renderBlock(block, key) {
+    const { styles } = this;
     return (
       <div
-        className={this.styles.block}
+        className={styles.block}
         key={key}
         ref={(ref) => {
           this.customRefs[key] = this.customRefs[key] || [];
           this.customRefs[key].push(ref);
         }}
       >
-        <div className={this.styles.blockLabel}>{block.label}</div>
-        <div className={this.styles.elems}>
+        {block.left && this.renderLeft(block)}
+        <div className={styles.blockLabel}>{block.label}</div>
+        <div className={styles.elems}>
           {map(block.elems, (c, k) => {
             return this.renderElem(c, k);
           })}
         </div>
         {block.after &&
-          <div className={this.styles.after}>
+          <div className={styles.after}>
             {block.after}
           </div>
         }
@@ -76,20 +110,21 @@ export default class Matrix extends Component {
   }
 
   renderSummary(column) {
+    const { styles } = this;
     const summaryKey = 'summaryKey';
     return (
       <div
-        className={this.styles.summary}
+        className={styles.summary}
         ref={(ref) => {
           this.customRefs[summaryKey] = this.customRefs[summaryKey] || [];
           this.customRefs[summaryKey].push(ref);
         }}
       >
-        <div className={this.styles.summaryLabel}>
+        <div className={styles.summaryLabel}>
           {column.summary.label}
         </div>
         {column.summary.elems &&
-          <div className={this.styles.summaryContent}>
+          <div className={styles.summaryContent}>
             {column.summary.elems.join(', ')}
           </div>
         }
@@ -98,10 +133,11 @@ export default class Matrix extends Component {
   }
 
   renderColumn(column, key) {
+    const { styles } = this;
     return (
-      <div className={this.styles.column} key={key}>
-        <div className={this.styles.label}>{column.label}</div>
-        <div className={this.styles.blocks}>
+      <div className={styles.column} key={key}>
+        <div className={styles.label}>{column.label}</div>
+        <div className={styles.blocks}>
           {map(column.blocks, (c, k) => {
             return this.renderBlock(c, k);
           })}
@@ -113,8 +149,9 @@ export default class Matrix extends Component {
 
   render() {
     const { matrix } = this.props;
+    const { styles } = this;
     return (
-      <div className={this.styles.matrix}>
+      <div className={styles.matrix}>
         {map(matrix, (c, k) => {
           return this.renderColumn(c, k);
         })}
