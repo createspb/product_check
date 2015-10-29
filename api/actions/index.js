@@ -5,3 +5,4 @@ export login from './login';
 export logout from './logout';
 export questions from './questions';
 export matrix from './matrix';
+export storeAnswer from './storeAnswer';

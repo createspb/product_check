@@ -1,13 +1,13 @@
-const matrix = {
+import _ from 'underscore';
+const matrixStatus = { no: 0, yes: 1 };
+
+export const matrixData = {
   "0": {
     label: 'Рынок',
     blocks: [
       {
         label: 'Проблемы и адресаты',
         elems: [
-          // {text: 'Целевая аудитория', value: 0},
-          // {text: 'Проблемы и потребности аудитории', value: 1},
-          // {text: 'Объем рынка', value: 2},
           'Проблема',
           'Целевая аудитория',
           'Потребности аудитории',
@@ -182,4 +182,61 @@ const matrix = {
   }
 };
 
-export default matrix;
+
+export function objectToArray(object) {
+  const array = [];
+  _.map(object, (value, index) => {
+    array.push(value);
+  });
+  return array;
+}
+
+function getElem(matrix, tree) {
+  const val = matrix[tree[0]].blocks[tree[1]].elems[tree[2]];
+  if (!_.isObject(val)) {
+    return { text: val, value: undefined };
+  }
+  return val;
+}
+
+function setElem(matrix, tree, value) {
+  matrix[tree[0]].blocks[tree[1]].elems[tree[2]] = value;
+  return matrix;
+}
+
+function applyAffectWrap(matrix, affect, answer) {
+  if (_.isString(affect[2])) {
+    const als = _.map(affect[2].split(', '), (v) => parseInt(v, 10));
+    for (let al of als) {
+      affect[2] = al;
+      matrix = applyAffect(matrix, affect, answer);
+    }
+    return matrix;
+  } else {
+    return applyAffect(matrix, affect, answer);
+  }
+}
+
+function applyAffect(matrix, affect, answer) {
+  const elem = getElem(matrix, affect);
+  if (elem.value == undefined || elem.value == matrixStatus.yes) {
+    matrix = setElem(matrix, affect, {
+      text: elem.text,
+      value: matrixStatus[answer]
+    });
+  }
+  return matrix;
+}
+
+export function applyAnswersToMatrix(matrix, answers, algorithm) {
+  let affectedMatrix = matrix;
+  for (let questionRules of algorithm.questions) {
+    const answer = _.find(answers, {id: questionRules.id});
+    if (questionRules.affect) {
+      for (let affect of questionRules.affect) {
+        affectedMatrix = applyAffectWrap(affectedMatrix, affect, answer.value);
+      }
+    }
+  }
+  return matrix;
+}
