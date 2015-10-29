@@ -1,5 +1,7 @@
 @import "../Styles/variables.less";
 
+@i: './components/Styles/icons/';
+
 .matrix {
   background: rgba(24, 28, 39, .2);
   float: right;
@@ -38,7 +40,7 @@
   color: #181c27;
   background: #EBEBEB;
   text-align: center;
-  margin: 0 0 17px;
+  margin: 0 0 20px;
   margin-right: -1px;
   border-right: 1px solid #EDDFD7;
   transition: all .3s;
@@ -51,12 +53,12 @@
 }
 .blockLabel {
   ._p;
-  padding: 0 20px 0 20px;
+  padding: 0 25px 0 25px;
   color: #F9B185;
   margin: 0 0 23px;
 }
 .elems {
-  padding: 0 20px 120px;
+  padding: 0 25px 100px;
   font-size: 14px;
   color: #fff;
   line-height: 17px;
@@ -68,7 +70,7 @@
 .after {
   ._proxima_regular;
   position: absolute;
-  bottom: 35px;
+  bottom: 25px;
   background: #F7AF84;
   height: 50px;
   line-height: 50px;
@@ -148,129 +150,35 @@
   line-height: 24px;
   color: rgba(255, 255, 255, .7);
 }
-/*
-.b_market_table {
+
+// Elem statuses
+.ok {
+  color: rgba(255, 255, 255, .2);
   position: relative;
-  float: right;
-  background: rgba(24, 28, 39, .2);
-  ._clearfix;
-  &_wrap {
-    overflow: hidden;
-    width: 1102px;
-    margin: 0 auto;
-    padding: 0 10px 0 0;
-  }
-  &_col {
-    float: left;
-    width: 199px;
-    border-right: 1px solid rgba(247, 175, 132, .2);
-    transition: all .3s;
-    &:hover {
-      background: rgba(24, 28, 39, .4);
-      .b_market_table_white_label, .b_market_table_summary {
-        background: #fff;
-        position: relative;
-        box-shadow: 0 2px 3px rgba(24, 28, 39, .17);
-      }
-    }
-    &:first-child {
-      .b_market_table_white_label, .b_market_table_summary { margin-left: -7px; border-radius: 2px 0 0 2px; padding: 0 20px 0 27px; }
-    }
-    &:last-child {
-      border: none;
-      .b_market_table_white_label, .b_market_table_summary { margin-right: -7px; border-radius: 0 2px 2px 0; padding: 0 27px 0 20px; }
-    }
-  }
-  &_white_label {
-    height: 52px;
-    line-height: 52px;
-    font-size: 18px;
-    color: #181C27;
-    background: #EBEBEB;
-    text-align: center;
-    margin: 0 0 17px;
-    margin-right: -1px;
-    border-right: 1px solid #EDDFD7;
-    transition: all .3s;
-  }
-  &_subsummary {
+  &:before {
     position: absolute;
-    background: #F7AF84;
-    height: 50px;
-    line-height: 50px;
-    font-size: 14px;
-    color: #181C27;
-    margin: -85px 0 0 20px;
-    text-align: center;
-    width: 760px;
-    border-radius: 2px;
-    box-shadow: 0 6px 6px rgba(24, 28, 39, .2);
-    pointer-events: none;
-  }
-  &_summary {
-    background: #d6d0d7;
-    margin-right: -1px;
-    border-right: 1px solid #EDDFD7;
-    color: #181C27;
-    padding: 0 20px;
-    transition: all .3s;
-    &_label {
-      padding: 25px 0 15px 0;
-      font-size: 18px;
-      line-height: 22px;
-    }
-    p {
-      font-size: 14px;
-      line-height: 17px;
-      padding: 0 0 24px;
-      ._proxima_light;
-    }
-  }
-  &_title {
-    padding: 0 20px 0 20px;
-    font-size: 16px;
-    line-height: 20px;
-    color: #F9B185;
-    margin: 0 0 23px;
-  }
-  &_content {
-    padding: 0 20px 120px;
-    font-size: 14px;
-    color: #fff;
-    line-height: 17px;
-    ._proxima_light;
-    p {
-      margin: 0 0 17px;
-      &:last-child {margin: 0;}
-    }
-  }
-  &_left {
-    position: absolute;
-    width: 190px;
-    pointer-events: none;
-    margin: 0 0 0 -225px;
-    &.__mt {
-      margin-top: -40px;
-    }
-    i {
-      display: block;
-      position: absolute;
-      right: 210px;
-      &.meditationGuruWhite  { ._icon(@meditation-guru-white); top: 2px; }
-      &.rulerWhite           { ._icon(@ruler-white); top: -1px; }
-      &.devLevel             { ._icon(@dev-level); top: 6px; }
-    }
-    &_label {
-      position: relative;
-      font-size: 20px;
-      line-height: 24px;
-      margin: 0 0 32px;
-    }
-    p {
-      font-size: 14px;
-      ._proxima_light;
-      line-height: 17px;
-    }
+    content: ' ';
+    width: 12px;
+    height: 9px;
+    left: -12px - 5px;
+    top: 4px;
+    background: url("@{i}ok.png") no-repeat center;
   }
 }
-*/
+.error {
+  position: relative;
+  color: #fff;
+  &:before {
+    top: 4px;
+    position: absolute;
+    content: ' ';
+    width: 9px;
+    height: 9px;
+    left: -9px - 7px;
+    background: url("@{i}error.png") no-repeat center;
+  }
+}
+.fade {
+  color: #fff;
+  opacity: .2;
+}

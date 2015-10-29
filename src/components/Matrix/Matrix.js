@@ -4,6 +4,7 @@ import { pushState } from 'redux-router';
 import { map } from 'underscore';
 import $ from 'jquery';
 import captions from '../../data/captions';
+import { isObject } from 'underscore';
 
 @connect(
   state => ({
@@ -47,8 +48,30 @@ export default class Matrix extends Component {
     return max;
   }
 
+  getValueClass(value) {
+    switch (value) {
+      case 0:
+        return this.styles.error;
+      case 1:
+        return this.styles.ok;
+      case 2:
+        return this.styles.fade;
+      default:
+        return '';
+    }
+  }
+
   renderElem(elem, key) {
     const { styles } = this;
+    const elemClass = styles.elem;
+    if (isObject(elem)) {
+      return (
+        <div
+          className={[elemClass, this.getValueClass(elem.value)].join(' ')}
+          key={key}
+        >{elem.text}</div>
+      );
+    }
     return (
       <div className={styles.elem} key={key}>{elem}</div>
     );
@@ -72,7 +95,7 @@ export default class Matrix extends Component {
             </div>
           </div>
           <div className={styles.progress}>
-            <div className={styles.progressActive} style={{width: '70%'}}></div>
+            <div className={styles.progressActive} style={{width: 70 + '%'}}></div>
           </div>
           <div className={styles.progressP}>
             {this.captions.nice}
