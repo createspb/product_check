@@ -1,4 +1,5 @@
 import _ from 'underscore';
+_.mixin(require('underscore.deep'));
 const matrixStatus = { no: 0, yes: 1 };
 
 export const matrixData = {

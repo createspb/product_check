@@ -33,9 +33,9 @@ export default class Results extends Component {
   constructor(props) {
     super(props);
     // check hasLostAnswers
-    // if (this.hasLostAnswers()) {
-    //   this.props.pushState(null, '/');
-    // }
+    if (this.hasLostAnswers()) {
+      this.props.pushState(null, '/');
+    }
   }
 
   componentDidMount() {
