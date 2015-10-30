@@ -182,11 +182,20 @@ export const matrixData = {
   }
 };
 
+export function shiftId(array) {
+  _.each(array, (value) => {
+    value.id = parseInt(value.id, 10) - 1;
+  });
+  return array;
+}
 
 export function objectToArray(object) {
   const array = [];
   _.map(object, (value, index) => {
-    array.push(value);
+    array.push({
+      id: value.id,
+      value: value.value
+    });
   });
   return array;
 }
@@ -205,6 +214,7 @@ function setElem(matrix, tree, value) {
 }
 
 function applyAffectWrap(matrix, affect, answer) {
+  // console.log(affect, answer);
   if (_.isString(affect[2])) {
     const als = _.map(affect[2].split(', '), (v) => parseInt(v, 10));
     for (let al of als) {
@@ -234,7 +244,9 @@ export function applyAnswersToMatrix(matrix, answers, algorithm) {
     const answer = _.find(answers, {id: questionRules.id});
     if (questionRules.affect) {
       for (let affect of questionRules.affect) {
-        affectedMatrix = applyAffectWrap(affectedMatrix, affect, answer.value);
+        if (answer && answer.value) {
+          affectedMatrix = applyAffectWrap(affectedMatrix, affect, answer.value);
+        }
       }
     }
   }

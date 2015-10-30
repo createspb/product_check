@@ -5,6 +5,9 @@ import {
   isLoaded as isLoadedQuestions,
   load as loadQuestions } from 'redux/modules/questions';
 import {
+  isLoaded as isLoadedAnswers,
+  load as loadAnswers } from 'redux/modules/answers';
+import {
   isLoaded as isLoadedMatrix,
   load as loadMatrix } from 'redux/modules/matrix';
 import { pushState } from 'redux-router';
@@ -15,7 +18,10 @@ import captions from '../../data/captions';
     questions: state.questions.questions,
     answers: state.answers
   }),
-  {pushState, isLoadedQuestions, loadQuestions, isLoadedMatrix, loadMatrix})
+  {pushState,
+   isLoadedQuestions, loadQuestions,
+   isLoadedMatrix, loadMatrix,
+   isLoadedAnswers, loadAnswers})
 export default class Results extends Component {
 
   static propTypes = {
@@ -38,8 +44,8 @@ export default class Results extends Component {
   }
 
   hasLostAnswers() {
-    return !this.props.answers
-       || Object.keys(this.props.answers).length < this.props.questions.count;
+    return !this.props.answers.answers
+           || Object.keys(this.props.answers.answers).length < this.props.questions.count;
   }
 
   static fetchData(getState, dispatch) {
@@ -50,6 +56,9 @@ export default class Results extends Component {
     if (!isLoadedMatrix(getState())) {
       promises.push(dispatch(loadMatrix()));
     }
+    if (!isLoadedAnswers(getState())) {
+      promises.push(dispatch(loadAnswers()));
+    }
     return Promise.all(promises);
   }
 
@@ -57,7 +66,7 @@ export default class Results extends Component {
     return (
       <a
         href="http://createdigital.me/blog/2015/10/19/matrica-cifrovogo-produkta-vvodnaya/"
-        target="_blamk"
+        target="_blank"
         className={styles.article}
       >
         <i className={icons.matrix}></i>

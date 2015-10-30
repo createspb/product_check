@@ -6,3 +6,5 @@ export logout from './logout';
 export questions from './questions';
 export matrix from './matrix';
 export storeAnswer from './storeAnswer';
+export getAnswers from './getAnswers';
+export setAllYes from './setAllYes';

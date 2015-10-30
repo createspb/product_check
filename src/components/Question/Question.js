@@ -1,6 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { isLoaded, load } from 'redux/modules/questions';
-import { storeAnswer } from 'redux/modules/answers';
+import {
+  isLoaded as isLoadedQuestions,
+  load as loadQuestions } from 'redux/modules/questions';
+import {
+  isLoaded as isLoadedAnswers,
+  load as loadAnswers,
+  storeAnswer } from 'redux/modules/answers';
 import { Carcas, QuestionInformation, Buttons } from '..';
 import { pushState } from 'redux-router';
 import { connect } from 'react-redux';
@@ -10,7 +15,8 @@ import { connect } from 'react-redux';
     questions: state.questions.questions,
     answers: state.answers
   }),
-  {pushState, isLoaded, load, storeAnswer})
+  {pushState, isLoadedQuestions, loadQuestions,
+   storeAnswer, isLoadedAnswers, loadAnswers })
 export default class Question extends Component {
 
   static propTypes = {
@@ -32,8 +38,8 @@ export default class Question extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const constructedProps = this.constructParams(nextProps);
-    if (constructedProps.questionId !== this.state.questionId) {
+    if (parseInt(nextProps.params.questionId, 10) - 1 !== this.state.questionId) {
+      const constructedProps = this.constructParams(nextProps);
       this.lock = false;
       this.setState(constructedProps, () => {
         this.changeQuestion();
@@ -43,14 +49,15 @@ export default class Question extends Component {
 
   constructParams(props) {
     const { questions } = props;
-    const questionId = parseInt(props.params.questionId, 10);
+    const questionId = parseInt(props.params.questionId, 10) - 1;
     const questionsCount = questions.count;
-    const question = questions[questionId - 1];
+    const question = questions[questionId];
     const back = props.params.back && true;
-    const prev = questionId > 0 && questionId - 1;
-    const prevQuestion = prev && questions[questionId - 2];
-    const next = questionsCount > questionId && questionId + 1;
-    const nextQuestion = next && questions[questionId];
+    const prevQuestion = questionId > 0 && questions[questionId - 1];
+    const prev = prevQuestion && questionId;
+    const nextQuestion = questionsCount - 1 > questionId && questions[questionId + 1];
+    const next = nextQuestion && questionId + 2;
+    // console.log(prev, prevQuestion, next, nextQuestion);
     return {
       questionsCount, questionId, question, next,
       nextQuestion, prev, prevQuestion, back
@@ -77,7 +84,14 @@ export default class Question extends Component {
   }
 
   static fetchData(getState, dispatch) {
-    if (!isLoaded(getState())) return Promise.all([dispatch(load())]);
+    const promises = [];
+    if (!isLoadedQuestions(getState())) {
+      promises.push(dispatch(loadQuestions()));
+    }
+    if (!isLoadedAnswers(getState())) {
+      promises.push(dispatch(loadAnswers()));
+    }
+    return Promise.all(promises);
   }
 
   storeValue(value) {
@@ -128,7 +142,7 @@ export default class Question extends Component {
   }
 
   render() {
-    const answer = this.props.answers[this.state.questionId];
+    const answer = this.props.answers.answers[this.state.questionId];
     const { question, questionsCount, prev } = this.state;
     return (
       <Carcas ref="carcas">
