@@ -21,7 +21,7 @@ export default function matrix(req) {
       // const answersArray = objectToArray(answersCopy);
       // console.log(answersArray);
       const matrix = applyAnswersToMatrix(matrixCopy,
-                                          answersArray,
+                                          answersCopy,
                                           algorithmCopy);
       resolve(matrix);
     } else {
