@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
-import { map } from 'underscore';
+import _ from 'underscore';
 import $ from 'jquery';
 import captions from '../../data/captions';
 import { isObject } from 'underscore';
+import Left from './Left';
 
 @connect(
   state => ({
@@ -19,6 +20,7 @@ export default class Matrix extends Component {
     questions: PropTypes.object,
     answers: PropTypes.object,
     matrix: PropTypes.object,
+    setMatrixResultValue: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -31,16 +33,26 @@ export default class Matrix extends Component {
 
   componentDidMount() {
     setTimeout(() => {
-      map(this.customRefs, (e) => {
-        const max = this.getMaxHeight(e);
-        $(e).height(max);
+      _.map(this.customRefs, (e) => {
+        const i = _.compact(e);
+        const max = this.getMaxHeight(i);
+        $(i).height(max);
       });
     }, 500);
   }
 
+  getLineBlocks(line) {
+    const { matrix } = this.props;
+    const lineBlocks = [];
+    _.each(matrix, (col) => {
+      lineBlocks.push(col.blocks[line].elems);
+    });
+    return _.flatten(lineBlocks);
+  }
+
   getMaxHeight(elems) {
     let max = 0;
-    map(elems, (e) => {
+    _.map(elems, (e) => {
       if (max < $(e).outerHeight()) {
         max = $(e).outerHeight();
       }
@@ -77,34 +89,6 @@ export default class Matrix extends Component {
     );
   }
 
-  renderLeft(block) {
-    const { styles } = this;
-    return (
-      <div className={styles.left}>
-        <div className={styles.leftLabel}>
-          <i className={this.icons[block.left.icon]}></i>
-          {block.left.label}
-        </div>
-        <div className={styles.progressWrap}>
-          <div className={styles.progressTop}>
-            <div className={styles.progressCaption}>
-              {this.captions.progressCaption}
-            </div>
-            <div className={styles.progressPercent}>
-              70%
-            </div>
-          </div>
-          <div className={styles.progress}>
-            <div className={styles.progressActive} style={{width: 70 + '%'}}></div>
-          </div>
-          <div className={styles.progressP}>
-            {this.captions.nice}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   renderBlock(block, key) {
     const { styles } = this;
     return (
@@ -116,10 +100,19 @@ export default class Matrix extends Component {
           this.customRefs[key].push(ref);
         }}
       >
-        {block.left && this.renderLeft(block)}
+        {block.left &&
+          <Left
+            styles={styles}
+            icons={this.icons}
+            block={block}
+            level={key}
+            getLineBlocks={::this.getLineBlocks}
+            setMatrixResultValue={this.props.setMatrixResultValue}
+          />
+        }
         <div className={styles.blockLabel}>{block.label}</div>
         <div className={styles.elems}>
-          {map(block.elems, (c, k) => {
+          {_.map(block.elems, (c, k) => {
             return this.renderElem(c, k);
           })}
         </div>
@@ -161,7 +154,7 @@ export default class Matrix extends Component {
       <div className={styles.column} key={key}>
         <div className={styles.label}>{column.label}</div>
         <div className={styles.blocks}>
-          {map(column.blocks, (c, k) => {
+          {_.map(column.blocks, (c, k) => {
             return this.renderBlock(c, k);
           })}
         </div>
@@ -175,7 +168,7 @@ export default class Matrix extends Component {
     const { styles } = this;
     return (
       <div className={styles.matrix}>
-        {map(matrix, (c, k) => {
+        {_.map(matrix, (c, k) => {
           return this.renderColumn(c, k);
         })}
       </div>

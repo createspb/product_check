@@ -39,9 +39,8 @@ export default class Question extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (parseInt(nextProps.params.questionId, 10) - 1 !== this.state.questionId) {
-      const constructedProps = this.constructParams(nextProps);
       this.lock = false;
-      this.setState(constructedProps, () => {
+      this.setState(this.constructParams(nextProps), () => {
         this.changeQuestion();
       });
     }
@@ -57,7 +56,6 @@ export default class Question extends Component {
     const prev = prevQuestion && questionId;
     const nextQuestion = questionsCount - 1 > questionId && questions[questionId + 1];
     const next = nextQuestion && questionId + 2;
-    // console.log(prev, prevQuestion, next, nextQuestion);
     return {
       questionsCount, questionId, question, next,
       nextQuestion, prev, prevQuestion, back
@@ -66,8 +64,7 @@ export default class Question extends Component {
 
   changeQuestion() {
     const { carcas } = this.refs;
-    const { question, questionId, back } = this.state;
-    const nextQuestion = this.props.questions[questionId];
+    const { question, questionId, back, nextQuestion } = this.state;
     const topOfLine = question.firstOfType ?
       carcas.hideTopOfLine() :
       carcas.showTopOfLine();
@@ -111,12 +108,13 @@ export default class Question extends Component {
 
   handleButton() {
     const { carcas } = this.refs;
-    if (this.state.next) {
-      if (this.state.nextQuestion && this.state.nextQuestion.firstOfType) {
+    const { next, nextQuestion } = this.state;
+    if (next) {
+      if (nextQuestion && nextQuestion.firstOfType) {
         carcas.setLineColor('transparent', 0);
       }
       carcas.animateToTop(
-        () => this.props.pushState(null, '/questions/' + this.state.next)
+        () => this.props.pushState(null, '/questions/' + next)
       );
     } else {
       carcas.animateToTop(
@@ -129,13 +127,13 @@ export default class Question extends Component {
     if (!this.lock) {
       this.lock = true;
       const { carcas } = this.refs;
-      const { question } = this.state;
+      const { question, prev } = this.state;
       if (this.state.prev) {
         if (question.firstOfType) {
           carcas.setLineColor('transparent', 0);
         }
         carcas.animateToBottom(
-          () => this.props.pushState(null, '/questions/' + this.state.prev + '/back')
+          () => this.props.pushState(null, '/questions/' + prev + '/back')
         );
       }
     }

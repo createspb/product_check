@@ -12,6 +12,7 @@ import {
   load as loadMatrix } from 'redux/modules/matrix';
 import { pushState } from 'redux-router';
 import captions from '../../data/captions';
+import $ from 'jquery';
 
 @connect(
   state => ({
@@ -43,9 +44,23 @@ export default class Results extends Component {
     carcas.bottomToCenter();
   }
 
+  setMatrixResultValue(value) {
+    setTimeout(() => {
+      if (this.h1 && this.p) {
+        for (const r of captions.matrix.results) {
+          if (value >= r.minValue && value <= r.maxValue) {
+            $(this.h1).html(r.text);
+            $(this.p).html(r.description);
+          }
+        }
+      }
+    }, 0);
+  }
+
   hasLostAnswers() {
-    return !this.props.answers.answers
-           || Object.keys(this.props.answers.answers).length < this.props.questions.count;
+    const { answers, questions } = this.props;
+    return !answers.answers
+           || Object.keys(answers.answers).length < questions.count;
   }
 
   static fetchData(getState, dispatch) {
@@ -122,10 +137,12 @@ export default class Results extends Component {
         <div className={styles.matrix}>
           <h1 className={styles.h1}>
             <i className={icons.results}></i>
-            {results.h1}
+            <em ref={(r) => this.h1 = r}>{results.h1}</em>
           </h1>
-          <p className={styles.p}>{results.p}</p>
-          <Matrix />
+          <p ref={(r) => this.p = r} className={styles.p}>{results.p}</p>
+          <Matrix
+            setMatrixResultValue={::this.setMatrixResultValue}
+          />
         </div>
         {this.renderNext(styles, icons, results)}
       </ResultsCarcas>

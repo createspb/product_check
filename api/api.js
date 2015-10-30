@@ -85,7 +85,7 @@ if (config.apiPort) {
   });
 
   io.on('connection', (socket) => {
-    socket.emit('news', {msg: `'Hello World!' from server`});
+    // socket.emit('news', {msg: `'Hello World!' from server`});
 
     socket.on('history', () => {
       for (let index = 0; index < bufferSize; index++) {
