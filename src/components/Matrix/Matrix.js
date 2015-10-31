@@ -114,6 +114,23 @@ export default class Matrix extends Component {
     );
   }
 
+  renderAfter(elem) {
+    const { styles } = this;
+    const elemClass = styles.after;
+    if (isObject(elem)) {
+      return (
+        <div
+          className={[elemClass, this.getValueClass(elem.value)].join(' ')}
+        >{elem.text}</div>
+      );
+    }
+    return (
+      <div className={styles.after}>
+        {elem}
+      </div>
+    );
+  }
+
   renderBlock(block, key) {
     const { styles } = this;
     return (
@@ -142,9 +159,7 @@ export default class Matrix extends Component {
           })}
         </div>
         {block.after &&
-          <div className={styles.after}>
-            {block.after}
-          </div>
+          this.renderAfter(block.after)
         }
       </div>
     );

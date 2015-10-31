@@ -109,6 +109,22 @@
   border-radius: 2px;
   box-shadow: 0 6px 6px rgba(24, 28, 39, .2);
   pointer-events: none;
+  &.ok {
+    color: #181C27;
+    position: absolute;
+    &:before {display: none;}
+  }
+  &.error {
+    background: #764B4D;
+    box-shadow: 0 3px 3px rgba(24, 28, 39, .1);
+    color: inherit;
+    position: absolute;
+    &:before {
+      top: auto;
+      left: auto;
+      margin: 20px 0 0 -15px;
+    }
+  }
 }
 .summary {
   background: #fff;

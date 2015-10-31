@@ -211,8 +211,14 @@ function getElem(matrix, tree) {
 
 function getSummaryElem(matrix, tree) {
   const val = matrix[tree[0]].summary.elems[tree[1]];
-  // console.log(matrix[tree[0]].summary);
-  // console.log(val);
+  if (!_.isObject(val)) {
+    return { text: val, value: undefined };
+  }
+  return val;
+}
+
+function getAfterElem(matrix, tree) {
+  const val = matrix[tree[0]].blocks[tree[1]].after;
   if (!_.isObject(val)) {
     return { text: val, value: undefined };
   }
@@ -229,40 +235,56 @@ function setSummaryElem(matrix, tree, value) {
   return matrix;
 }
 
-function applyWrap(matrix, affect, answer) {
+function setAfterElem(matrix, tree, value) {
+  matrix[tree[0]].blocks[tree[1]].after = value;
+  return matrix;
+}
+
+function applyWrap(matrix, affect, answer, func) {
   if (!answer || !answer.value) {
     return matrix;
   } else {
     answer = answer.value
   }
-  if (_.isString(affect[2])) {
-    const als = _.map(affect[2].split(', '), (v) => parseInt(v, 10));
+  if (_.isString(affect[affect.length - 1])) {
+    const als = _.map(affect[affect.length - 1].split(', '), (v) => parseInt(v, 10));
     for (let al of als) {
-      affect[2] = al;
-      matrix = applyAffect(matrix, affect, answer);
+      affect[affect.length - 1] = al;
+      matrix = func(matrix, affect, answer);
     }
     return matrix;
   } else {
-    return applyAffect(matrix, affect, answer);
+    return func(matrix, affect, answer);
   }
 }
 
-function applyWrapSummary(matrix, affect, answer) {
-  if (!answer || !answer.value) {
-    return matrix;
-  } else {
-    answer = answer.value
+// function applyWrapSummary(matrix, affect, answer, func) {
+//   if (!answer || !answer.value) {
+//     return matrix;
+//   } else {
+//     answer = answer.value
+//   }
+//   if (_.isString(affect[affect.length - 1])) {
+//     const als = _.map(affect[affect.length - 1].split(', '), (v) => parseInt(v, 10));
+//     for (let al of als) {
+//       affect[affect.length - 1] = al;
+//       matrix = func(matrix, affect, answer);
+//     }
+//     return matrix;
+//   } else {
+//     return func(matrix, affect, answer);
+//   }
+// }
+
+function applyAffectAfter(matrix, affect, answer) {
+  const elem = getAfterElem(matrix, affect);
+  if (elem.value == undefined || elem.value == matrixStatus.yes) {
+    matrix = setAfterElem(matrix, affect, {
+      text: elem.text,
+      value: matrixStatus[answer]
+    });
   }
-  if (_.isString(affect[1])) {
-    const als = _.map(affect[1].split(', '), (v) => parseInt(v, 10));
-    for (let al of als) {
-      affect[1] = al;
-      matrix = applyAffectSummary(matrix, affect, answer);
-    }
-    return matrix;
-  } else {
-    return applyAffectSummary(matrix, affect, answer);
-  }
+  return matrix;
 }
 
 function applyAffectSummary(matrix, affect, answer) {
@@ -299,8 +321,14 @@ export function applyAnswersToMatrix(matrix, answers, algorithm) {
     }
     if (questionRules.affectSummary) {
       for (let affect of questionRules.affectSummary) {
-        affectedMatrix = applyWrapSummary(affectedMatrix, affect,
-                                          answer, applyAffectSummary);
+        affectedMatrix = applyWrap(affectedMatrix, affect,
+                                   answer, applyAffectSummary);
+      }
+    }
+    if (questionRules.affectAfter) {
+      for (let affect of questionRules.affectAfter) {
+        affectedMatrix = applyWrap(affectedMatrix, affect,
+                                   answer, applyAffectAfter);
       }
     }
   }
