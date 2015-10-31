@@ -183,26 +183,36 @@ export const matrixData = {
   }
 };
 
-export function shiftId(array) {
-  _.each(array, (value) => {
-    value.id = parseInt(value.id, 10) - 1;
-  });
-  return array;
-}
+// export function shiftId(array) {
+//   _.each(array, (value) => {
+//     value.id = parseInt(value.id, 10) - 1;
+//   });
+//   return array;
+// }
 
-export function objectToArray(object) {
-  const array = [];
-  _.map(object, (value, index) => {
-    array.push({
-      id: value.id,
-      value: value.value
-    });
-  });
-  return array;
-}
+// export function objectToArray(object) {
+//   const array = [];
+//   _.map(object, (value, index) => {
+//     array.push({
+//       id: value.id,
+//       value: value.value
+//     });
+//   });
+//   return array;
+// }
 
 function getElem(matrix, tree) {
   const val = matrix[tree[0]].blocks[tree[1]].elems[tree[2]];
+  if (!_.isObject(val)) {
+    return { text: val, value: undefined };
+  }
+  return val;
+}
+
+function getSummaryElem(matrix, tree) {
+  const val = matrix[tree[0]].summary.elems[tree[1]];
+  // console.log(matrix[tree[0]].summary);
+  // console.log(val);
   if (!_.isObject(val)) {
     return { text: val, value: undefined };
   }
@@ -214,8 +224,17 @@ function setElem(matrix, tree, value) {
   return matrix;
 }
 
-function applyAffectWrap(matrix, affect, answer) {
-  // console.log(affect, answer);
+function setSummaryElem(matrix, tree, value) {
+  matrix[tree[0]].summary.elems[tree[1]] = value;
+  return matrix;
+}
+
+function applyWrap(matrix, affect, answer) {
+  if (!answer || !answer.value) {
+    return matrix;
+  } else {
+    answer = answer.value
+  }
   if (_.isString(affect[2])) {
     const als = _.map(affect[2].split(', '), (v) => parseInt(v, 10));
     for (let al of als) {
@@ -226,6 +245,35 @@ function applyAffectWrap(matrix, affect, answer) {
   } else {
     return applyAffect(matrix, affect, answer);
   }
+}
+
+function applyWrapSummary(matrix, affect, answer) {
+  if (!answer || !answer.value) {
+    return matrix;
+  } else {
+    answer = answer.value
+  }
+  if (_.isString(affect[1])) {
+    const als = _.map(affect[1].split(', '), (v) => parseInt(v, 10));
+    for (let al of als) {
+      affect[1] = al;
+      matrix = applyAffectSummary(matrix, affect, answer);
+    }
+    return matrix;
+  } else {
+    return applyAffectSummary(matrix, affect, answer);
+  }
+}
+
+function applyAffectSummary(matrix, affect, answer) {
+  const elem = getSummaryElem(matrix, affect);
+  if (elem.value == undefined || elem.value == matrixStatus.yes) {
+    matrix = setSummaryElem(matrix, affect, {
+      text: elem.text,
+      value: matrixStatus[answer]
+    });
+  }
+  return matrix;
 }
 
 function applyAffect(matrix, affect, answer) {
@@ -245,11 +293,16 @@ export function applyAnswersToMatrix(matrix, answers, algorithm) {
     const answer = _.find(answers, {id: questionRules.id});
     if (questionRules.affect) {
       for (let affect of questionRules.affect) {
-        if (answer && answer.value) {
-          affectedMatrix = applyAffectWrap(affectedMatrix, affect, answer.value);
-        }
+        affectedMatrix = applyWrap(affectedMatrix, affect,
+                                   answer, applyAffect);
+      }
+    }
+    if (questionRules.affectSummary) {
+      for (let affect of questionRules.affectSummary) {
+        affectedMatrix = applyWrapSummary(affectedMatrix, affect,
+                                          answer, applyAffectSummary);
       }
     }
   }
-  return matrix;
+  return affectedMatrix;
 }

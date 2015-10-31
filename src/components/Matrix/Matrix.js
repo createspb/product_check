@@ -50,6 +50,15 @@ export default class Matrix extends Component {
     return _.flatten(lineBlocks);
   }
 
+  getSummaryStatus(column) {
+    const summaryElems = this.props.matrix[column].summary.elems;
+    const errElemsBlocks = _.where(summaryElems, {
+      value: 0
+    });
+    // return true if has errors elems
+    return _.size(errElemsBlocks) > 0;
+  }
+
   getMaxHeight(elems) {
     let max = 0;
     _.map(elems, (e) => {
@@ -76,6 +85,22 @@ export default class Matrix extends Component {
   renderElem(elem, key) {
     const { styles } = this;
     const elemClass = styles.elem;
+    if (isObject(elem)) {
+      return (
+        <div
+          className={[elemClass, this.getValueClass(elem.value)].join(' ')}
+          key={key}
+        >{elem.text}</div>
+      );
+    }
+    return (
+      <div className={styles.elem} key={key}>{elem}</div>
+    );
+  }
+
+  renderSummaryElem(elem, key) {
+    const { styles } = this;
+    const elemClass = styles.summaryElem;
     if (isObject(elem)) {
       return (
         <div
@@ -125,9 +150,13 @@ export default class Matrix extends Component {
     );
   }
 
-  renderSummary(column) {
+  renderSummary(column, key) {
     const { styles } = this;
     const summaryKey = 'summaryKey';
+    const summaryLabelClasses = [styles.summaryLabel];
+    if (this.getSummaryStatus(key)) {
+      summaryLabelClasses.push(styles.summaryLabelWarning);
+    }
     return (
       <div
         className={styles.summary}
@@ -136,12 +165,14 @@ export default class Matrix extends Component {
           this.customRefs[summaryKey].push(ref);
         }}
       >
-        <div className={styles.summaryLabel}>
+        <div className={summaryLabelClasses.join(' ')}>
           {column.summary.label}
         </div>
         {column.summary.elems &&
           <div className={styles.summaryContent}>
-            {column.summary.elems.join(', ')}
+            {_.map(column.summary.elems, (c, k) => {
+              return this.renderSummaryElem(c, k);
+            })}
           </div>
         }
       </div>
@@ -158,7 +189,7 @@ export default class Matrix extends Component {
             return this.renderBlock(c, k);
           })}
         </div>
-        {this.renderSummary(column)}
+        {this.renderSummary(column, key)}
       </div>
     );
   }
@@ -166,6 +197,7 @@ export default class Matrix extends Component {
   render() {
     const { matrix } = this.props;
     const { styles } = this;
+    // console.log(matrix);
     return (
       <div className={styles.matrix}>
         {_.map(matrix, (c, k) => {
