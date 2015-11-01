@@ -13,7 +13,13 @@ export default class Question extends Component {
     icon: PropTypes.string,
     questionsCount: PropTypes.number,
     back: PropTypes.any,
-    handleBack: PropTypes.func.isRequired
+    next: PropTypes.any,
+    handleBack: PropTypes.func.isRequired,
+    handleNext: PropTypes.func.isRequired
+  }
+
+  constructor(props) {
+    super(props);
   }
 
   getDotOffsetTop() {
@@ -23,6 +29,11 @@ export default class Question extends Component {
   handleBack(event) {
     event.stopPropagation();
     this.props.handleBack();
+  }
+
+  handleNext(event) {
+    event.stopPropagation();
+    this.props.handleNext();
   }
 
   renderLabel(styles, icons) {
@@ -36,7 +47,7 @@ export default class Question extends Component {
   }
 
   renderBack(styles, icons) {
-    const { back/* , color*/ } = this.props;
+    const { back } = this.props;
     if (!back) return false;
     return (
       <div
@@ -44,10 +55,32 @@ export default class Question extends Component {
         onClick={::this.handleBack}
         className={styles.back}
       >
-        <i className={icons.back}></i>
+        <i className={icons.topstr}></i>
       </div>
     );
-    // style={{background: color}}
+  }
+
+  renderNext(styles, icons) {
+    const { next } = this.props;
+    if (!next) {
+      return (
+        <div
+          ref="next"
+          className={[styles.next, styles.nextPassive].join(' ')}
+        >
+          <i className={icons.botstr}></i>
+        </div>
+      );
+    }
+    return (
+      <div
+        ref="next"
+        onClick={::this.handleNext}
+        className={styles.next}
+      >
+        <i className={icons.botstr}></i>
+      </div>
+    );
   }
 
   render() {
@@ -59,8 +92,10 @@ export default class Question extends Component {
       <div>
         {this.renderLabel(styles, icons)}
         <div ref="numbers" className={styles.numbers}>
+          {this.renderBack(styles, icons)}
+          {this.renderNext(styles, icons)}
           {number} / {questionsCount}
-          <i ref="dot" style={{background: this.props.color}}></i>
+          <b ref="dot" style={{background: this.props.color}}></b>
         </div>
         <div className={styles.h2}>{title}</div>
         <p className={styles.p}>{subtitle}</p>
@@ -70,7 +105,6 @@ export default class Question extends Component {
             {information}
           </div>
         }
-        {this.renderBack(styles, icons)}
       </div>
     );
   }

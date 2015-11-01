@@ -56,9 +56,12 @@ export default class Question extends Component {
     const prev = prevQuestion && questionId;
     const nextQuestion = questionsCount - 1 > questionId && questions[questionId + 1];
     const next = nextQuestion && questionId + 2;
+    const answer = props.answers &&
+                   props.answers.answers &&
+                   props.answers.answers[questionId];
     return {
       questionsCount, questionId, question, next,
-      nextQuestion, prev, prevQuestion, back
+      nextQuestion, prev, prevQuestion, back, answer
     };
   }
 
@@ -139,22 +142,35 @@ export default class Question extends Component {
     }
   }
 
+  handleWheel(event) {
+    const { answer } = this.state;
+    if (event.deltaY < -100) {
+      this.handleBack();
+    }
+    if (event.deltaY > 100 && answer) {
+      this.handleButton();
+    }
+  }
+
   render() {
-    const answer = this.props.answers.answers[this.state.questionId];
-    const { question, questionsCount, prev } = this.state;
+    const { question, questionsCount, prev, answer } = this.state;
     return (
       <Carcas ref="carcas">
-        <QuestionInformation
-          handleBack={::this.handleBack}
-          back={prev}
-          questionsCount={questionsCount}
-          {...question}
-        />
-        <Buttons
-          answer={answer}
-          handleYes={::this.handleButtonWithTimeout}
-          handleNo={::this.handleButtonWithTimeout}
-        />
+        <div onWheel={::this.handleWheel}>
+          <QuestionInformation
+            handleBack={::this.handleBack}
+            handleNext={::this.handleButton}
+            back={prev}
+            next={answer}
+            questionsCount={questionsCount}
+            {...question}
+          />
+          <Buttons
+            answer={answer}
+            handleYes={::this.handleButtonWithTimeout}
+            handleNo={::this.handleButtonWithTimeout}
+          />
+        </div>
       </Carcas>
     );
   }
