@@ -32,8 +32,8 @@ export default class Html extends Component {
           <meta name="twitter:title" content="Аудит продуктовой идеи" />
           <meta property="og:description" content="Проверь, готов ли ты к созданию продукта и инвестициям.  Одиннадцать вопросов, ответы на которые определяют успех или провал вашей идеи." />
           <meta name="twitter:description" content="Проверь, готов ли ты к созданию продукта и инвестициям.  Одиннадцать вопросов, ответы на которые определяют успех или провал вашей идеи." />
-          <meta name="twitter:image" content="/sharing.png" />
-          <meta property="og:image" content="/sharing.png" />
+          <meta name="twitter:image" content="https://obsvtr.herokuapp.com/sharing.png" />
+          <meta property="og:image" content="https://obsvtr.herokuapp.com/sharing.png" />
 
           <link rel="shortcut icon" href="/favicon.ico" />
 

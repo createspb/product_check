@@ -124,7 +124,7 @@ export default class Results extends Component {
   }
 
   renderNext(styles, icons, results) {
-    const site = 'http://obsvtr.herokuapp.com';
+    const site = 'https://obsvtr.herokuapp.com';
     const { fbShare, vkShare, twShare } = {
       twShare: 'https://twitter.com/intent/tweet?url=' + site,
       fbShare: 'https://www.facebook.com/sharer/sharer.php?&u=' + site,
