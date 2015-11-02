@@ -1,0 +1,27 @@
+@import "../Styles/variables.less";
+
+.h2 {
+  ._h2;
+  margin: 0 0 20px;
+}
+.transparentInput {
+  ._transparentButton;
+  display: block;
+  float: left;
+  border-radius: 2px 0 0 2px;
+  cursor: auto;
+  width: 360px;
+  &:hover {
+    background: rgba(255, 255, 255, .1);
+  }
+  &.error {
+    border-color: #C27164;
+  }
+}
+.transparentButton {
+  ._transparentButton;
+  display: block;
+  float: left;
+  border-radius: 0 2px 2px 0;
+  border-left: none;
+}
