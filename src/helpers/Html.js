@@ -28,6 +28,13 @@ export default class Html extends Component {
         <head>
           {DocumentMeta.renderAsReact()}
 
+          <meta property="og:title" content="Аудит продуктовой идеи" />
+          <meta name="twitter:title" content="Аудит продуктовой идеи" />
+          <meta property="og:description" content="Проверь, готов ли ты к созданию продукта и инвестициям.  Одиннадцать вопросов, ответы на которые определяют успех или провал вашей идеи." />
+          <meta name="twitter:description" content="Проверь, готов ли ты к созданию продукта и инвестициям.  Одиннадцать вопросов, ответы на которые определяют успех или провал вашей идеи." />
+          <meta name="twitter:image" content="/sharing.png" />
+          <meta property="og:image" content="/sharing.png" />
+
           <link rel="shortcut icon" href="/favicon.ico" />
 
           {/* styles (will be present only in production with webpack extract text plugin) */}

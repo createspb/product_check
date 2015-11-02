@@ -124,6 +124,12 @@ export default class Results extends Component {
   }
 
   renderNext(styles, icons, results) {
+    const site = 'http://obsvtr.herokuapp.com';
+    const { fbShare, vkShare, twShare } = {
+      twShare: 'https://twitter.com/intent/tweet?url=' + site,
+      fbShare: 'https://www.facebook.com/sharer/sharer.php?&u=' + site,
+      vkShare: 'http://vk.com/share.php?url=' + site
+    };
     return (
       <div className={styles.next}>
         <h1 className={styles.h1}>
@@ -147,9 +153,15 @@ export default class Results extends Component {
         <div className={styles.right}>
           <p className={styles.p}>{results.nextRight}</p>
           <ul className={styles.social}>
-            <li><a href="" target="_blank"><i className={icons.fb}></i></a></li>
-            <li><a href="" target="_blank"><i className={icons.vk}></i></a></li>
-            <li><a href="" target="_blank"><i className={icons.tw}></i></a></li>
+            <li><a href={fbShare} target="_blank">
+              <i className={icons.fb}></i>
+            </a></li>
+            <li><a href={vkShare} target="_blank">
+              <i className={icons.vk}></i>
+            </a></li>
+            <li><a href={twShare} target="_blank">
+              <i className={icons.tw}></i>
+            </a></li>
           </ul>
           <div className={styles.company}>
             {results.from}
