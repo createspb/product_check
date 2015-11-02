@@ -23,7 +23,7 @@ export default function matrix(req) {
     if (req.session.answers) {
       resolve(applyAnswersToMatrix(
         _.deepClone(matrixData),
-        _.deepClone(answers),
+        _.deepClone(req.session.answers),
         _.deepClone(algorithm)
       ));
     } else {

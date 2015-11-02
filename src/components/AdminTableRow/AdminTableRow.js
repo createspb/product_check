@@ -21,13 +21,12 @@ export default class AdminTable extends Component {
     const { styles, result } = this.props;
     const createdAt = moment(result.createdAt);
     return (
-      <tr>
+      <tr onClick={::this.handleOpenResult}>
         <td className={styles.id}>{result.id}</td>
         <td>
           <a
             className={styles.a}
             href=""
-            onClick={::this.handleOpenResult}
           >{result.productName}</a>
         </td>
         <td className={styles.date}>{createdAt.format(captions.dateFormats.std)}</td>
