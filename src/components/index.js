@@ -12,3 +12,4 @@ export Results from './Results/Results';
 export Matrix from './Matrix/Matrix';
 export ResultsCarcas from './ResultsCarcas/ResultsCarcas';
 export QuestionInformation from './QuestionInformation/QuestionInformation';
+export ProductName from './ProductName/ProductName';

@@ -1,6 +1,5 @@
 import { matrixData, applyAnswersToMatrix } from './data/matrix';
 import algorithm from './data/algorithm';
-// import answers from './data/testAnswersYesNo';
 import _ from 'underscore';
 _.mixin(require('underscore.deep'));
 

@@ -121,7 +121,7 @@ export default class Question extends Component {
       );
     } else {
       carcas.animateToTop(
-        () => this.props.pushState(null, '/results')
+        () => this.props.pushState(null, '/name')
       );
     }
   }
