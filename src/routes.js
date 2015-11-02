@@ -55,11 +55,11 @@ export default (store) => {
         <Route path="questions/:questionId" component={Question} />
         <Route path="name" component={ProductName} />
         <Route path="results" component={Results} />
+        <Route onEnter={requireUnlogin} path="login" component={Login} />
       </Route>
       <Route onEnter={requireLogin} path="admin">
         <IndexRoute component={Admin} />
       </Route>
-      <Route onEnter={requireUnlogin} path="login" component={Login} />
       <Route path="*" component={NotFound} />
     </Route>
   );

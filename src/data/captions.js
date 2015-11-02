@@ -26,6 +26,12 @@ export default {
     from: 'от ',
     companyName: 'Create',
   },
+  login: {
+    placeholderName: 'Логин',
+    placeholderPass: 'Пароль',
+    button: 'Войти',
+    error: 'Ошибка'
+  },
   matrix: {
     progressCaption: 'Готовность',
     results: [{

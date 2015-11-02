@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { login } from 'redux/modules/auth';
 import { pushState } from 'redux-router';
+import { Carcas } from '..';
+import captions from '../../data/captions';
 
 @connect(
   state => ({user: state.auth.user, loginError: state.auth.loginError}),
@@ -14,6 +16,10 @@ export default class Login extends Component {
     logout: PropTypes.func,
     loginError: PropTypes.bool,
     pushState: PropTypes.func.isRequired
+  }
+
+  componentDidMount() {
+    this.refs.carcas.bottomToCenter();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,23 +40,38 @@ export default class Login extends Component {
   }
 
   render() {
+    const styles = require('./Login.less');
     const {user, loginError} = this.props;
+    const loginCaptions = captions.login;
     return (
-      <div>
-        <h2>Login</h2>
+      <Carcas ref="carcas">
+        <h2 className={styles.h2}>Вход</h2>
         {!user &&
         <div>
           {loginError &&
-          <p>Error</p>
+          <p className={styles.error}>{loginCaptions.error}</p>
           }
           <form onSubmit={::this.handleSubmit}>
-            <input type="text" ref="username" placeholder="Enter a username" />
-            <input type="password" ref="password" placeholder="Enter a password" />
-            <button onClick={::this.handleSubmit}>Log In</button>
+            <input
+              type="text"
+              ref="username"
+              placeholder={loginCaptions.placeholderName}
+              className={styles.transparentInput}
+            />
+            <input
+              type="password"
+              ref="password"
+              placeholder={loginCaptions.placeholderPass}
+              className={styles.transparentInput}
+            />
+            <button
+              onClick={::this.handleSubmit}
+              className={styles.transparentButton}
+            >{loginCaptions.button}</button>
           </form>
         </div>
         }
-      </div>
+      </Carcas>
     );
   }
 
