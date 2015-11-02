@@ -10,3 +10,4 @@ export storeProductName from './storeProductName';
 export getAnswers from './getAnswers';
 export setAllYes from './setAllYes';
 export results from './results';
+export repeat from './repeat';

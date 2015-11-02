@@ -6,7 +6,8 @@ import {
   load as loadQuestions } from 'redux/modules/questions';
 import {
   isLoaded as isLoadedAnswers,
-  load as loadAnswers } from 'redux/modules/answers';
+  load as loadAnswers,
+  repeatTest } from 'redux/modules/answers';
 import {
   isLoaded as isLoadedMatrix,
   load as loadMatrix } from 'redux/modules/matrix';
@@ -22,13 +23,14 @@ import $ from 'jquery';
   {pushState,
    isLoadedQuestions, loadQuestions,
    isLoadedMatrix, loadMatrix,
-   isLoadedAnswers, loadAnswers})
+   isLoadedAnswers, loadAnswers, repeatTest})
 export default class Results extends Component {
 
   static propTypes = {
     questions: PropTypes.object,
     answers: PropTypes.object,
-    pushState: PropTypes.func.isRequired
+    pushState: PropTypes.func.isRequired,
+    repeatTest: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -42,6 +44,12 @@ export default class Results extends Component {
   componentDidMount() {
     const { carcas } = this.refs;
     carcas.bottomToCenter();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.answers.loaded) {
+      this.props.pushState(null, '/');
+    }
   }
 
   setMatrixResultValue(value) {
@@ -77,22 +85,40 @@ export default class Results extends Component {
     return Promise.all(promises);
   }
 
+  // renderArticleButton(styles, icons, results) {
+  //   return (
+  //     <a
+  //       href="http://createdigital.me/blog/2015/10/19/matrica-cifrovogo-produkta-vvodnaya/"
+  //       target="_blank"
+  //       className={styles.article}
+  //     >
+  //       <i className={icons.matrix}></i>
+  //       <div className={styles.articleData}>
+  //         <div className={styles.articleTitle}>
+  //           {results.articleTitle}
+  //         </div>
+  //         <div className={styles.articleDescription}>
+  //           {results.articleDescription}
+  //         </div>
+  //       </div>
+  //     </a>
+  //   );
+  // }
+
+  handleRepeatButton(event) {
+    event.stopPropagation();
+    this.props.repeatTest();
+  }
+
   renderArticleButton(styles, icons, results) {
     return (
       <a
         href="http://createdigital.me/blog/2015/10/19/matrica-cifrovogo-produkta-vvodnaya/"
         target="_blank"
-        className={styles.article}
+        className={styles.transparentButton}
       >
-        <i className={icons.matrix}></i>
-        <div className={styles.articleData}>
-          <div className={styles.articleTitle}>
-            {results.articleTitle}
-          </div>
-          <div className={styles.articleDescription}>
-            {results.articleDescription}
-          </div>
-        </div>
+        <i className={icons.matrix1}></i>
+        {results.articleTitle}
       </a>
     );
   }
@@ -107,6 +133,16 @@ export default class Results extends Component {
         <div className={styles.left}>
           <p className={styles.p}>{results.nextLeft}</p>
           {this.renderArticleButton(styles, icons, results)}
+        </div>
+        <div className={styles.center}>
+          <p className={styles.p}>{results.nextCenter}</p>
+          <button
+            className={styles.transparentButton}
+            onClick={::this.handleRepeatButton}
+          >
+            <i className={icons.repeat}></i>
+            Пройти еще раз
+          </button>
         </div>
         <div className={styles.right}>
           <p className={styles.p}>{results.nextRight}</p>

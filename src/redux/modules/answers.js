@@ -1,9 +1,14 @@
 const GET = 'answers/GET';
 const GET_SUCCESS = 'answers/GET_SUCCESS';
 const GET_FAIL = 'answers/GET_FAIL';
+
 const STORE = 'answers/STORE';
 const STORE_SUCCESS = 'answers/STORE_SUCCESS';
 const STORE_FAIL = 'answers/STORE_FAIL';
+
+const REPEAT = 'answers/REPEAT';
+const REPEAT_SUCCESS = 'answers/REPEAT_SUCCESS';
+const REPEAT_FAIL = 'answers/REPEAT_FAIL';
 
 const initialState = {
   loaded: false
@@ -11,6 +16,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
+
     case GET:
       return {
         ...state,
@@ -28,6 +34,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false
       };
+
     case STORE:
       return {
         ...state,
@@ -45,6 +52,23 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false
       };
+
+    case REPEAT:
+      return {
+        ...state,
+        loading: true
+      };
+    case REPEAT_SUCCESS:
+      return {
+        loaded: false,
+        loading: false
+      };
+    case REPEAT_FAIL:
+      return {
+        ...state,
+        loading: false
+      };
+
     default:
       return state;
   }
@@ -67,5 +91,12 @@ export function storeAnswer(data) {
     promise: (client) => client.post('/storeAnswer', {
       data
     })
+  };
+}
+
+export function repeatTest() {
+  return {
+    types: [REPEAT, REPEAT_SUCCESS, REPEAT_FAIL],
+    promise: (client) => client.get('/repeat')
   };
 }
