@@ -24,9 +24,13 @@ export default class Login extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
-      this.props.pushState(null, '/admin');
+      this.refs.carcas.animateToTop(
+        () => this.props.pushState(null, '/admin')
+      );
     } else if (this.props.user && !nextProps.user) {
-      this.props.pushState(null, '/');
+      this.refs.carcas.animateToTop(
+        () => this.props.pushState(null, '/')
+      );
     }
   }
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import {IndexRoute, Route} from 'react-router';
+// import {IndexRoute, Route} from 'react-router';
+import { Route } from 'react-router';
 import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
 import {
     Admin,
@@ -56,9 +57,7 @@ export default (store) => {
         <Route path="name" component={ProductName} />
         <Route path="results" component={Results} />
         <Route onEnter={requireUnlogin} path="login" component={Login} />
-      </Route>
-      <Route onEnter={requireLogin} path="admin">
-        <IndexRoute component={Admin} />
+        <Route onEnter={requireLogin} path="admin" component={Admin} />
       </Route>
       <Route path="*" component={NotFound} />
     </Route>

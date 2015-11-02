@@ -1,4 +1,17 @@
 export default {
+  dateFormats: {
+    std: 'DD.MM.YY HH:mm'
+  },
+  admin: {
+    title: 'Панель администрирования',
+    logout: 'Выход',
+    close: 'Закрыть'
+  },
+  adminTable: {
+    n: '#',
+    title: 'Название продукта',
+    date: 'Дата'
+  },
   welcome: {
     h1: 'АУДИТ ИДЕИ ПРОДУКТА',
     from: 'от ',

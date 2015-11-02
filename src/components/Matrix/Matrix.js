@@ -10,7 +10,6 @@ import Left from './Left';
 @connect(
   state => ({
     questions: state.questions.questions,
-    answers: state.answers,
     matrix: state.matrix.matrix
   }),
   { pushState })
@@ -18,13 +17,16 @@ export default class Matrix extends Component {
 
   static propTypes = {
     questions: PropTypes.object,
-    answers: PropTypes.object,
     matrix: PropTypes.object,
-    setMatrixResultValue: PropTypes.func.isRequired
+    setMatrixResultValue: PropTypes.func.isRequired,
+    matrixByAnswers: PropTypes.object
   };
 
   constructor(props) {
     super(props);
+    this.matrix = this.props.matrixByAnswers ?
+                  this.props.matrixByAnswers :
+                  this.props.matrix;
     this.icons = require('../Styles/icons.less');
     this.styles = require('./Matrix.less');
     this.customRefs = {};
@@ -42,7 +44,7 @@ export default class Matrix extends Component {
   }
 
   getLineBlocks(line) {
-    const { matrix } = this.props;
+    const { matrix } = this;
     const lineBlocks = [];
     _.each(matrix, (col) => {
       lineBlocks.push(col.blocks[line].elems);
@@ -51,7 +53,7 @@ export default class Matrix extends Component {
   }
 
   getSummaryStatus(column) {
-    const summaryElems = this.props.matrix[column].summary.elems;
+    const summaryElems = this.matrix[column].summary.elems;
     const errElemsBlocks = _.where(summaryElems, {
       value: 0
     });
@@ -210,9 +212,7 @@ export default class Matrix extends Component {
   }
 
   render() {
-    const { matrix } = this.props;
-    const { styles } = this;
-    // console.log(matrix);
+    const { styles, matrix } = this;
     return (
       <div className={styles.matrix}>
         {_.map(matrix, (c, k) => {

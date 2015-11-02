@@ -13,3 +13,6 @@ export Matrix from './Matrix/Matrix';
 export ResultsCarcas from './ResultsCarcas/ResultsCarcas';
 export QuestionInformation from './QuestionInformation/QuestionInformation';
 export ProductName from './ProductName/ProductName';
+export AdminTable from './AdminTable/AdminTable';
+export AdminResult from './AdminResult/AdminResult';
+export AdminTableRow from './AdminTableRow/AdminTableRow';
