@@ -29,6 +29,7 @@ export default class Welcome extends Component {
     if (!isLoaded(getState())) return Promise.all([dispatch(load())]);
   }
 
+  // TODO: SET PARTNER URL
   render() {
     const { welcome } = captions;
     const styles = require('./Welcome.less');
@@ -43,6 +44,12 @@ export default class Welcome extends Component {
             target="_blank"
             href="http://createdigital.me/"
           >{welcome.companyName}</a>
+          {welcome.and}
+          <a
+            className={styles.a}
+            target="_blank"
+            href="http://createdigital.me/"
+          >{welcome.companyPartner}</a>
         </div>
         <p className={styles.p}>{welcome.text}</p>
         <button onClick={::this.handleButton} className={styles.button}>

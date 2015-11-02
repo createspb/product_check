@@ -43,6 +43,14 @@ export default class Question extends Component {
       this.setState(this.constructParams(nextProps), () => {
         this.changeQuestion();
       });
+    } else {
+      const questionId = parseInt(nextProps.params.questionId, 10) - 1;
+      const answer = nextProps.answers &&
+                     nextProps.answers.answers &&
+                     nextProps.answers.answers[questionId];
+      this.setState({
+        answer: answer
+      });
     }
   }
 
