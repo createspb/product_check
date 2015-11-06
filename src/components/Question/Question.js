@@ -123,10 +123,14 @@ export default class Question extends Component {
     if (next) {
       if (nextQuestion && nextQuestion.firstOfType) {
         carcas.setLineColor('transparent', 0);
+        carcas.animateToTop(
+          () => this.props.pushState(null, '/subresults/' + next)
+        );
+      } else {
+        carcas.animateToTop(
+          () => this.props.pushState(null, '/questions/' + next)
+        );
       }
-      carcas.animateToTop(
-        () => this.props.pushState(null, '/questions/' + next)
-      );
     } else {
       carcas.animateToTop(
         () => this.props.pushState(null, '/name')

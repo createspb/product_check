@@ -112,7 +112,10 @@ export default class Matrix extends Component {
       );
     }
     return (
-      <div className={styles.elem} key={key}>{elem}</div>
+      <div
+        className={[elemClass, this.getValueClass(elem.value)].join(' ')}
+        key={key}
+      >{elem}</div>
     );
   }
 

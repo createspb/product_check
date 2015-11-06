@@ -16,3 +16,5 @@ export ProductName from './ProductName/ProductName';
 export AdminTable from './AdminTable/AdminTable';
 export AdminResult from './AdminResult/AdminResult';
 export AdminTableRow from './AdminTableRow/AdminTableRow';
+export Warning from './Warning/Warning';
+export Subresults from './Subresults/Subresults';

@@ -3,15 +3,17 @@ import React from 'react';
 import { Route } from 'react-router';
 import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
 import {
-    Admin,
     App,
     Home,
-    Login,
-    Question,
-    NotFound,
     Welcome,
+    Warning,
+    Question,
+    Subresults,
+    ProductName,
     Results,
-    ProductName
+    Admin,
+    Login,
+    NotFound,
   } from 'components';
 
 export default (store) => {
@@ -52,8 +54,10 @@ export default (store) => {
     <Route component={App}>
       <Route component={Home}>
         <Route path="/" component={Welcome} />
+        <Route path="warning" component={Warning} />
         <Route path="questions/:questionId/:back" component={Question} />
         <Route path="questions/:questionId" component={Question} />
+        <Route path="subresults/:questionId" component={Subresults} />
         <Route path="name" component={ProductName} />
         <Route path="results" component={Results} />
         <Route onEnter={requireUnlogin} path="login" component={Login} />
