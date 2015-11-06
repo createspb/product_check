@@ -8,7 +8,8 @@ export default class AdminTable extends Component {
 
   static propTypes = {
     results: PropTypes.array.isRequired,
-    handleOpenResult: PropTypes.func.isRequired
+    handleOpenResult: PropTypes.func.isRequired,
+    handleRemoveResult: PropTypes.func.isRequired
   };
 
   render() {
@@ -21,6 +22,7 @@ export default class AdminTable extends Component {
             <th>{tableCaptions.n}</th>
             <th className={styles.title}>{tableCaptions.title}</th>
             <th>{tableCaptions.date}</th>
+            <th className={styles.delete}></th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +31,7 @@ export default class AdminTable extends Component {
               <AdminTableRow
                 key={key}
                 handleOpenResult={this.props.handleOpenResult}
+                handleRemoveResult={this.props.handleRemoveResult}
                 result={result}
                 styles={styles}
               />

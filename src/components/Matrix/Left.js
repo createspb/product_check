@@ -55,10 +55,24 @@ export default class Buttons extends Component {
     return 'error';
   }
 
+  renderArticleButton(styles, icons, results) {
+    return (
+      <a
+        href="http://createdigital.me/blog/2015/10/19/matrica-cifrovogo-produkta-vvodnaya/"
+        target="_blank"
+        className={styles.transparentButton}
+      >
+        <i className={icons.matrix1}></i>
+        {results.articleTitle}
+      </a>
+    );
+  }
+
   render() {
     const { styles, icons, block } = this.props;
     const { str, val } = this.getPercent();
     const lvlCaption = this.getLevelCaption(val);
+    const { results } = captions;
     return (
       <div className={styles.left}>
         <div className={styles.leftLabel}>
@@ -80,6 +94,9 @@ export default class Buttons extends Component {
           <div className={styles.progressP}>
             {lvlCaption}
           </div>
+          {this.props.level === 0 &&
+            this.renderArticleButton(styles, icons, results)
+          }
         </div>
       </div>
     );

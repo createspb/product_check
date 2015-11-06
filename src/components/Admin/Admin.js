@@ -3,33 +3,38 @@ import { connect } from 'react-redux';
 import { logout } from 'redux/modules/auth';
 import { pushState } from 'redux-router';
 import { ResultsCarcas, AdminTable, AdminResult } from '..';
-import { load, isLoaded } from 'redux/modules/results';
+import { load, isLoaded, remove } from 'redux/modules/results';
 import {
   isLoaded as isLoadedQuestions,
   load as loadQuestions } from 'redux/modules/questions';
 import captions from '../../data/captions';
 import _ from 'underscore';
+import $ from 'jquery';
 
 @connect(
   state => ({
     user: state.auth.user,
     results: state.results.data
   }),
-  { logout, pushState, load, isLoaded, isLoadedQuestions, loadQuestions })
+  { logout, pushState, load, isLoaded,
+    isLoadedQuestions, loadQuestions, remove })
 export default class Admin extends Component {
 
   static propTypes = {
     user: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
     results: PropTypes.array,
-    pushState: PropTypes.func.isRequired
+    pushState: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
     this.state = {
       activeResultId: false,
-      activeResult: false
+      activeResult: false,
+      page: 0,
+      countOnPage: 10
     };
   }
 
@@ -63,6 +68,11 @@ export default class Admin extends Component {
     });
   }
 
+  handleRemoveResult(id) {
+    console.log(id);
+    this.props.remove(id);
+  }
+
   handleLogout(event) {
     event.preventDefault();
     this.props.logout();
@@ -73,6 +83,21 @@ export default class Admin extends Component {
     this.setState({
       activeResultId: false,
       activeResult: false
+    });
+  }
+
+  handlePage(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({
+      page: parseInt($(event.currentTarget).data('id'), 10)
+    });
+  }
+
+  paginatedResults(page) {
+    return _.filter(this.props.results, (e, k) => {
+      return k >= (page * this.state.countOnPage) &&
+             k < ((page + 1) * this.state.countOnPage);
     });
   }
 
@@ -104,6 +129,32 @@ export default class Admin extends Component {
     );
   }
 
+  renderPagination(styles) {
+    const pages = _.range(Math.ceil(
+      _.size(this.props.results) / this.state.countOnPage
+    ));
+    if (_.size(pages) === 1) { return false; }
+    return (
+      <div className={styles.pagination}>
+        {_.map(pages, (page, key) => {
+          return (
+            <a
+              data-id={key}
+              key={key}
+              onClick={::this.handlePage}
+              className={
+                (key === this.state.page) ?
+                styles.paginationActive :
+                styles.paginationPassive
+              }
+              href="#"
+            >{page + 1}</a>
+          );
+        })}
+      </div>
+    );
+  }
+
   render() {
     const adminCaptions = captions.admin;
     const styles = require('./Admin.less');
@@ -114,9 +165,11 @@ export default class Admin extends Component {
         {!activeResult &&
           <AdminTable
             handleOpenResult={::this.handleOpenResult}
-            results={this.props.results}
+            handleRemoveResult={::this.handleRemoveResult}
+            results={this.paginatedResults(this.state.page)}
           />
         }
+        {!activeResult && this.renderPagination(styles)}
         {activeResult &&
           <AdminResult result={activeResult} />
         }

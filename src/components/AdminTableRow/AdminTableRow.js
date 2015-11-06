@@ -7,17 +7,24 @@ export default class AdminTable extends Component {
   static propTypes = {
     result: PropTypes.object.isRequired,
     styles: PropTypes.object.isRequired,
-    handleOpenResult: PropTypes.func.isRequired
+    handleOpenResult: PropTypes.func.isRequired,
+    handleRemoveResult: PropTypes.func.isRequired,
   };
 
   handleOpenResult(event) {
     event.preventDefault();
     event.stopPropagation();
     this.props.handleOpenResult(this.props.result.id);
-    return false;
+  }
+
+  handleRemoveResult(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.props.handleRemoveResult(this.props.result.id);
   }
 
   render() {
+    const icons = require('../Styles/icons.less');
     const { styles, result } = this.props;
     const createdAt = moment(result.createdAt);
     return (
@@ -29,7 +36,14 @@ export default class AdminTable extends Component {
             href=""
           >{result.productName}</a>
         </td>
-        <td className={styles.date}>{createdAt.format(captions.dateFormats.std)}</td>
+        <td className={styles.date}>
+          {createdAt.format(captions.dateFormats.std)}
+        </td>
+        <td className={styles.delete}>
+          <a href="#" onClick={::this.handleRemoveResult}>
+            <i className={icons.remove}></i>
+          </a>
+        </td>
       </tr>
     );
   }
