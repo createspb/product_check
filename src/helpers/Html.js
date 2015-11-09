@@ -46,7 +46,7 @@ export default class Html extends Component {
           <meta name="twitter:image" content="https://obsvtr.herokuapp.com/sharing.png" />
           <meta property="og:image" content="https://obsvtr.herokuapp.com/sharing.png" />
 
-          <link rel="shortcut icon" href="/favicon.ico" />
+          <link rel="shortcut icon" href="/favicon.png" />
 
           {/* styles (will be present only in production with webpack extract text plugin) */}
           {Object.keys(assets.styles).map((style, key) =>
