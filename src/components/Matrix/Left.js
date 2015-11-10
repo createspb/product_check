@@ -91,9 +91,10 @@ export default class Buttons extends Component {
           <div className={styles.progress}>
             <div className={styles.progressActive} style={{width: val + '%'}}></div>
           </div>
-          <div className={styles.progressP}>
-            {lvlCaption}
-          </div>
+          <div
+            className={styles.progressP}
+            dangerouslySetInnerHTML={{__html: lvlCaption}}
+          />
           {this.props.level === 0 &&
             this.renderArticleButton(styles, icons, results)
           }

@@ -149,7 +149,10 @@ export default class Results extends Component {
           </button>
         </div>
         <div className={styles.right}>
-          <p className={styles.p}>{results.nextRight}</p>
+          <p
+            className={styles.p}
+            dangerouslySetInnerHTML={{__html: results.nextRight}}
+          />
           <ul className={styles.social}>
             <li><a href={fbShare} target="_blank">
               <i className={icons.fb}></i>
