@@ -21,7 +21,6 @@ export default function matrix(req) {
   }
   return new Promise((resolve, reject) => {
     if (req.session.answers) {
-      console.log(req.session.answers);
       resolve(applyAnswersToMatrix(
         _.deepClone(matrixData),
         _.deepClone(req.session.answers),

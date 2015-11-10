@@ -97,8 +97,8 @@ export default class Question extends Component {
           {number} / {questionsCount}
           <b ref="dot" style={{background: this.props.color}}></b>
         </div>
-        <div className={styles.h2}>{title}</div>
-        <p className={styles.p}>{subtitle}</p>
+        <div className={styles.h2} dangerouslySetInnerHTML={{__html: title}} />
+        <p className={styles.p} dangerouslySetInnerHTML={{__html: subtitle}} />
         {information &&
           <div className={styles.info}>
             <i className={icons.info}></i>
