@@ -102,7 +102,7 @@ export default class Question extends Component {
         {information &&
           <div className={styles.info}>
             <i className={icons.info}></i>
-            {information}
+            <span dangerouslySetInnerHTML={{__html: information}}></span>
           </div>
         }
       </div>
