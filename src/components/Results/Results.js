@@ -73,11 +73,9 @@ export default class Results extends Component {
 
   static fetchData(getState, dispatch) {
     const promises = [];
+    promises.push(dispatch(loadMatrix()));
     if (!isLoadedQuestions(getState())) {
       promises.push(dispatch(loadQuestions()));
-    }
-    if (!isLoadedMatrix(getState())) {
-      promises.push(dispatch(loadMatrix()));
     }
     if (!isLoadedAnswers(getState())) {
       promises.push(dispatch(loadAnswers()));
