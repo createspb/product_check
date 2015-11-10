@@ -116,7 +116,7 @@ export default class Subresults extends React.Component {
         </h2>
         {_.map(ps, (e, k) => {
           return (
-            <p className={styles.p} key={k}>{e}</p>
+            <p className={styles.p} key={k} dangerouslySetInnerHTML={{__html: e}} />
           );
         })}
         <div className={styles.buttons}>

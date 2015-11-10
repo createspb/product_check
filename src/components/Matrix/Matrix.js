@@ -92,11 +92,16 @@ export default class Matrix extends Component {
         <div
           className={[elemClass, this.getValueClass(elem.value)].join(' ')}
           key={key}
-        >{elem.text}</div>
+          dangerouslySetInnerHTML={{__html: elem.text}}
+        />
       );
     }
     return (
-      <div className={styles.elem} key={key}>{elem}</div>
+      <div
+        className={styles.elem}
+        key={key}
+        dangerouslySetInnerHTML={{__html: elem}}
+      />
     );
   }
 
@@ -157,7 +162,10 @@ export default class Matrix extends Component {
             setMatrixResultValue={this.props.setMatrixResultValue}
           />
         }
-        <div className={styles.blockLabel}>{block.label}</div>
+        <div
+          className={styles.blockLabel}
+          dangerouslySetInnerHTML={{__html: block.label}}
+        />
         <div className={styles.elems}>
           {_.map(block.elems, (c, k) => {
             return this.renderElem(c, k);
