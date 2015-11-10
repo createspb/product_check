@@ -32,13 +32,13 @@ export default class Warning extends React.Component {
       <Carcas ref="carcas">
         <h2 className={styles.h2}>
           <i className={icons.warningWhite}></i>
-          {label}
+          <span dangerouslySetInnerHTML={{__html: label}} />
         </h2>
-        <p className={styles.p}>{p}</p>
-        <p className={styles.p}>{p1}</p>
+        <p className={styles.p} dangerouslySetInnerHTML={{__html: p}} />
+        <p className={styles.p} dangerouslySetInnerHTML={{__html: p1}} />
         <div className={styles.info}>
           <i className={icons.info}></i>
-          {info}
+          <span dangerouslySetInnerHTML={{__html: info}} />
         </div>
         <button
           onClick={::this.handleButton}

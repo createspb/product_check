@@ -29,7 +29,6 @@ export default class Welcome extends Component {
     if (!isLoaded(getState())) return Promise.all([dispatch(load())]);
   }
 
-  // TODO: SET PARTNER URL
   render() {
     const { welcome } = captions;
     const styles = require('./Welcome.less');
@@ -51,7 +50,10 @@ export default class Welcome extends Component {
             href="http://digitalchange.me/"
           >{welcome.companyPartner}</a>
         </div>
-        <p className={styles.p}>{welcome.text}</p>
+        <p
+          className={styles.p}
+          dangerouslySetInnerHTML={{__html: welcome.text}}
+        />
         <button onClick={::this.handleButton} className={styles.button}>
           <i className={icons.go}></i>
           {welcome.button}
