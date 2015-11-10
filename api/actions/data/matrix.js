@@ -7,7 +7,7 @@ export const matrixData = {
     label: 'Рынок',
     blocks: [
       {
-        label: 'Проблемы и адресаты',
+        label: 'Проблемы и&nbsp;адресаты',
         elems: [
           'Проблема',
           'Целевая аудитория',
