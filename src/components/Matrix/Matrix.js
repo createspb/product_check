@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
-import { map } from 'underscore';
+import _ from 'underscore';
 import $ from 'jquery';
 import captions from '../../data/captions';
 import { isObject } from 'underscore';
+import Left from './Left';
 
 @connect(
   state => ({
     questions: state.questions.questions,
-    answers: state.answers,
     matrix: state.matrix.matrix
   }),
   { pushState })
@@ -17,12 +17,16 @@ export default class Matrix extends Component {
 
   static propTypes = {
     questions: PropTypes.object,
-    answers: PropTypes.object,
     matrix: PropTypes.object,
+    setMatrixResultValue: PropTypes.func.isRequired,
+    matrixByAnswers: PropTypes.object
   };
 
   constructor(props) {
     super(props);
+    this.matrix = this.props.matrixByAnswers ?
+                  this.props.matrixByAnswers :
+                  this.props.matrix;
     this.icons = require('../Styles/icons.less');
     this.styles = require('./Matrix.less');
     this.customRefs = {};
@@ -31,16 +35,35 @@ export default class Matrix extends Component {
 
   componentDidMount() {
     setTimeout(() => {
-      map(this.customRefs, (e) => {
-        const max = this.getMaxHeight(e);
-        $(e).height(max);
+      _.map(this.customRefs, (e) => {
+        const i = _.compact(e);
+        const max = this.getMaxHeight(i);
+        $(i).height(max);
       });
     }, 500);
   }
 
+  getLineBlocks(line) {
+    const { matrix } = this;
+    const lineBlocks = [];
+    _.each(matrix, (col) => {
+      lineBlocks.push(col.blocks[line].elems);
+    });
+    return _.flatten(lineBlocks);
+  }
+
+  getSummaryStatus(column) {
+    const summaryElems = this.matrix[column].summary.elems;
+    const errElemsBlocks = _.where(summaryElems, {
+      value: 0
+    });
+    // return true if has errors elems
+    return _.size(errElemsBlocks) > 0;
+  }
+
   getMaxHeight(elems) {
     let max = 0;
-    map(elems, (e) => {
+    _.map(elems, (e) => {
       if (max < $(e).outerHeight()) {
         max = $(e).outerHeight();
       }
@@ -69,38 +92,51 @@ export default class Matrix extends Component {
         <div
           className={[elemClass, this.getValueClass(elem.value)].join(' ')}
           key={key}
+          dangerouslySetInnerHTML={{__html: elem.text}}
+        />
+      );
+    }
+    return (
+      <div
+        className={styles.elem}
+        key={key}
+        dangerouslySetInnerHTML={{__html: elem}}
+      />
+    );
+  }
+
+  renderSummaryElem(elem, key) {
+    const { styles } = this;
+    const elemClass = styles.summaryElem;
+    if (isObject(elem)) {
+      return (
+        <div
+          className={[elemClass, this.getValueClass(elem.value)].join(' ')}
+          key={key}
         >{elem.text}</div>
       );
     }
     return (
-      <div className={styles.elem} key={key}>{elem}</div>
+      <div
+        className={[elemClass, this.getValueClass(elem.value)].join(' ')}
+        key={key}
+      >{elem}</div>
     );
   }
 
-  renderLeft(block) {
+  renderAfter(elem) {
     const { styles } = this;
+    const elemClass = styles.after;
+    if (isObject(elem)) {
+      return (
+        <div
+          className={[elemClass, this.getValueClass(elem.value)].join(' ')}
+        >{elem.text}</div>
+      );
+    }
     return (
-      <div className={styles.left}>
-        <div className={styles.leftLabel}>
-          <i className={this.icons[block.left.icon]}></i>
-          {block.left.label}
-        </div>
-        <div className={styles.progressWrap}>
-          <div className={styles.progressTop}>
-            <div className={styles.progressCaption}>
-              {this.captions.progressCaption}
-            </div>
-            <div className={styles.progressPercent}>
-              70%
-            </div>
-          </div>
-          <div className={styles.progress}>
-            <div className={styles.progressActive} style={{width: 70 + '%'}}></div>
-          </div>
-          <div className={styles.progressP}>
-            {this.captions.nice}
-          </div>
-        </div>
+      <div className={styles.after}>
+        {elem}
       </div>
     );
   }
@@ -116,25 +152,39 @@ export default class Matrix extends Component {
           this.customRefs[key].push(ref);
         }}
       >
-        {block.left && this.renderLeft(block)}
-        <div className={styles.blockLabel}>{block.label}</div>
+        {block.left &&
+          <Left
+            styles={styles}
+            icons={this.icons}
+            block={block}
+            level={key}
+            getLineBlocks={::this.getLineBlocks}
+            setMatrixResultValue={this.props.setMatrixResultValue}
+          />
+        }
+        <div
+          className={styles.blockLabel}
+          dangerouslySetInnerHTML={{__html: block.label}}
+        />
         <div className={styles.elems}>
-          {map(block.elems, (c, k) => {
+          {_.map(block.elems, (c, k) => {
             return this.renderElem(c, k);
           })}
         </div>
         {block.after &&
-          <div className={styles.after}>
-            {block.after}
-          </div>
+          this.renderAfter(block.after)
         }
       </div>
     );
   }
 
-  renderSummary(column) {
+  renderSummary(column, key) {
     const { styles } = this;
     const summaryKey = 'summaryKey';
+    const summaryLabelClasses = [styles.summaryLabel];
+    if (this.getSummaryStatus(key)) {
+      summaryLabelClasses.push(styles.summaryLabelWarning);
+    }
     return (
       <div
         className={styles.summary}
@@ -143,12 +193,14 @@ export default class Matrix extends Component {
           this.customRefs[summaryKey].push(ref);
         }}
       >
-        <div className={styles.summaryLabel}>
+        <div className={summaryLabelClasses.join(' ')}>
           {column.summary.label}
         </div>
         {column.summary.elems &&
           <div className={styles.summaryContent}>
-            {column.summary.elems.join(', ')}
+            {_.map(column.summary.elems, (c, k) => {
+              return this.renderSummaryElem(c, k);
+            })}
           </div>
         }
       </div>
@@ -161,21 +213,20 @@ export default class Matrix extends Component {
       <div className={styles.column} key={key}>
         <div className={styles.label}>{column.label}</div>
         <div className={styles.blocks}>
-          {map(column.blocks, (c, k) => {
+          {_.map(column.blocks, (c, k) => {
             return this.renderBlock(c, k);
           })}
         </div>
-        {this.renderSummary(column)}
+        {this.renderSummary(column, key)}
       </div>
     );
   }
 
   render() {
-    const { matrix } = this.props;
-    const { styles } = this;
+    const { styles, matrix } = this;
     return (
       <div className={styles.matrix}>
-        {map(matrix, (c, k) => {
+        {_.map(matrix, (c, k) => {
           return this.renderColumn(c, k);
         })}
       </div>

@@ -65,7 +65,34 @@
 }
 .elem {
   margin: 0 0 17px;
+  .fade;
   &:last-child {margin: 0;}
+}
+.summaryElem {
+  display: inline-block;
+  color: rgba(24, 28, 39, .4);
+  &:after {
+    content: ', ';
+    margin-right: 4px;
+  }
+  &:last-child:after {
+    content: '';
+    margin: 0;
+  }
+  &.ok {
+    color: rgba(24, 28, 39, .4);
+    &:before {display: none;}
+  }
+  &.error {
+    color: rgba(24, 28, 39, .8);
+    &:before {
+      display: inline-block;
+      position: relative;
+      top: auto;
+      left: auto;
+      margin: 0 4px 0 0;
+    }
+  }
 }
 .after {
   ._proxima_regular;
@@ -82,12 +109,28 @@
   border-radius: 2px;
   box-shadow: 0 6px 6px rgba(24, 28, 39, .2);
   pointer-events: none;
+  &.ok {
+    color: #181C27;
+    position: absolute;
+    &:before {display: none;}
+  }
+  &.error {
+    background: #764B4D;
+    box-shadow: 0 3px 3px rgba(24, 28, 39, .1);
+    color: inherit;
+    position: absolute;
+    &:before {
+      top: auto;
+      left: auto;
+      margin: 20px 0 0 -15px;
+    }
+  }
 }
 .summary {
   background: #fff;
   margin-right: -1px;
   border-right: 1px solid #EDDFD7;
-  padding: 0 20px;
+  padding: 0 25px;
   transition: all .3s;
 }
 .summaryLabel {
@@ -95,6 +138,18 @@
   ._big;
   ._proxima_regular;
   color: #181c27;
+}
+.summaryLabelWarning {
+  position: relative;
+  &:before {
+    content: ' ';
+    position: absolute;
+    width: 15px;
+    height: 14px;
+    margin-top: 2px;
+    left: -14px - 4px;
+    background: url("@{i}warning.png") no-repeat center;
+  }
 }
 .summaryContent {
   ._proxima_light;
@@ -106,7 +161,7 @@
 .left {
   position: absolute;
   width: 180px;
-  pointer-events: none;
+  // pointer-events: none;
   margin: 0 0 0 -215px;
 }
 .leftLabel {
@@ -147,7 +202,7 @@
 .progressP {
   ._proxima_light;
   font-size: 14px;
-  line-height: 24px;
+  line-height: 17px;
   color: rgba(255, 255, 255, .7);
 }
 
@@ -179,6 +234,23 @@
   }
 }
 .fade {
-  color: #fff;
-  opacity: .2;
+  color: rgba(255, 255, 255, .2);
+}
+
+.transparentButton {
+  ._transparentButton;
+  display: block;
+  padding-right: 25px;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 7px 10px 0;
+  margin: 20px 0 0 0;
+  i {
+    float: left;
+    margin: 0;
+  }
+  span {
+    display: block;
+    margin: 0 0 0 28px;
+  }
 }

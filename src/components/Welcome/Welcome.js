@@ -21,7 +21,7 @@ export default class Welcome extends Component {
   handleButton(event) {
     event.stopPropagation();
     this.refs.carcas.animateToTop(
-      () => this.props.pushState(null, '/questions/1')
+      () => this.props.pushState(null, '/warning')
     );
   }
 
@@ -43,8 +43,17 @@ export default class Welcome extends Component {
             target="_blank"
             href="http://createdigital.me/"
           >{welcome.companyName}</a>
+          {welcome.and}
+          <a
+            className={styles.a}
+            target="_blank"
+            href="http://digitalchange.me/"
+          >{welcome.companyPartner}</a>
         </div>
-        <p className={styles.p}>{welcome.text}</p>
+        <p
+          className={styles.p}
+          dangerouslySetInnerHTML={{__html: welcome.text}}
+        />
         <button onClick={::this.handleButton} className={styles.button}>
           <i className={icons.go}></i>
           {welcome.button}

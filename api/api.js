@@ -21,7 +21,7 @@ app.use(session({
   secret: 'react and redux rule!!!!',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
 app.use(bodyParser.json());
 
@@ -85,7 +85,7 @@ if (config.apiPort) {
   });
 
   io.on('connection', (socket) => {
-    socket.emit('news', {msg: `'Hello World!' from server`});
+    // socket.emit('news', {msg: `'Hello World!' from server`});
 
     socket.on('history', () => {
       for (let index = 0; index < bufferSize; index++) {

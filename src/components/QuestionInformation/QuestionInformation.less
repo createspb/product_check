@@ -21,7 +21,7 @@
   ._p;
   line-height: 29px;
   font-style: italic;
-  i {
+  b {
     width: 7px;
     height: 7px;
     position: absolute;
@@ -38,14 +38,27 @@
   ._h3;
 }
 .back {
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  top: -49px;
   left: 0;
-  width: 100px;
-  height: 100px;
   cursor: pointer;
-  padding: 100px 0 0 0;
-  opacity: .15;
   transition: opacity .3s;
-  &:hover { opacity: .4; }
+  width: 100%;
+  text-align: center;
+  &:hover { opacity: .8; }
+}
+.next {
+  position: absolute;
+  top: 49px + 19px / 2;
+  left: 0;
+  cursor: pointer;
+  transition: opacity .3s;
+  width: 100%;
+  text-align: center;
+  &:hover { opacity: .8; }
+}
+.nextPassive {
+  opacity: .1;
+  cursor: auto;
+  &:hover {opacity: .1;}
 }

@@ -1,0 +1,59 @@
+@import "../Styles/variables.less";
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  // border: 1px solid rgba(255, 255, 255, .2);
+  // border-width: 0 1px 1px 0;
+  border-radius: 5px;
+  thead {
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    th {
+      ._big;
+    }
+  }
+  tbody {
+    tr {
+      cursor: pointer;
+      &:first-child {
+        td {
+          padding-top: 20px;
+        }
+      }
+      &:nth-child(2n) {
+        background: rgba(255, 255, 255, .1);
+      }
+      &:hover {
+        background: rgba(255, 255, 255, .05);
+        &:nth-child(2n) {
+          background: rgba(255, 255, 255, .15);
+        }
+      }
+    }
+  }
+  td, th {
+    padding: 15px 5px;
+  }
+  th {
+    &:nth-child(1) { width: 50px; }
+    &:nth-child(3) { width: 120px; }
+  }
+}
+.id {
+  text-align: center;
+}
+.delete {
+  width: 50px;
+}
+.a {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid #fff;
+  &:hover {border-bottom: none;}
+}
+.date {
+  text-align: center;
+}
+.title {
+  text-align: left;
+}

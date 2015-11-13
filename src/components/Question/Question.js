@@ -1,6 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { isLoaded, load } from 'redux/modules/questions';
-import { storeAnswer } from 'redux/modules/answers';
+import {
+  isLoaded as isLoadedQuestions,
+  load as loadQuestions } from 'redux/modules/questions';
+import {
+  isLoaded as isLoadedAnswers,
+  load as loadAnswers,
+  storeAnswer } from 'redux/modules/answers';
 import { Carcas, QuestionInformation, Buttons } from '..';
 import { pushState } from 'redux-router';
 import { connect } from 'react-redux';
@@ -10,7 +15,8 @@ import { connect } from 'react-redux';
     questions: state.questions.questions,
     answers: state.answers
   }),
-  {pushState, isLoaded, load, storeAnswer})
+  {pushState, isLoadedQuestions, loadQuestions,
+   storeAnswer, isLoadedAnswers, loadAnswers })
 export default class Question extends Component {
 
   static propTypes = {
@@ -32,35 +38,44 @@ export default class Question extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const constructedProps = this.constructParams(nextProps);
-    if (constructedProps.questionId !== this.state.questionId) {
+    if (parseInt(nextProps.params.questionId, 10) - 1 !== this.state.questionId) {
       this.lock = false;
-      this.setState(constructedProps, () => {
+      this.setState(this.constructParams(nextProps), () => {
         this.changeQuestion();
+      });
+    } else {
+      const questionId = parseInt(nextProps.params.questionId, 10) - 1;
+      const answer = nextProps.answers &&
+                     nextProps.answers.answers &&
+                     nextProps.answers.answers[questionId];
+      this.setState({
+        answer: answer
       });
     }
   }
 
   constructParams(props) {
     const { questions } = props;
-    const questionId = parseInt(props.params.questionId, 10);
+    const questionId = parseInt(props.params.questionId, 10) - 1;
     const questionsCount = questions.count;
-    const question = questions[questionId - 1];
+    const question = questions[questionId];
     const back = props.params.back && true;
-    const prev = questionId > 0 && questionId - 1;
-    const prevQuestion = prev && questions[questionId - 2];
-    const next = questionsCount > questionId && questionId + 1;
-    const nextQuestion = next && questions[questionId];
+    const prevQuestion = questionId > 0 && questions[questionId - 1];
+    const prev = prevQuestion && questionId;
+    const nextQuestion = questionsCount - 1 > questionId && questions[questionId + 1];
+    const next = nextQuestion && questionId + 2;
+    const answer = props.answers &&
+                   props.answers.answers &&
+                   props.answers.answers[questionId];
     return {
       questionsCount, questionId, question, next,
-      nextQuestion, prev, prevQuestion, back
+      nextQuestion, prev, prevQuestion, back, answer
     };
   }
 
   changeQuestion() {
     const { carcas } = this.refs;
-    const { question, questionId, back } = this.state;
-    const nextQuestion = this.props.questions[questionId];
+    const { question, questionId, back, nextQuestion } = this.state;
     const topOfLine = question.firstOfType ?
       carcas.hideTopOfLine() :
       carcas.showTopOfLine();
@@ -77,7 +92,14 @@ export default class Question extends Component {
   }
 
   static fetchData(getState, dispatch) {
-    if (!isLoaded(getState())) return Promise.all([dispatch(load())]);
+    const promises = [];
+    if (!isLoadedQuestions(getState())) {
+      promises.push(dispatch(loadQuestions()));
+    }
+    if (!isLoadedAnswers(getState())) {
+      promises.push(dispatch(loadAnswers()));
+    }
+    return Promise.all(promises);
   }
 
   storeValue(value) {
@@ -97,16 +119,21 @@ export default class Question extends Component {
 
   handleButton() {
     const { carcas } = this.refs;
-    if (this.state.next) {
-      if (this.state.nextQuestion && this.state.nextQuestion.firstOfType) {
+    const { next, nextQuestion } = this.state;
+    if (next) {
+      if (nextQuestion && nextQuestion.firstOfType) {
         carcas.setLineColor('transparent', 0);
+        carcas.animateToTop(
+          () => this.props.pushState(null, '/subresults/' + next)
+        );
+      } else {
+        carcas.animateToTop(
+          () => this.props.pushState(null, '/questions/' + next)
+        );
       }
-      carcas.animateToTop(
-        () => this.props.pushState(null, '/questions/' + this.state.next)
-      );
     } else {
       carcas.animateToTop(
-        () => this.props.pushState(null, '/results')
+        () => this.props.pushState(null, '/name')
       );
     }
   }
@@ -115,34 +142,47 @@ export default class Question extends Component {
     if (!this.lock) {
       this.lock = true;
       const { carcas } = this.refs;
-      const { question } = this.state;
+      const { question, prev } = this.state;
       if (this.state.prev) {
         if (question.firstOfType) {
           carcas.setLineColor('transparent', 0);
         }
         carcas.animateToBottom(
-          () => this.props.pushState(null, '/questions/' + this.state.prev + '/back')
+          () => this.props.pushState(null, '/questions/' + prev + '/back')
         );
       }
     }
   }
 
+  handleWheel(event) {
+    const { answer } = this.state;
+    if (event.deltaY < -100) {
+      this.handleBack();
+    }
+    if (event.deltaY > 100 && answer) {
+      this.handleButton();
+    }
+  }
+
   render() {
-    const answer = this.props.answers[this.state.questionId];
-    const { question, questionsCount, prev } = this.state;
+    const { question, questionsCount, prev, answer } = this.state;
     return (
       <Carcas ref="carcas">
-        <QuestionInformation
-          handleBack={::this.handleBack}
-          back={prev}
-          questionsCount={questionsCount}
-          {...question}
-        />
-        <Buttons
-          answer={answer}
-          handleYes={::this.handleButtonWithTimeout}
-          handleNo={::this.handleButtonWithTimeout}
-        />
+        <div onWheel={::this.handleWheel}>
+          <QuestionInformation
+            handleBack={::this.handleBack}
+            handleNext={::this.handleButton}
+            back={prev}
+            next={answer}
+            questionsCount={questionsCount}
+            {...question}
+          />
+          <Buttons
+            answer={answer}
+            handleYes={::this.handleButtonWithTimeout}
+            handleNo={::this.handleButtonWithTimeout}
+          />
+        </div>
       </Carcas>
     );
   }

@@ -1,0 +1,37 @@
+@import "../Styles/variables.less";
+
+.h2 {
+  ._h2;
+  margin: 0 0 20px;
+}
+.transparentInput {
+  ._transparentButton;
+  display: block;
+  float: left;
+  border-radius: 0;
+  cursor: auto;
+  width: 150px;
+  &:hover {
+    background: rgba(255, 255, 255, .1);
+  }
+  &.error {
+    border-color: #C27164;
+  }
+  &:first-child {
+    border-radius: 2px 0 0 2px;
+    border-right: none;
+  }
+}
+.transparentButton {
+  ._transparentButton;
+  display: block;
+  float: left;
+  border-radius: 0 2px 2px 0;
+  border-left: none;
+  padding: 0 20px;
+}
+
+.error {
+  color: #C27164;
+  margin: 0 0 20px;
+}
