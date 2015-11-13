@@ -38,7 +38,7 @@ export default class Html extends Component {
       <html lang="en-us">
         <head>
           {DocumentMeta.renderAsReact()}
-
+          <title>Аудит продукта</title>
           <meta property="og:title" content="Аудит продуктовой идеи" />
           <meta name="twitter:title" content="Аудит продуктовой идеи" />
           <meta property="og:description" content="Проверь, готов ли ты к созданию продукта и инвестициям.  Одиннадцать вопросов, ответы на которые определяют успех или провал вашей идеи." />

@@ -38,6 +38,7 @@ export default {
     companyName: 'Create',
     and: ' & ',
     companyPartner: 'D/С',
+    companyPartnerLong: 'Digital Change',
     text: `Проверь, готов&nbsp;ли ты&nbsp;к&nbsp;созданию продукта и&nbsp;инвестициям. Одиннадцать
           вопросов, ответы на&nbsp;которые определят успех или провал идеи.`,
     button: 'Поехали'

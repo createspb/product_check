@@ -164,14 +164,40 @@ export default class Results extends Component {
               <i className={icons.tw}></i>
             </a></li>
           </ul>
-          <div className={styles.company}>
-            {results.from}
+        </div>
+      </div>
+    );
+  }
+
+  renderFooter(styles, icons) {
+    const { welcome } = captions;
+    return (
+      <div className={styles.footer}>
+        <div className={styles.license}>
+          <i className={icons.cc}></i>
+          <p className={styles.dh}>This work is licensed under a Creative Commons <em>Attribution-NonCommercial 4.0 International License.</em></p>
+        </div>
+        <div className={styles.git}>
+          <i className={icons.git}></i>
+          <p className={styles.oh}>
+            Открытый репозиторий на <a href="https://github.com/createspb/product_check" target="_blank">Github</a>
+          </p>
+        </div>
+        <div className={styles.copyright}>
+          <p className={styles.oh}>
+            {welcome.from}
             <a
               className={styles.a}
               target="_blank"
               href="http://createdigital.me/"
-            >{results.companyName}</a>
-          </div>
+            >{welcome.companyName}</a>
+            {welcome.and}
+            <a
+              className={styles.a}
+              target="_blank"
+              href="http://digitalchange.me/"
+            >{welcome.companyPartnerLong}</a>
+          </p>
         </div>
       </div>
     );
@@ -194,6 +220,7 @@ export default class Results extends Component {
           />
         </div>
         {this.renderNext(styles, icons, results)}
+        {this.renderFooter(styles, icons)}
       </ResultsCarcas>
     );
   }
