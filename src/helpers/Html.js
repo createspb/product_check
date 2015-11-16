@@ -53,11 +53,11 @@ export default class Html extends Component {
             <link href={assets.styles[style]} key={key} media="screen, projection"
                   rel="stylesheet" type="text/css"/>
           )}
+          <script dangerouslySetInnerHTML={this.trackingCode()} />
         </head>
         <body>
           <section id="content" style={{height: '100%'}} dangerouslySetInnerHTML={{__html: content}} />
           <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} />
-          <script dangerouslySetInnerHTML={this.trackingCode()} />
           <script src={assets.javascript.main}/>
         </body>
       </html>

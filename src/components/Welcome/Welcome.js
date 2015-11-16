@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import React, { Component, PropTypes } from 'react';
 import captions from '../../data/captions';
 import { isLoaded, load } from 'redux/modules/questions';
@@ -25,9 +26,14 @@ export default class Welcome extends Component {
     );
   }
 
+  handleExternalLink(event) {
+    ga('send', 'event', 'externalLink', $(event.currentTarget).attr('href')); // eslint-disable-line
+  }
+
   static fetchData(getState, dispatch) {
     if (!isLoaded(getState())) return Promise.all([dispatch(load())]);
   }
+
 
   render() {
     const { welcome } = captions;
@@ -42,12 +48,14 @@ export default class Welcome extends Component {
             className={styles.a}
             target="_blank"
             href="http://createdigital.me/"
+            onClick={::this.handleExternalLink}
           >{welcome.companyName}</a>
           {welcome.and}
           <a
             className={styles.a}
             target="_blank"
             href="http://digitalchange.me/"
+            onClick={::this.handleExternalLink}
           >{welcome.companyPartner}</a>
         </div>
         <p

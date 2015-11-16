@@ -108,12 +108,17 @@ export default class Results extends Component {
     this.props.repeatTest();
   }
 
+  handleExternalLink(event) {
+    ga('send', 'event', 'externalLink', $(event.currentTarget).attr('href')); // eslint-disable-line
+  }
+
   renderArticleButton(styles, icons, results) {
     return (
       <a
         href="http://createdigital.me/blog/2015/10/19/matrica-cifrovogo-produkta-vvodnaya/"
         target="_blank"
         className={styles.transparentButton}
+        onClick={::this.handleExternalLink}
       >
         <i className={icons.matrix1}></i>
         {results.articleTitle}
@@ -180,7 +185,7 @@ export default class Results extends Component {
         <div className={styles.git}>
           <i className={icons.git}></i>
           <p className={styles.oh}>
-            Открытый репозиторий на <a href="https://github.com/createspb/product_check" target="_blank">Github</a>
+            Открытый репозиторий на <a href="https://github.com/createspb/product_check" onClick={::this.handleExternalLink} target="_blank">Github</a>
           </p>
         </div>
         <div className={styles.copyright}>
@@ -189,12 +194,14 @@ export default class Results extends Component {
             <a
               className={styles.a}
               target="_blank"
+              onClick={::this.handleExternalLink}
               href="http://createdigital.me/"
             >{welcome.companyName}</a>
             {welcome.and}
             <a
               className={styles.a}
               target="_blank"
+              onClick={::this.handleExternalLink}
               href="http://digitalchange.me/"
             >{welcome.companyPartnerLong}</a>
           </p>

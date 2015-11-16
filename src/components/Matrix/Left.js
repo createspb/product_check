@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import captions from '../../data/captions';
 import _ from 'underscore';
+import $ from 'jquery';
 
 export default class Buttons extends Component {
 
@@ -55,12 +56,17 @@ export default class Buttons extends Component {
     return 'error';
   }
 
+  handleExternalLink(event) {
+    ga('send', 'event', 'externalLink', $(event.currentTarget).attr('href')); // eslint-disable-line
+  }
+
   renderArticleButton(styles, icons, results) {
     return (
       <a
         href="http://createdigital.me/blog/2015/10/19/matrica-cifrovogo-produkta-vvodnaya/"
         target="_blank"
         className={styles.transparentButton}
+        onClick={::this.handleExternalLink}
       >
         <i className={icons.matrix1}></i>
         {results.articleTitle}
