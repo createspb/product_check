@@ -25,6 +25,7 @@ export default {
   admin: {
     title: 'Панель администрирования',
     logout: 'Выход',
+    summary: 'Сводка',
     close: 'Закрыть'
   },
   adminTable: {

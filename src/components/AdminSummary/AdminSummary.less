@@ -1,0 +1,79 @@
+@import "../Styles/variables.less";
+
+.leftTable,
+.rightTable {
+  line-height: 30px;
+  table-layout: fixed;
+  tr:last-child td { padding-bottom: 5px; }
+  tr:first-child td { padding-top: 5px; }
+}
+
+.leftTable {
+  float: left;
+  width: 90px;
+  table-layout: fixed;
+  line-height: 30px;
+  background: #77505a;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(24, 28, 39, .3);
+}
+.idCol {
+  width: 30px;
+  ._proxima_regular;
+}
+.percentCol {
+  width: 60px;
+  overflow: hidden;
+  color: rgba(255, 255, 255, .5);
+}
+
+.tablesWrapper {
+  overflow: hidden;
+  clear: both;
+  padding: 35px 0 0 0;
+}
+
+
+.rightTable {
+  max-width: 100000px;
+  td {
+    // padding-left: 20px;
+    // padding-right: 20px;
+    width: 100px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+  }
+}
+.result {
+  width: 50px;
+}
+
+.rightWrapper {
+  margin: -35px 0 0 90px;
+  overflow-x: scroll;
+  overflow-y: visible;
+}
+
+.productNames {
+  // margin: -35px 0 0 0;
+  overflow: hidden;
+  line-height: 30px;
+  padding: 0 0 5px;
+}
+
+.productName {
+  float: left;
+  width: 100px;
+  padding-left: 5px;
+  padding-right: 5px;
+  white-space: nowrap;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  // padding: 0 20px;
+  // transform: rotate(90deg);
+  // line-height: 1;
+  // // text-align: right;
+
+}
