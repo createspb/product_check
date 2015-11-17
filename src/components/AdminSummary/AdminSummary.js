@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import _ from 'underscore';
+import moment from 'moment';
+import captions from '../../data/captions';
 
 export default class Admin extends Component {
 
@@ -32,13 +34,16 @@ export default class Admin extends Component {
 
   renderRight(question, questionId, styles) {
     const { results } = this.props;
+    const icons = require('../Styles/icons.less');
     console.log(question);
     return (
       <tr key={questionId}>
         {_.map(results, (result) => {
           return (
             <td className={styles.result}>
-              {result.answers && result.answers[questionId] && result.answers[questionId].value}
+              {result.answers && result.answers[questionId] &&
+                <i className={icons[result.answers[questionId].value + 'Active']}></i>
+              }
             </td>
           );
         })}
@@ -47,10 +52,12 @@ export default class Admin extends Component {
   }
 
   renderRightTop(result, styles) {
+    const createdAt = moment(result.createdAt);
     console.log(result);
     return (
       <div title={result.productName} className={styles.productName}>
-        {result.productName}
+        <span className={styles.productNameTitle}>{result.productName}</span>
+        <span className={styles.productNameDate}>{createdAt.format(captions.dateFormats.std)}</span>
       </div>
     );
   }
@@ -61,14 +68,18 @@ export default class Admin extends Component {
     return (
       <div className={styles.tablesWrapper}>
         <table className={styles.leftTable}>
-          {_.map(questions, (e, i) => this.renderLeft(e, i, styles))}
+          <tbody>
+            {_.map(questions, (e, i) => this.renderLeft(e, i, styles))}
+          </tbody>
         </table>
         <div className={styles.rightWrapper}>
           <div className={styles.productNames} style={{width: 100 * results.length}}>
             {_.map(results, (e) => this.renderRightTop(e, styles))}
           </div>
           <table className={styles.rightTable} style={{width: 100 * results.length}}>
-            {_.map(questions, (e, i) => this.renderRight(e, i, styles))}
+            <tbody>
+              {_.map(questions, (e, i) => this.renderRight(e, i, styles))}
+            </tbody>
           </table>
         </div>
       </div>
