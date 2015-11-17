@@ -175,7 +175,7 @@ export default class Results extends Component {
   }
 
   renderFooter(styles, icons) {
-    const { welcome } = captions;
+    const { welcome, results } = captions;
     return (
       <div className={styles.footer}>
         <div className={styles.license}>
@@ -190,14 +190,14 @@ export default class Results extends Component {
         </div>
         <div className={styles.copyright}>
           <p className={styles.oh}>
-            {welcome.from}
+            {results.from}
             <a
               className={styles.a}
               target="_blank"
               onClick={::this.handleExternalLink}
               href="http://createdigital.me/"
             >{welcome.companyName}</a>
-            {welcome.and}
+            {results.and}
             <a
               className={styles.a}
               target="_blank"
