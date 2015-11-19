@@ -109,3 +109,24 @@ export default class Buttons extends Component {
     );
   }
 }
+
+// <div className={styles.progressWrap}>
+//   <div className={styles.progressTop}>
+//     <div className={styles.progressCaption}>
+//       {this.captions.progressCaption}
+//     </div>
+//     <div className={styles.progressPercent}>
+//       {str}
+//     </div>
+//   </div>
+//   <div className={styles.progress}>
+//     <div className={styles.progressActive} style={{width: val + '%'}}></div>
+//   </div>
+//   <div
+//     className={styles.progressP}
+//     dangerouslySetInnerHTML={{__html: lvlCaption}}
+//   />
+//   {this.props.level === 0 &&
+//     this.renderArticleButton(styles, icons, results)
+//   }
+// </div>
