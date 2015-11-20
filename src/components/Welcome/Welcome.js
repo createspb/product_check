@@ -1,9 +1,11 @@
 import $ from 'jquery';
 import React, { Component, PropTypes } from 'react';
-import captions from '../../data/captions';
 import { isLoaded, load } from 'redux/modules/questions';
 import { pushState } from 'redux-router';
 import { connect } from 'react-redux';
+import MobileDetect from 'mobile-detect';
+
+import captions from '../../data/captions';
 import { Carcas } from '..';
 
 @connect(
@@ -17,6 +19,12 @@ export default class Welcome extends Component {
 
   componentDidMount() {
     this.refs.carcas.bottomToCenter();
+    if (window) {
+      const md = new MobileDetect(window.navigator.userAgent);
+      if (md.mobile() || md.phone() || md.tablet()) {
+        this.props.pushState(null, '/mobile');
+      }
+    }
   }
 
   handleButton(event) {
@@ -33,7 +41,6 @@ export default class Welcome extends Component {
   static fetchData(getState, dispatch) {
     if (!isLoaded(getState())) return Promise.all([dispatch(load())]);
   }
-
 
   render() {
     const { welcome } = captions;

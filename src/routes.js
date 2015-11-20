@@ -14,6 +14,7 @@ import {
     Admin,
     Login,
     NotFound,
+    Mobile
   } from 'components';
 
 export default (store) => {
@@ -60,6 +61,7 @@ export default (store) => {
         <Route path="subresults/:questionId" component={Subresults} />
         <Route path="name" component={ProductName} />
         <Route path="results" component={Results} />
+        <Route path="mobile" component={Mobile} />
         <Route onEnter={requireUnlogin} path="login" component={Login} />
         <Route onEnter={requireLogin} path="admin" component={Admin} />
       </Route>

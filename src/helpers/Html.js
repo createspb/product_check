@@ -46,6 +46,9 @@ export default class Html extends Component {
           <meta name="twitter:image" content="http://product-check.createdigital.me/sharing.png" />
           <meta property="og:image" content="http://product-check.createdigital.me/sharing.png" />
 
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+
           <link rel="shortcut icon" href="/favicon.png" />
 
           {/* styles (will be present only in production with webpack extract text plugin) */}
