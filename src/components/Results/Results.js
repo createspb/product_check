@@ -144,13 +144,13 @@ export default class Results extends Component {
           {this.renderArticleButton(styles, icons, results)}
         </div>
         <div className={styles.center}>
-          <p className={styles.p}>{results.nextCenter}</p>
+          <p className={styles.p} dangerouslySetInnerHTML={{__html: results.nextCenter}} />
           <button
             className={styles.transparentButton}
             onClick={::this.handleRepeatButton}
           >
             <i className={icons.repeat}></i>
-            Пройти еще раз
+            {results.repeat}
           </button>
         </div>
         <div className={styles.right}>
@@ -197,13 +197,6 @@ export default class Results extends Component {
               onClick={::this.handleExternalLink}
               href="http://createdigital.me/"
             >{welcome.companyName}</a>
-            {results.and}
-            <a
-              className={styles.a}
-              target="_blank"
-              onClick={::this.handleExternalLink}
-              href="http://digitalchange.me/"
-            >{welcome.companyPartnerLong}</a>
           </p>
         </div>
       </div>
