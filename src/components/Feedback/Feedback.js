@@ -1,10 +1,21 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import captions from '../../data/captions';
+import { send } from 'redux/modules/feedback';
+import { connect } from 'react-redux';
 
+@connect(
+  state => ({
+    feedback: state.feedback.result,
+    error: state.feedback.error
+  }),
+  { send })
 export default class Feedback extends Component {
 
   static propTypes = {
-    handleCloseFeedback: React.PropTypes.func.isRequired
+    handleCloseFeedback: React.PropTypes.func.isRequired,
+    send: React.PropTypes.func.isRequired,
+    feedback: React.PropTypes.any,
+    error: React.PropTypes.any,
   };
 
   constructor(props) {
@@ -12,26 +23,74 @@ export default class Feedback extends Component {
     this.styles = require('./Feedback.less');
     this.icons = require('../Styles/icons.less');
     this.state = {
-      sended: false
+      sended: false,
+      animate: false,
+      errors: false
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.feedback) {
+      this.setState({
+        sended: true
+      }, () => {
+        setTimeout(() => {
+          this.setState({
+            animate: true
+          });
+        }, 300);
+      });
+    }
+    if (nextProps.error) {
+      this.setError();
+    }
+  }
+
+  setError() {
+    this.setState({
+      errors: true
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          errors: false
+        });
+      }, 1500);
+    });
   }
 
   handleSubmit(event) {
     event.stopPropagation();
+    if (this.email.value !== '' && this.textarea.value !== '') {
+      this.props.send({
+        email: this.email.value,
+        text: this.textarea.value,
+      });
+    } else {
+      this.setError();
+    }
   }
 
   renderForm() {
     const { styles, icons } = this;
     const { feedback } = captions;
+    const errorClass = this.state.errors ? styles.error : '';
     return (
       <div className={styles.form}>
         <div className={styles.label}>{feedback.label}</div>
         <div className={styles.field}>
           <i className={icons.email}></i>
-          <input type="email" placeholder={feedback.email} />
+          <input
+            type="email"
+            className={[styles.email, errorClass].join(' ')}
+            placeholder={feedback.email}
+            ref={(ref) => this.email = ref}
+          />
         </div>
         <div className={styles.field}>
-          <textarea placeholder={feedback.text}></textarea>
+          <textarea
+            className={[styles.textarea, errorClass].join(' ')}
+            placeholder={feedback.text}
+            ref={(ref) => this.textarea = ref}></textarea>
         </div>
         <div className={styles.footer}>
           <button
@@ -44,9 +103,14 @@ export default class Feedback extends Component {
   }
 
   renderSuccess() {
+    const { styles, icons } = this;
+    const { feedback } = captions;
+    const animateClass = this.state.animate ? icons.__animated : '';
     return (
-      <div>
-        Успех
+      <div className={styles.form}>
+        <div className={styles.label}>{feedback.successLabel}</div>
+        <p className={styles.p}>{feedback.successText}</p>
+        <i className={[icons.sended, animateClass].join(' ')}></i>
       </div>
     );
   }

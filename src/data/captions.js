@@ -2,8 +2,10 @@ export default {
   feedback: {
     label: 'ОСТАВИТЬ ОТЗЫВ',
     email: 'Почта',
-    text: 'Опишите вашу задачу и мы свяжемся с вами',
+    text: 'Текст сообщения',
     button: 'ОТПРАВИТЬ',
+    successLabel: 'ОТЛИЧНО!',
+    successText: 'Мы скоро свяжемся с вами',
   },
   subresults: {
     label: 'Результаты',

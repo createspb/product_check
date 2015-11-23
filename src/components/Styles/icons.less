@@ -206,6 +206,25 @@
 .email {
   display: block;
   width: 24px;
+  position: absolute;
+  top: 50%;
+  left: 0;
   height: 23px;
+  margin: -23px/2 0 0 0;
   background: url("@{i}email.png") no-repeat center;
+}
+.sended {
+  display: block;
+  position: absolute;
+  top: 601px;
+  left: -191px;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  background: url("@{i}sended.png") no-repeat center;
+  width: 200px;
+  height: 266px;
+  &.__animated {
+    top: 205px;
+    left: 186px;
+  }
 }

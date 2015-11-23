@@ -4,6 +4,8 @@ You can use this project as a base for your own interactive tests.
 
 Demo: http://product-check.createdigital.me/
 
+Hope it will be useful, contributions are welcome.
+
 # Docs
 
 To run in development mode:

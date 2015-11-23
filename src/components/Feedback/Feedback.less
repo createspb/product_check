@@ -32,6 +32,11 @@
   ._h2;
   color: #212129;
   letter-spacing: 1.44px;
+  margin: 0 0 25px;
+}
+.field {
+  margin: 0 0 20px;
+  position: relative;
 }
 .footer {
   position: absolute;
@@ -55,4 +60,43 @@
   &:focus {
     outline: none;
   }
+}
+.p {
+  ._p;
+  color: #212129;
+}
+.email {
+  border: none;
+  width: 100%;
+  ._p;
+  height: 45px;
+  line-height: 45px;
+  padding: 0 0 0 45px;
+  border-bottom: 1px solid rgba(33, 33, 41, .03);
+  color: #212129;
+  &:focus {
+    outline: none;
+  }
+}
+.textarea {
+  ._p;
+  border: none;
+  margin: 0;
+  border-bottom: 1px solid transparent;
+  padding: 0;
+  width: 100%;
+  height: 250px;
+  color: #212129;
+  transition: color .3s, border .3s;
+  &:focus {
+    outline: none;
+  }
+}
+.error {
+  color: red;
+  border-bottom: 1px solid red;
+  &::-webkit-input-placeholder {color: red;}
+  &::-moz-placeholder          {color: red;}
+  &:-moz-placeholder           {color: red;}
+  &:-ms-input-placeholder      {color: red;}
 }
