@@ -9,7 +9,6 @@ const answers = {
   7: { id: 7, value: 'yes' },
   8: { id: 8, value: 'yes' },
   9: { id: 9, value: 'yes' },
-  10: { id: 10, value: 'yes' }
 }
 
 export default answers;

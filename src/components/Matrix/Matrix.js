@@ -92,8 +92,15 @@ export default class Matrix extends Component {
         <div
           className={[elemClass, this.getValueClass(elem.value)].join(' ')}
           key={key}
-          dangerouslySetInnerHTML={{__html: elem.text}}
-        />
+        >
+          <span dangerouslySetInnerHTML={{__html: elem.text}} />
+          {elem.tooltip &&
+            <span
+              className={styles.tooltip}
+              dangerouslySetInnerHTML={{__html: elem.tooltip}}
+            />
+          }
+        </div>
       );
     }
     return (

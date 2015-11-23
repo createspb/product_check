@@ -25,6 +25,9 @@ export default class ProductName extends Component {
 
   componentDidMount() {
     this.refs.carcas.bottomToCenter();
+    if (window) {
+      ga('send', 'event', 'productName'); // eslint-disable-line
+    }
   }
 
   componentWillReceiveProps(nextProps) {

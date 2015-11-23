@@ -21,6 +21,7 @@ export default class Welcome extends Component {
     this.refs.carcas.bottomToCenter();
     if (window) {
       const md = new MobileDetect(window.navigator.userAgent);
+      ga('send', 'event', 'welcome'); // eslint-disable-line
       if (md.mobile() || md.phone() || md.tablet()) {
         this.props.pushState(null, '/mobile');
       }
