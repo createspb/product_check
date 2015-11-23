@@ -30,6 +30,11 @@ Admin password (/admin) on Heroku you can set in "Config Variables", example:
 
     PASSWORD: admin
 
+To configure Amazon SES on Heroku you’d need to set "Config Variables" as follows:
+
+    SES_ACCESS_KEY: ___
+    SES_KEY_ID: ___
+
 You can deploy this to [Heroku](https://www.heroku.com)
 
     $ heroku login

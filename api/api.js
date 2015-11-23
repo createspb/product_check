@@ -1,13 +1,14 @@
 require('../server.babel'); // babel registration (runtime transpilation for node)
 
 import express from 'express';
-import session from 'express-session';
+// import session from 'express-session';
 import bodyParser from 'body-parser';
 import config from '../src/config';
 import * as actions from './actions/index';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import SocketIo from 'socket.io';
+import cookieSession from 'cookie-session';
 
 const pretty = new PrettyError();
 const app = express();
@@ -17,17 +18,22 @@ const server = new http.Server(app);
 const io = new SocketIo(server);
 io.path('/ws');
 
-app.use(session({
-  secret: 'react and redux rule!!!!',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 }
-}));
+app.use(cookieSession({
+  name: 'session',
+  secret: 'session secret'
+}))
+// app.use(session({
+//   secret: '---',
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: { maxAge: 1000 * 60 * 60 * 24 }
+// }));
 app.use(bodyParser.json());
 
 
 app.use((req, res) => {
 
+  req.sessionOptions.maxAge = 1000 * 60 * 60 * 24 
   const matcher = req.url.split('?')[0].split('/').slice(1);
 
   let action = false;
