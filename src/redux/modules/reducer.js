@@ -8,6 +8,7 @@ import answers from './answers';
 import matrix from './matrix';
 import productName from './productName';
 import results from './results';
+import feedback from './feedback';
 
 export default combineReducers({
   router: routerStateReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   answers,
   matrix,
   productName,
-  results
+  results,
+  feedback
 });

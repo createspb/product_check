@@ -1,4 +1,12 @@
 export default {
+  feedback: {
+    label: 'ОСТАВИТЬ ОТЗЫВ',
+    email: 'Почта',
+    text: 'Текст сообщения',
+    button: 'ОТПРАВИТЬ',
+    successLabel: 'ОТЛИЧНО!',
+    successText: 'Мы скоро свяжемся с вами',
+  },
   subresults: {
     label: 'Результаты',
     button: 'Продолжить',
@@ -58,6 +66,8 @@ export default {
     from: 'от ',
     companyName: 'Create',
     repeat: 'Повторить попытку',
+    feedback: 'Помогите сделать сервис лучше',
+    feedbackButton: 'Обратная связь',
   },
   login: {
     placeholderName: 'Логин',
