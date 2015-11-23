@@ -1,3 +1,9 @@
+Product Check is a tool aimed at entrepreneurs to help them assess the product’s idea before making huge investments into development.
+
+You can use this project as a base for your own interactive tests.
+
+Demo: http://product-check.createdigital.me/
+
 # Docs
 
 To run in development mode:

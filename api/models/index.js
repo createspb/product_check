@@ -19,7 +19,7 @@ if (process.env.DATABASE_URL) {
     }
   })
 } else {
-  var sequelize = new Sequelize('obsvtr', 'postgres', '', {
+  var sequelize = new Sequelize('obsvtr', 'juicyigor', '', {
     host: 'localhost',
     dialect: 'postgres'
   });
@@ -28,7 +28,7 @@ if (process.env.DATABASE_URL) {
 
 
 
-var db        = {};
+var db = {};
 
 fs
   .readdirSync(__dirname)
