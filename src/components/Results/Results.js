@@ -1,5 +1,5 @@
+import $ from 'jquery';
 import React, { Component, PropTypes } from 'react';
-import { ResultsCarcas, Matrix } from '..';
 import { connect } from 'react-redux';
 import {
   isLoaded as isLoadedQuestions,
@@ -13,7 +13,7 @@ import {
   load as loadMatrix } from 'redux/modules/matrix';
 import { pushState } from 'redux-router';
 import captions from '../../data/captions';
-import $ from 'jquery';
+import { ResultsCarcas, Matrix, Feedback } from '..';
 
 @connect(
   state => ({
@@ -39,6 +39,9 @@ export default class Results extends Component {
     if (this.hasLostAnswers()) {
       this.props.pushState(null, '/');
     }
+    this.state = {
+      feedback: false
+    };
   }
 
   componentDidMount() {
@@ -115,6 +118,20 @@ export default class Results extends Component {
     ga('send', 'event', 'externalLink', $(event.currentTarget).attr('href')); // eslint-disable-line
   }
 
+  handleCloseFeedback(event) {
+    event.stopPropagation();
+    this.setState({
+      feedback: false
+    });
+  }
+
+  handleFeedbackButton(event) {
+    event.stopPropagation();
+    this.setState({
+      feedback: true
+    });
+  }
+
   renderArticleButton(styles, icons, results) {
     return (
       <a
@@ -142,18 +159,31 @@ export default class Results extends Component {
           <i className={icons.next}></i>
           {results.nextH1}
         </h1>
-        <div className={styles.left}>
-          <p className={styles.p}>{results.nextLeft}</p>
-          {this.renderArticleButton(styles, icons, results)}
-        </div>
+
         <div className={styles.center}>
-          <p className={styles.p} dangerouslySetInnerHTML={{__html: results.nextCenter}} />
+          <p
+            className={styles.p}
+            dangerouslySetInnerHTML={{__html: results.nextCenter}}
+          />
           <button
             className={styles.transparentButton}
             onClick={::this.handleRepeatButton}
           >
             <i className={icons.repeat}></i>
             {results.repeat}
+          </button>
+        </div>
+        <div className={styles.feedback}>
+          <p
+            className={styles.p}
+            dangerouslySetInnerHTML={{__html: results.feedback}}
+          />
+          <button
+            className={styles.transparentButton}
+            onClick={::this.handleFeedbackButton}
+          >
+            <i className={icons.feedback}></i>
+            {results.feedbackButton}
           </button>
         </div>
         <div className={styles.right}>
@@ -176,6 +206,11 @@ export default class Results extends Component {
       </div>
     );
   }
+
+  // <div className={styles.left}>
+  //   <p className={styles.p}>{results.nextLeft}</p>
+  //   {this.renderArticleButton(styles, icons, results)}
+  // </div>
 
   renderFooter(styles, icons) {
     const { welcome, results } = captions;
@@ -210,6 +245,7 @@ export default class Results extends Component {
     const styles = require('./Results.less');
     const icons = require('../Styles/icons.less');
     const { results } = captions;
+    const { feedback } = this.state;
     return (
       <ResultsCarcas ref="carcas">
         <div className={styles.matrix}>
@@ -224,6 +260,9 @@ export default class Results extends Component {
         </div>
         {this.renderNext(styles, icons, results)}
         {this.renderFooter(styles, icons)}
+        {feedback &&
+          <Feedback handleCloseFeedback={::this.handleCloseFeedback} />
+        }
       </ResultsCarcas>
     );
   }

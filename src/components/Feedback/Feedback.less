@@ -1,0 +1,58 @@
+@import "../Styles/variables.less";
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(24, 28, 39, .9);
+}
+.window {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 32px 48px rgba(24, 28, 39, .7);
+  width: 600px;
+  height: 600px;
+  margin: -300px 0 0 -300px;
+}
+.form {
+  padding: 72px 71px 0;
+}
+.label {
+  ._h2;
+  color: #212129;
+  letter-spacing: 1.44px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.button {
+  ._big;
+  width: 100%;
+  border: none;
+  padding: 0;
+  margin: 0;
+  height: 70px;
+  line-height: 70px;
+  cursor: pointer;
+  background: linear-gradient(-135deg, #3F7CCF 0%, #2244A7 100%);
+  &:hover {
+    background: linear-gradient(-135deg, lighten(#3F7CCF, 10%) 0%, lighten(#2244A7, 10%) 100%);
+  }
+  &:focus {
+    outline: none;
+  }
+}

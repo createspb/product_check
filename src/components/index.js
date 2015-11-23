@@ -20,3 +20,4 @@ export AdminTableRow from './AdminTableRow/AdminTableRow';
 export Warning from './Warning/Warning';
 export Subresults from './Subresults/Subresults';
 export Mobile from './Mobile/Mobile';
+export Feedback from './Feedback/Feedback';
