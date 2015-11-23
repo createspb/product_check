@@ -7,6 +7,12 @@ export default class Mobile extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    if (window) {
+      ga('send', 'event', 'mobile'); // eslint-disable-line
+    }
+  }
+
   render() {
     const icons = require('../Styles/icons.less');
     const styles = require('./Mobile.less');

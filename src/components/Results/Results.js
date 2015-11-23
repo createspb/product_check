@@ -43,6 +43,9 @@ export default class Results extends Component {
 
   componentDidMount() {
     const { carcas } = this.refs;
+    if (window) {
+      ga('send', 'event', 'results'); // eslint-disable-line
+    }
     carcas.bottomToCenter();
   }
 

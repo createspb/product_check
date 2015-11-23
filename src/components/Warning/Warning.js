@@ -15,6 +15,9 @@ export default class Warning extends React.Component {
 
   componentDidMount() {
     this.refs.carcas.bottomToCenter();
+    if (window) {
+      ga('send', 'event', 'warning'); // eslint-disable-line
+    }
   }
 
   handleButton(event) {
