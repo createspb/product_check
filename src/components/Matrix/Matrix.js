@@ -86,7 +86,10 @@ export default class Matrix extends Component {
 
   renderElem(elem, key) {
     const { styles } = this;
-    const elemClass = styles.elem;
+    let elemClass = styles.elem;
+    if (elem.tooltip) {
+      elemClass = [elemClass, styles.hoverable].join(' ');
+    }
     if (isObject(elem)) {
       return (
         <div

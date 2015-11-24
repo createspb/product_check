@@ -218,7 +218,13 @@ export default class Results extends Component {
       <div className={styles.footer}>
         <div className={styles.license}>
           <i className={icons.cc}></i>
-          <p className={styles.dh}>This work is licensed under a Creative Commons <em>Attribution-NonCommercial 4.0 International License.</em></p>
+          <p className={styles.dh}>
+            {'This work is licensed under a Creative Commons '}
+            <a onClick={::this.handleExternalLink}
+              target="_blank"
+              href="http://creativecommons.org/licenses/by-nc/4.0/"
+            >Attribution-NonCommercial 4.0 International License.</a>
+          </p>
         </div>
         <div className={styles.git}>
           <i className={icons.git}></i>
