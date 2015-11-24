@@ -75,7 +75,7 @@ export default class Question extends Component {
 
   changeQuestion() {
     if (window) {
-      ga('send', 'event', 'question', this.props.params.questionId); // eslint-disable-line
+      ga('send', 'event', 'question', 'question_' + this.props.params.questionId); // eslint-disable-line
     }
     const { carcas } = this.refs;
     const { question, questionId, back, nextQuestion } = this.state;
