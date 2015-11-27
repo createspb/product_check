@@ -108,7 +108,7 @@ export const matrixData = {
       }
     ],
     summary: {
-      label: 'Доля рынка'
+      label: ''
     }
   },
   "1": {
@@ -396,7 +396,7 @@ export const matrixData = {
       }
     ],
     summary: {
-      label: 'Выручка'
+      label: ''
     }
   }
 };

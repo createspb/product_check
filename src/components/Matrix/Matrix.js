@@ -141,13 +141,15 @@ export default class Matrix extends Component {
       return (
         <div
           className={[elemClass, this.getValueClass(elem.value)].join(' ')}
-        >{elem.text}</div>
+          dangerouslySetInnerHTML={{__html: elem.text}}
+        />
       );
     }
     return (
-      <div className={styles.after}>
-        {elem}
-      </div>
+      <div
+        className={styles.after}
+        dangerouslySetInnerHTML={{__html: elem.text}}
+      />
     );
   }
 

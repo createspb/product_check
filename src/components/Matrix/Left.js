@@ -83,7 +83,7 @@ export default class Buttons extends Component {
       <div className={styles.left}>
         <div className={styles.leftLabel}>
           <i className={icons[block.left.icon]}></i>
-          {block.left.label}
+          <span dangerouslySetInnerHTML={{__html: block.left.label}}/>
         </div>
         <div className={styles.progressWrap}>
           <div className={styles.progressTop}>
