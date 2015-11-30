@@ -241,6 +241,13 @@ export default class Results extends Component {
               onClick={::this.handleExternalLink}
               href="http://createdigital.me/"
             >{welcome.companyName}</a>
+            {results.and}
+            <a
+              className={styles.a}
+              target="_blank"
+              href="http://digitalchange.me/"
+              onClick={::this.handleExternalLink}
+            >{results.companyPartner}</a>
           </p>
         </div>
       </div>

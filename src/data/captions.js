@@ -39,7 +39,7 @@ export default {
     h1: 'АУДИТ ИДЕИ ПРОДУКТА',
     from: 'от ',
     companyName: 'Create',
-    and: ' при поддержке ',
+    and: ' и ',
     companyPartner: 'Digital Change',
     companyPartnerLong: 'Digital Change',
     text: `Проверьте, готовы&nbsp;ли вы&nbsp;к&nbsp;созданию продукта и&nbsp;инвестициям. Десять вопросов, ответы на&nbsp;которые определят успех или провал идеи.`,
@@ -54,7 +54,7 @@ export default {
     button: 'Готово'
   },
   results: {
-    and: ' & ',
+    and: ' и ',
     h1: 'Поздравляем! Вас ждет провал',
     p: 'Слишком много вопросов. Вам нужно хорошенько поработать над своей идеей.',
     nextH1: 'Что дальше',
@@ -65,6 +65,7 @@ export default {
     articleDescription: 'Блог Create Digital',
     from: 'от ',
     companyName: 'Create',
+    companyPartner: 'D/C',
     repeat: 'Повторить попытку',
     feedback: 'Помогите сделать сервис лучше',
     feedbackButton: 'Обратная связь',
