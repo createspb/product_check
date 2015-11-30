@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { isLoaded, load } from 'redux/modules/questions';
 import { pushState } from 'redux-router';
 import { connect } from 'react-redux';
-import MobileDetect from 'mobile-detect';
+// import MobileDetect from 'mobile-detect';
 
 import captions from '../../data/captions';
 import { Carcas } from '..';
@@ -19,13 +19,13 @@ export default class Welcome extends Component {
 
   componentDidMount() {
     this.refs.carcas.bottomToCenter();
-    if (window) {
-      const md = new MobileDetect(window.navigator.userAgent);
-      ga('send', 'event', 'welcome'); // eslint-disable-line
-      if (md.mobile() || md.phone() || md.tablet()) {
-        this.props.pushState(null, '/mobile');
-      }
-    }
+    // if (window) {
+    //   const md = new MobileDetect(window.navigator.userAgent);
+    //   ga('send', 'event', 'welcome'); // eslint-disable-line
+    //   if (md.mobile() || md.phone() || md.tablet()) {
+    //     this.props.pushState(null, '/mobile');
+    //   }
+    // }
   }
 
   handleButton(event) {
