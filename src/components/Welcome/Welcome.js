@@ -49,6 +49,7 @@ export default class Welcome extends Component {
     const icons = require('../Styles/icons.less');
     return (
       <Carcas ref="carcas">
+        <i className={icons.mainMobile}></i>
         <h1 className={styles.h1}>{welcome.h1}</h1>
         <div className={styles.company}>
           {welcome.from}

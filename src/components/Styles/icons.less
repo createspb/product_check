@@ -18,6 +18,18 @@
   height: 316px;
   background: url("@{i}main.svg") no-repeat center;
 }
+i.mainMobile {
+  width: 134px/2;
+  height: 150px/2;
+  display: block;
+  background: url("@{i}main1.png") no-repeat center;
+  background-size: 100%;
+  margin: 0 0 35px;
+  display: none;
+  @media only screen and (max-width: 1000px) {
+    display: block;
+  }
+}
 
 .yes, .yesActive {
   display: inline-block;

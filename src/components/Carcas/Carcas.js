@@ -15,6 +15,12 @@ export default class Carcas extends Component {
     this.wrapClass = this.styles.containerLeft;
   }
 
+  componentWillReceiveProps() {
+    setTimeout(() => {
+      $(this.container).scrollTop(0);
+    }, 500);
+  }
+
   // Animations
   setBackgroundClass(className) {
     $(this.refs.bgLayer1).css({
