@@ -31,11 +31,27 @@
     margin: -3.5px 0 0 0;
     background: #b6e1bc;
   }
+  @media only screen and (max-width: 1000px) {
+    right: auto;
+    left: 0;
+    font-size: 12px;
+    width: 40px;
+    text-align: center;
+    b {display: none;}
+  }
 }
 .firstOfType {
   position: fixed;
   top: 50px;
-  ._h3;
+  ._proxima_light;
+  font-size: 30px;
+  line-height: 38px;
+  color: #97D4B4;
+  @media only screen and (max-width: 1000px) {
+    position: relative;
+    top: auto;
+    margin: 0 0 15px;
+  }
 }
 .back {
   position: absolute;
@@ -46,6 +62,9 @@
   width: 100%;
   text-align: center;
   &:hover { opacity: .8; }
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .next {
   position: absolute;
@@ -56,6 +75,9 @@
   width: 100%;
   text-align: center;
   &:hover { opacity: .8; }
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .nextPassive {
   opacity: .1;

@@ -51,7 +51,8 @@ export default {
   },
   name: {
     label: 'Укажите название продукта',
-    button: 'Готово'
+    button: 'Готово',
+    placeholder: 'Введите название продукта',
   },
   results: {
     and: ' и ',

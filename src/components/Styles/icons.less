@@ -54,6 +54,7 @@
   margin: 0 0 0 -7px;
   background: url("@{i}top.svg") no-repeat center;
 }
+
 .idea {
   background: url("@{i}idea.png") no-repeat center;
 }
@@ -76,7 +77,16 @@
   position: absolute;
   top: (50px - 44px) / -2;
   left: -15px - 50px;
+  @media only screen and (max-width: 1000px) {
+    position: relative;
+    top: auto;
+    left: auto;
+    display: block;
+    margin: 0 0 10px;
+  }
 }
+// .idea { @media only screen and (max-width: 1000px) {  } }
+// .results { @media only screen and (max-width: 1000px) {  } }
 
 .back {
   display: block;
@@ -147,12 +157,22 @@
   top: 50%;
   margin: -50px/2 0 0 0;
   left: -67px;
+  @media only screen and (max-width: 1000px) {
+    position: relative;
+    left: auto;
+    top: auto;
+    display: block;
+    margin: 0;
+  }
 }
 .dev {
   background: url("@{i}dev.png") no-repeat center;
 }
 .guru {
   background: url("@{i}guru.png") no-repeat center;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .len {
   background: url("@{i}len.png") no-repeat center;
@@ -168,6 +188,12 @@
   position: absolute;
   background: url("@{i}warningWhite.png") no-repeat center;
   left: -27px - 23px;
+  @media only screen and (max-width: 1000px) {
+    position: relative;
+    left: auto;
+    display: block;
+    margin: 0 0 20px;
+  }
 }
 
 .remove {

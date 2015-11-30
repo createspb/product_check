@@ -5,6 +5,12 @@
   position: relative;
   color: #F9B185;
   margin: 0 0 15px;
+  @media only screen and (max-width: 1000px) {
+    ._h4;
+    position: relative;
+    color: #F9B185;
+    margin: 0 0 15px;
+  }
 }
 .p {
   ._p;
@@ -22,12 +28,18 @@
   ._clearfix;
   .h1 {
     margin: 0 0 45px;
+    @media only screen and (max-width: 1000px) {
+      display: none;
+    }
   }
 }
 .feedback {
   float: left;
   width: 195px;
   margin: 0 0 0 30px;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
   p {
     line-height: 20px;
     margin: 0 0 20px;
@@ -45,6 +57,9 @@
   width: 225px;
   float: left;
   margin: 0 0 0 210px;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
   p {
     line-height: 40px;
     margin: 0 0 20px;
@@ -53,7 +68,11 @@
 .right {
   width: 240px;
   float: right;
-  // margin:  0 0 0 80px;
+  @media only screen and (max-width: 1000px) {
+    float: none;
+    width: auto;
+    width: 250px;
+  }
   .a {
     ._a;
   }
@@ -61,6 +80,9 @@
 .social {
   margin: 24px 0 120px 0;
   overflow: hidden;
+  @media only screen and (max-width: 1000px) {
+    margin: 24px 0;
+  }
   li {
     display: block;
     float: left;
@@ -106,6 +128,9 @@
   font-size: 14px;
   line-height: 17px;
   color: #fff;
+  @media only screen and (max-width: 1000px) {
+    padding: 15px 0 0 0;
+  }
 }
 .license {
   float: left;
@@ -113,13 +138,22 @@
   em {
     color: #F7AF84;
   }
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .git {
   float: left;
   margin: 0 0 0 60px;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .copyright {
   float: right;
+  @media only screen and (max-width: 1000px) {
+    float: none;
+  }
 }
 
 .oh {

@@ -7,6 +7,11 @@
   float: right;
   position: relative;
   margin: 0 -76px 0 0;
+  @media only screen and (max-width: 1000px) {
+    float: none;
+    background: none;
+    width: 100%;
+  }
 }
 .column {
   float: left;
@@ -22,7 +27,16 @@
   //     box-shadow: 0 2px 3px rgba(24, 28, 39, .17);
   //   }
   // }
+  @media only screen and (max-width: 1000px) {
+    display: none;
+    border: none;
+    width: 100%;
+    float: none;
+  }
   &:first-child {
+    @media only screen and (max-width: 1000px) {
+      display: block;
+    }
     .label,
     .summary { margin-left: -7px; border-radius: 2px 0 0 2px; padding: 0 20px 0 27px; }
   }
@@ -57,24 +71,38 @@
   margin-right: -1px;
   border-right: 1px solid #EDDFD7;
   transition: all .3s;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .blocks {
-
 }
 .block {
   position: relative;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+    &:first-child {
+      display: block;
+    }
+  }
 }
 .blockLabel {
   ._p;
   padding: 0 25px 0 25px;
   color: #F9B185;
   margin: 0 0 23px;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .elems {
   padding: 0 25px 100px;
   font-size: 14px;
   color: #fff;
   line-height: 17px;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .elem {
   margin: 0 0 17px;
@@ -142,6 +170,9 @@
       margin: 0 4px 0 0;
     }
   }
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .after {
   ._proxima_regular;
@@ -174,6 +205,9 @@
       margin: 20px 0 0 -15px;
     }
   }
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .summary {
   background: #fff;
@@ -181,6 +215,9 @@
   border-right: 1px solid #EDDFD7;
   padding: 0 25px;
   transition: all .3s;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .summaryLabel {
   padding: 25px 0 15px 0;
@@ -212,6 +249,11 @@
   width: 180px;
   // pointer-events: none;
   margin: 0 0 0 -215px;
+  @media only screen and (max-width: 1000px) {
+    position: relative;
+    margin: 0;
+    width: auto;
+  }
 }
 .leftLabel {
   position: relative;
@@ -301,5 +343,9 @@
   span {
     display: block;
     margin: 0 0 0 28px;
+  }
+  @media only screen and (max-width: 1000px) {
+    padding: 15px 10px 0;
+    margin: 40px 0 0 0;
   }
 }

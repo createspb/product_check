@@ -79,6 +79,7 @@ export default class ProductName extends Component {
           onKeyPress={::this.handleKeyPress}
           onChange={::this.handleChange}
           type="text"
+          placeholder={name.placeholder}
           className={styles.transparentInput}
         />
         <button
