@@ -8,6 +8,7 @@
     min-height: auto;
     height: 100%;
     overflow: hidden;
+    position: inherit;
   }
 }
 .container {
@@ -15,6 +16,7 @@
   @media only screen and (max-width: 1000px) {
     ._container;
     top: 0;
+    display: block;
     width: 100%;
   }
 }
@@ -22,11 +24,13 @@
   height: auto;
   @media only screen and (max-width: 1000px) {
     ._containerRow;
+    display: block;
   }
 }
 .containerCell {
   @media only screen and (max-width: 1000px) {
     ._containerCell;
+    display: block;
   }
 }
 .containerAll {
@@ -38,9 +42,20 @@
   @media only screen and (max-width: 1000px) {
     width: 100%;
     float: none;
-    max-height: 100%;
-    overflow-y: auto;
+    // max-height: 100%;
+    // overflow-y: auto;
     padding: 30px 40px;
+  }
+}
+
+
+.backgroundWrap {
+  @media only screen and (max-width: 1000px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 }
 
