@@ -4,7 +4,8 @@
   height: 100%;
   overflow: hidden;
   @media only screen and (max-width: 1000px) {
-    overflow: auto;
+    overflow: hidden;
+    // position: relative;
   }
 }
 .container {
@@ -31,6 +32,16 @@
 }
 .containerRight {
   ._containerRight;
+}
+
+.backgroundWrap {
+  @media only screen and (max-width: 1000px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 // Line

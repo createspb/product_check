@@ -33,6 +33,17 @@ export default class Html extends Component {
   render() {
     const {assets, component, store} = this.props;
     const content = component ? ReactDOM.renderToString(component) : '';
+    const style = `
+      #content {
+        height: 100%;
+      }
+      @media only screen and (max-width: 1000px) {
+        #content {
+          min-height: 100%;
+          height: auto;
+        }
+      }
+    `;
 
     return (
       <html lang="en-us">
@@ -59,7 +70,10 @@ export default class Html extends Component {
           <script dangerouslySetInnerHTML={this.trackingCode()} />
         </head>
         <body>
-          <section id="content" style={{height: '100%'}} dangerouslySetInnerHTML={{__html: content}} />
+          <section id="content" dangerouslySetInnerHTML={{__html: content}} />
+          <style>
+            {style}
+          </style>
           <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} />
           <script src={assets.javascript.main}/>
         </body>
