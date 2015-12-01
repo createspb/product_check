@@ -20,7 +20,8 @@
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
-        "APIPORT": 3030
+        "APIPORT": 3030,
+        "PORT": 3000
       }
     },
     "start-prod-api": {
@@ -28,7 +29,8 @@
       "env": {
         "NODE_PATH": "./api",
         "NODE_ENV": "production",
-        "APIPORT": 3030
+        "APIPORT": 3030,
+        "PORT": 3000
       }
     },
     "start-dev": {
