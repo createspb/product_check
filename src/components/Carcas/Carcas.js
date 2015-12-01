@@ -17,7 +17,7 @@ export default class Carcas extends Component {
 
   componentWillReceiveProps() {
     setTimeout(() => {
-      $(this.container).scrollTop(0);
+      $(document).scrollTo(0);
     }, 500);
   }
 
