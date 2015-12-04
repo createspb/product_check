@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import captions from '../../data/captions';
 import { send } from 'redux/modules/feedback';
 import { connect } from 'react-redux';
+import { emailValidation } from '../../utils/validation';
 
 @connect(
   state => ({
@@ -54,18 +55,26 @@ export default class Feedback extends Component {
         this.setState({
           errors: false
         });
-      }, 1500);
+      }, 2500);
     });
   }
 
   handleSubmit(event) {
     event.stopPropagation();
-    if (this.email.value !== '' && this.textarea.value !== '') {
+
+    const emailErr = emailValidation(this.email.value);
+
+    if (!emailErr && this.textarea.value !== '') {
       this.props.send({
         email: this.email.value,
         text: this.textarea.value,
       });
     } else {
+
+      if (console && emailErr) {
+        console.warn(emailErr);
+      }
+
       this.setError();
     }
   }
