@@ -8,7 +8,7 @@ export default function send(req) {
     });
     aws.config.update({region: 'eu-west-1'});
     const ses = new aws.SES({apiVersion: '2010-12-01'});
-    const to = ['account@createdigital.me'];
+    const to = ['please@createdigital.me'];
     const from = 'robot@createdigital.me';
     ses.sendEmail({
       Source: from,
