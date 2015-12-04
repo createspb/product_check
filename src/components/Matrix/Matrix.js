@@ -86,14 +86,24 @@ export default class Matrix extends Component {
 
   renderElem(elem, key) {
     const { styles } = this;
-    const elemClass = styles.elem;
+    let elemClass = styles.elem;
+    if (elem.tooltip) {
+      elemClass = [elemClass, styles.hoverable].join(' ');
+    }
     if (isObject(elem)) {
       return (
         <div
           className={[elemClass, this.getValueClass(elem.value)].join(' ')}
           key={key}
-          dangerouslySetInnerHTML={{__html: elem.text}}
-        />
+        >
+          <span dangerouslySetInnerHTML={{__html: elem.text}} />
+          {elem.tooltip &&
+            <span
+              className={styles.tooltip}
+              dangerouslySetInnerHTML={{__html: elem.tooltip}}
+            />
+          }
+        </div>
       );
     }
     return (
@@ -131,13 +141,15 @@ export default class Matrix extends Component {
       return (
         <div
           className={[elemClass, this.getValueClass(elem.value)].join(' ')}
-        >{elem.text}</div>
+          dangerouslySetInnerHTML={{__html: elem.text}}
+        />
       );
     }
     return (
-      <div className={styles.after}>
-        {elem}
-      </div>
+      <div
+        className={styles.after}
+        dangerouslySetInnerHTML={{__html: elem.text}}
+      />
     );
   }
 

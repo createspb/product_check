@@ -33,6 +33,17 @@ export default class Html extends Component {
   render() {
     const {assets, component, store} = this.props;
     const content = component ? ReactDOM.renderToString(component) : '';
+    const style = `
+      #content {
+        height: 100%;
+      }
+      @media only screen and (max-width: 1000px) {
+        #content {
+          min-height: 100%;
+          height: auto;
+        }
+      }
+    `;
 
     return (
       <html lang="en-us">
@@ -41,10 +52,13 @@ export default class Html extends Component {
           <title>Аудит продукта</title>
           <meta property="og:title" content="Аудит продуктовой идеи" />
           <meta name="twitter:title" content="Аудит продуктовой идеи" />
-          <meta property="og:description" content="Проверь, готов ли ты к созданию продукта и инвестициям.  Одиннадцать вопросов, ответы на которые определяют успех или провал вашей идеи." />
-          <meta name="twitter:description" content="Проверь, готов ли ты к созданию продукта и инвестициям.  Одиннадцать вопросов, ответы на которые определяют успех или провал вашей идеи." />
-          <meta name="twitter:image" content="https://obsvtr.herokuapp.com/sharing.png" />
-          <meta property="og:image" content="https://obsvtr.herokuapp.com/sharing.png" />
+          <meta property="og:description" content="Проверь, готов ли ты к созданию продукта и инвестициям. Десять вопросов, ответы на которые определяют успех или провал вашей идеи." />
+          <meta name="twitter:description" content="Проверь, готов ли ты к созданию продукта и инвестициям. Десять вопросов, ответы на которые определяют успех или провал вашей идеи." />
+          <meta name="twitter:image" content="http://product-check.createdigital.me/sharing.png" />
+          <meta property="og:image" content="http://product-check.createdigital.me/sharing.png" />
+
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
 
           <link rel="shortcut icon" href="/favicon.png" />
 
@@ -53,11 +67,14 @@ export default class Html extends Component {
             <link href={assets.styles[style]} key={key} media="screen, projection"
                   rel="stylesheet" type="text/css"/>
           )}
+          <script dangerouslySetInnerHTML={this.trackingCode()} />
         </head>
         <body>
-          <section id="content" style={{height: '100%'}} dangerouslySetInnerHTML={{__html: content}} />
+          <section id="content" dangerouslySetInnerHTML={{__html: content}} />
+          <style>
+            {style}
+          </style>
           <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} />
-          <script dangerouslySetInnerHTML={this.trackingCode()} />
           <script src={assets.javascript.main}/>
         </body>
       </html>

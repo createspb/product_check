@@ -4,40 +4,60 @@
   height: auto;
   min-height: 100%;
   position: relative;
-  // overflow: hidden;
+  @media only screen and (max-width: 1000px) {
+    min-height: auto;
+    height: 100%;
+    overflow: hidden;
+    position: inherit;
+  }
 }
 .container {
   height: auto;
-  // ._container;
-  // top: 0;
+  @media only screen and (max-width: 1000px) {
+    ._container;
+    top: 0;
+    display: block;
+    width: 100%;
+  }
 }
 .containerRow {
   height: auto;
-  // ._containerRow;
+  @media only screen and (max-width: 1000px) {
+    ._containerRow;
+    display: block;
+  }
 }
 .containerCell {
-  // height: 100%;
-  // width: 100%;
-  // overflow: hidden;
-  // overflow-y: auto;
-  // ._containerCell;
+  @media only screen and (max-width: 1000px) {
+    ._containerCell;
+    display: block;
+  }
 }
-// .containerLeft {
-//   ._containerLeft;
-//   position: relative;
-//   top: 0;
-//   .moveToBottom;
-// }
 .containerAll {
   ._containerAll;
   position: relative;
   padding: 150px 0 50px 0;
   top: 0;
   .moveToBottom;
+  @media only screen and (max-width: 1000px) {
+    width: 100%;
+    float: none;
+    // max-height: 100%;
+    // overflow-y: auto;
+    padding: 30px 40px;
+  }
 }
-// .containerRight {
-//   ._containerRight;
-// }
+
+
+.backgroundWrap {
+  @media only screen and (max-width: 1000px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
 
 // Line
 .line {
@@ -105,19 +125,6 @@
   right: 0;
   transition: background 10s;
 }
-// .c0  { ._diagonal_gradiend(#374444, #26373e); }
-// .c1  { ._diagonal_gradiend(#304042, #1f2f39); }
-// .c2  { ._diagonal_gradiend(#273a3f, #1d2735); }
-// .c3  { ._diagonal_gradiend(#1f303a, #19232f); }
-// .c4  { ._diagonal_gradiend(#422c37, #392536); }
-// .c5  { ._diagonal_gradiend(#3f2936, #352235); }
-// .c6  { ._diagonal_gradiend(#3a2536, #321e35); }
-// .c7  { ._diagonal_gradiend(#2b4249, #293945); }
-// .c8  { ._diagonal_gradiend(#2a3e47, #263442); }
-// .c9  { ._diagonal_gradiend(#293a45, #253040); }
-// .c10 { ._diagonal_gradiend(#273542, #242b3e); }
-// .c11 { ._diagonal_gradiend(#253041, #22263d); }
-// .c12 { ._diagonal_gradiend(#242b3f, #21223b); }
 .cresults {
   background: linear-gradient(135deg, #FCAF82 0%, #F47D7C 20%, #A83270 58%, #610E5F 78%, #2C064A 100%);
   &:after {

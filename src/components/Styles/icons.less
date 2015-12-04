@@ -18,6 +18,18 @@
   height: 316px;
   background: url("@{i}main.svg") no-repeat center;
 }
+i.mainMobile {
+  width: 134px/2;
+  height: 150px/2;
+  display: block;
+  background: url("@{i}main1.png") no-repeat center;
+  background-size: 100%;
+  margin: 0 0 35px;
+  display: none;
+  @media only screen and (max-width: 1000px) {
+    display: block;
+  }
+}
 
 .yes, .yesActive {
   display: inline-block;
@@ -54,6 +66,7 @@
   margin: 0 0 0 -7px;
   background: url("@{i}top.svg") no-repeat center;
 }
+
 .idea {
   background: url("@{i}idea.png") no-repeat center;
 }
@@ -76,7 +89,16 @@
   position: absolute;
   top: (50px - 44px) / -2;
   left: -15px - 50px;
+  @media only screen and (max-width: 1000px) {
+    position: relative;
+    top: auto;
+    left: auto;
+    display: block;
+    margin: 0 0 10px;
+  }
 }
+// .idea { @media only screen and (max-width: 1000px) {  } }
+// .results { @media only screen and (max-width: 1000px) {  } }
 
 .back {
   display: block;
@@ -139,23 +161,36 @@
   background: url("@{i}repeat.png") no-repeat center;
 }
 
-.dev, .guru, .len {
+.dev, .guru, .len, .settings {
   width: 50px;
-  height: 48px;
+  height: 50px;
   display: block;
   position: absolute;
   top: 50%;
-  margin: -48px/2 0 0 0;
+  margin: -50px/2 0 0 0;
   left: -67px;
+  @media only screen and (max-width: 1000px) {
+    position: relative;
+    left: auto;
+    top: auto;
+    display: block;
+    margin: 0;
+  }
 }
 .dev {
   background: url("@{i}dev.png") no-repeat center;
 }
 .guru {
   background: url("@{i}guru.png") no-repeat center;
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 .len {
   background: url("@{i}len.png") no-repeat center;
+}
+.settings {
+  background: url("@{i}settings.png") no-repeat center;
 }
 
 .warningWhite {
@@ -165,6 +200,12 @@
   position: absolute;
   background: url("@{i}warningWhite.png") no-repeat center;
   left: -27px - 23px;
+  @media only screen and (max-width: 1000px) {
+    position: relative;
+    left: auto;
+    display: block;
+    margin: 0 0 20px;
+  }
 }
 
 .remove {
@@ -191,4 +232,37 @@
   height: 30px;
   background: url("@{i}git.png") no-repeat center;
   margin: 0 13px 0 0;
+}
+
+.feedback {
+  width: 17px;
+  height: 15px;
+  vertical-align: -2px;
+  display: inline-block;
+  background: url("@{i}feedback.png") no-repeat center;
+}
+.email {
+  display: block;
+  width: 24px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 23px;
+  margin: -23px/2 0 0 0;
+  background: url("@{i}email.png") no-repeat center;
+}
+.sended {
+  display: block;
+  position: absolute;
+  top: 601px;
+  left: -191px;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  background: url("@{i}sended.png") no-repeat center;
+  width: 200px;
+  height: 266px;
+  &.__animated {
+    top: 205px;
+    left: 186px;
+  }
 }

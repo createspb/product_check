@@ -31,6 +31,9 @@ export default class Subresults extends React.Component {
   }
 
   componentDidMount() {
+    if (window) {
+      ga('send', 'event', 'subresults', 'subresults_' + this.nextQuestionId()); // eslint-disable-line
+    }
     this.refs.carcas.bottomToCenter();
   }
 

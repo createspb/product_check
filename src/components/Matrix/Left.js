@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import captions from '../../data/captions';
 import _ from 'underscore';
+import $ from 'jquery';
 
 export default class Buttons extends Component {
 
@@ -55,12 +56,17 @@ export default class Buttons extends Component {
     return 'error';
   }
 
+  handleExternalLink(event) {
+    ga('send', 'event', 'externalLink', $(event.currentTarget).attr('href')); // eslint-disable-line
+  }
+
   renderArticleButton(styles, icons, results) {
     return (
       <a
         href="http://createdigital.me/blog/2015/10/19/matrica-cifrovogo-produkta-vvodnaya/"
         target="_blank"
         className={styles.transparentButton}
+        onClick={::this.handleExternalLink}
       >
         <i className={icons.matrix1}></i>
         {results.articleTitle}
@@ -77,7 +83,7 @@ export default class Buttons extends Component {
       <div className={styles.left}>
         <div className={styles.leftLabel}>
           <i className={icons[block.left.icon]}></i>
-          {block.left.label}
+          <span dangerouslySetInnerHTML={{__html: block.left.label}}/>
         </div>
         <div className={styles.progressWrap}>
           <div className={styles.progressTop}>
@@ -103,3 +109,24 @@ export default class Buttons extends Component {
     );
   }
 }
+
+// <div className={styles.progressWrap}>
+//   <div className={styles.progressTop}>
+//     <div className={styles.progressCaption}>
+//       {this.captions.progressCaption}
+//     </div>
+//     <div className={styles.progressPercent}>
+//       {str}
+//     </div>
+//   </div>
+//   <div className={styles.progress}>
+//     <div className={styles.progressActive} style={{width: val + '%'}}></div>
+//   </div>
+//   <div
+//     className={styles.progressP}
+//     dangerouslySetInnerHTML={{__html: lvlCaption}}
+//   />
+//   {this.props.level === 0 &&
+//     this.renderArticleButton(styles, icons, results)
+//   }
+// </div>

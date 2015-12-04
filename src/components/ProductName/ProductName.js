@@ -25,6 +25,9 @@ export default class ProductName extends Component {
 
   componentDidMount() {
     this.refs.carcas.bottomToCenter();
+    if (window) {
+      ga('send', 'event', 'productName'); // eslint-disable-line
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -76,6 +79,7 @@ export default class ProductName extends Component {
           onKeyPress={::this.handleKeyPress}
           onChange={::this.handleChange}
           type="text"
+          placeholder={name.placeholder}
           className={styles.transparentInput}
         />
         <button

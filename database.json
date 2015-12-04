@@ -1,7 +1,7 @@
 {
   "dev": {
     "driver": "pg",
-    "user": "postgres",
+    "user": "juicyigor",
     "password": "",
     "host": "localhost",
     "database": "obsvtr",

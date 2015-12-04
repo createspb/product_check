@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { logout } from 'redux/modules/auth';
 import { pushState } from 'redux-router';
-import { ResultsCarcas, AdminTable, AdminResult } from '..';
+import { ResultsCarcas, AdminTable, AdminResult, AdminSummary } from '..';
 import { load, isLoaded, remove } from 'redux/modules/results';
 import {
   isLoaded as isLoadedQuestions,
@@ -14,7 +14,8 @@ import $ from 'jquery';
 @connect(
   state => ({
     user: state.auth.user,
-    results: state.results.data
+    results: state.results.data,
+    questions: state.questions.questions
   }),
   { logout, pushState, load, isLoaded,
     isLoadedQuestions, loadQuestions, remove })
@@ -23,9 +24,10 @@ export default class Admin extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
-    results: PropTypes.array,
     pushState: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired
+    remove: PropTypes.func.isRequired,
+    questions: PropTypes.object,
+    results: PropTypes.array,
   };
 
   constructor(props) {
@@ -33,6 +35,7 @@ export default class Admin extends Component {
     this.state = {
       activeResultId: false,
       activeResult: false,
+      activeSummary: false,
       page: 0,
       countOnPage: 10
     };
@@ -64,7 +67,7 @@ export default class Admin extends Component {
       activeResultId: id,
       activeResult: _.where(this.props.results, {id})[0]
     }, () => {
-      // callback
+      console.log(this.state);
     });
   }
 
@@ -82,7 +85,16 @@ export default class Admin extends Component {
     event.preventDefault();
     this.setState({
       activeResultId: false,
-      activeResult: false
+      activeResult: false,
+      activeSummary: false
+    });
+  }
+
+  handleSummary(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({
+      activeSummary: true
     });
   }
 
@@ -101,30 +113,61 @@ export default class Admin extends Component {
     });
   }
 
-  renderHeader(activeResult, styles, adminCaptions) {
+  renderSubtitle(styles, adminCaptions) {
+    const { activeResult, activeSummary } = this.state;
+    if (activeResult) {
+      return (
+        <span className={styles.fade}>
+          <em> &rarr; </em>
+          {activeResult.productName}
+        </span>
+      );
+    }
+    if (activeSummary) {
+      return (
+        <span className={styles.fade}>
+          <em> &rarr; </em>
+          {adminCaptions.summary}
+        </span>
+      );
+    }
+    return false;
+  }
+
+  renderHeader(styles, adminCaptions) {
+    const { activeResult, activeSummary } = this.state;
     return (
       <header className={styles.header}>
         <h2 className={styles.h2}>
           {adminCaptions.title}
-          {activeResult &&
-            <span className={styles.fade}>
-              <em> &rarr; </em>
-              {activeResult.productName}
-            </span>
-          }
+          {this.renderSubtitle(styles, adminCaptions)}
         </h2>
-        {!activeResult &&
-          <button
-            className={styles.button}
-            onClick={::this.handleLogout}
-          >{adminCaptions.logout}</button>
-        }
-        {activeResult &&
-          <button
-            className={styles.button}
-            onClick={::this.handleClose}
-          >{adminCaptions.close}</button>
-        }
+        {(() => {
+          if (!activeResult && !activeSummary) {
+            return (
+              <div>
+                <button
+                  className={styles.button}
+                  onClick={::this.handleLogout}
+                >{adminCaptions.logout}</button>
+                <button
+                  className={styles.button}
+                  onClick={::this.handleSummary}
+                >{adminCaptions.summary}</button>
+              </div>
+            );
+          }
+        })()}
+        {(() => {
+          if (activeResult || activeSummary) {
+            return (
+              <button
+                className={styles.button}
+                onClick={::this.handleClose}
+              >{adminCaptions.close}</button>
+            );
+          }
+        })()}
       </header>
     );
   }
@@ -158,20 +201,26 @@ export default class Admin extends Component {
   render() {
     const adminCaptions = captions.admin;
     const styles = require('./Admin.less');
-    const { activeResult } = this.state;
+    const { activeResult, activeSummary } = this.state;
     return (
       <ResultsCarcas ref="carcas">
-        {this.renderHeader(activeResult, styles, adminCaptions)}
-        {!activeResult &&
+        {this.renderHeader(styles, adminCaptions)}
+        {!activeResult && !activeSummary &&
           <AdminTable
             handleOpenResult={::this.handleOpenResult}
             handleRemoveResult={::this.handleRemoveResult}
             results={this.paginatedResults(this.state.page)}
           />
         }
-        {!activeResult && this.renderPagination(styles)}
+        {!activeResult && !activeSummary && this.renderPagination(styles)}
         {activeResult &&
           <AdminResult result={activeResult} />
+        }
+        {activeSummary &&
+          <AdminSummary
+            questions={this.props.questions}
+            results={this.props.results}
+          />
         }
       </ResultsCarcas>
     );

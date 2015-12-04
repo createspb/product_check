@@ -31,17 +31,36 @@
   height: 100%;
   margin: 0 auto;
   display: table;
+  // Container is made full page width
+  @media only screen and (max-width: 1000px) {
+    width: 100%;
+    display: block;
+  }
 }
 ._containerRow {
   display: table-row;
+  @media only screen and (max-width: 1000px) {
+    display: block;
+  }
 }
 ._containerCell {
   display: table-cell;
   vertical-align: middle;
+  @media only screen and (max-width: 1000px) {
+    display: block;
+  }
 }
 ._containerLeft {
   width: @leftWidth;
   float: left;
+  // Left container is made for full width of parent
+  @media only screen and (max-width: 1000px) {
+    width: 100%;
+    float: none;
+    // max-height: 100%;
+    // overflow-y: auto;
+    padding: 30px 40px;
+  }
 }
 ._containerAll {
   width: @width;
@@ -50,6 +69,10 @@
 ._containerRight {
   float: right;
   width: @width - @leftWidth;
+  // Hide right
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 }
 ._h1 {
   ._proxima_regular;
@@ -81,22 +104,34 @@
   font-size: 16px;
   line-height: 20px;
   color: rgba(255, 255, 255, .7);
+  @media only screen and (max-width: 1000px) {
+    color: #D1D1D1;
+  }
 }
 ._little {
   ._proxima_light;
   font-size: 12px;
   line-height: 15px;
   color: rgba(255, 255, 255, .5);
+  @media only screen and (max-width: 1000px) {
+    color: #A3A3A3;
+  }
 }
 ._big {
   ._proxima_light;
   font-size: 18px;
   line-height: 22px;
   color: rgba(255, 255, 255, .8);
+  @media only screen and (max-width: 1000px) {
+    color: #D1D1D1;
+  }
 }
 ._a {
   color: rgba(162, 213, 180, .7);
   text-decoration: underline;
+  @media only screen and (max-width: 1000px) {
+    color: #D1D1D1;
+  }
   &:hover {
     text-decoration: none;
   }
@@ -119,6 +154,10 @@
   i { margin: 0 25px 0 0; }
   &:focus { outline: none; }
   &:hover { ._box_shadow_hover; }
+  @media only screen and (max-width: 1000px) {
+    padding: 0 25px 0 18px;
+    i { margin: 0 15px 0 0; }
+  }
 }
 ._transparentButton {
   ._button;

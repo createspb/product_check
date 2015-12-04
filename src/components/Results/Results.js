@@ -1,5 +1,5 @@
+import $ from 'jquery';
 import React, { Component, PropTypes } from 'react';
-import { ResultsCarcas, Matrix } from '..';
 import { connect } from 'react-redux';
 import {
   isLoaded as isLoadedQuestions,
@@ -13,7 +13,7 @@ import {
   load as loadMatrix } from 'redux/modules/matrix';
 import { pushState } from 'redux-router';
 import captions from '../../data/captions';
-import $ from 'jquery';
+import { ResultsCarcas, Matrix, Feedback } from '..';
 
 @connect(
   state => ({
@@ -39,10 +39,16 @@ export default class Results extends Component {
     if (this.hasLostAnswers()) {
       this.props.pushState(null, '/');
     }
+    this.state = {
+      feedback: false
+    };
   }
 
   componentDidMount() {
     const { carcas } = this.refs;
+    if (window) {
+      ga('send', 'event', 'results'); // eslint-disable-line
+    }
     carcas.bottomToCenter();
   }
 
@@ -108,12 +114,31 @@ export default class Results extends Component {
     this.props.repeatTest();
   }
 
+  handleExternalLink(event) {
+    ga('send', 'event', 'externalLink', $(event.currentTarget).attr('href')); // eslint-disable-line
+  }
+
+  handleCloseFeedback(event) {
+    event.stopPropagation();
+    this.setState({
+      feedback: false
+    });
+  }
+
+  handleFeedbackButton(event) {
+    event.stopPropagation();
+    this.setState({
+      feedback: true
+    });
+  }
+
   renderArticleButton(styles, icons, results) {
     return (
       <a
         href="http://createdigital.me/blog/2015/10/19/matrica-cifrovogo-produkta-vvodnaya/"
         target="_blank"
         className={styles.transparentButton}
+        onClick={::this.handleExternalLink}
       >
         <i className={icons.matrix1}></i>
         {results.articleTitle}
@@ -122,7 +147,7 @@ export default class Results extends Component {
   }
 
   renderNext(styles, icons, results) {
-    const site = 'https://obsvtr.herokuapp.com';
+    const site = 'http://product-check.createdigital.me/';
     const { fbShare, vkShare, twShare } = {
       twShare: 'https://twitter.com/intent/tweet?url=' + site,
       fbShare: 'https://www.facebook.com/sharer/sharer.php?&u=' + site,
@@ -134,18 +159,31 @@ export default class Results extends Component {
           <i className={icons.next}></i>
           {results.nextH1}
         </h1>
-        <div className={styles.left}>
-          <p className={styles.p}>{results.nextLeft}</p>
-          {this.renderArticleButton(styles, icons, results)}
-        </div>
+
         <div className={styles.center}>
-          <p className={styles.p}>{results.nextCenter}</p>
+          <p
+            className={styles.p}
+            dangerouslySetInnerHTML={{__html: results.nextCenter}}
+          />
           <button
             className={styles.transparentButton}
             onClick={::this.handleRepeatButton}
           >
             <i className={icons.repeat}></i>
-            Пройти еще раз
+            {results.repeat}
+          </button>
+        </div>
+        <div className={styles.feedback}>
+          <p
+            className={styles.p}
+            dangerouslySetInnerHTML={{__html: results.feedback}}
+          />
+          <button
+            className={styles.transparentButton}
+            onClick={::this.handleFeedbackButton}
+          >
+            <i className={icons.feedback}></i>
+            {results.feedbackButton}
           </button>
         </div>
         <div className={styles.right}>
@@ -169,34 +207,47 @@ export default class Results extends Component {
     );
   }
 
+  // <div className={styles.left}>
+  //   <p className={styles.p}>{results.nextLeft}</p>
+  //   {this.renderArticleButton(styles, icons, results)}
+  // </div>
+
   renderFooter(styles, icons) {
-    const { welcome } = captions;
+    const { welcome, results } = captions;
     return (
       <div className={styles.footer}>
         <div className={styles.license}>
           <i className={icons.cc}></i>
-          <p className={styles.dh}>This work is licensed under a Creative Commons <em>Attribution-NonCommercial 4.0 International License.</em></p>
+          <p className={styles.dh}>
+            {'This work is licensed under a Creative Commons '}
+            <a onClick={::this.handleExternalLink}
+              target="_blank"
+              href="http://creativecommons.org/licenses/by-nc/4.0/"
+            >Attribution-NonCommercial 4.0 International License.</a>
+          </p>
         </div>
         <div className={styles.git}>
           <i className={icons.git}></i>
           <p className={styles.oh}>
-            Открытый репозиторий на <a href="https://github.com/createspb/product_check" target="_blank">Github</a>
+            Открытый репозиторий на <a href="https://github.com/createspb/product_check" onClick={::this.handleExternalLink} target="_blank">Github</a>
           </p>
         </div>
         <div className={styles.copyright}>
           <p className={styles.oh}>
-            {welcome.from}
+            {results.from}
             <a
               className={styles.a}
               target="_blank"
+              onClick={::this.handleExternalLink}
               href="http://createdigital.me/"
             >{welcome.companyName}</a>
-            {welcome.and}
+            {results.and}
             <a
               className={styles.a}
               target="_blank"
               href="http://digitalchange.me/"
-            >{welcome.companyPartnerLong}</a>
+              onClick={::this.handleExternalLink}
+            >{results.companyPartner}</a>
           </p>
         </div>
       </div>
@@ -207,6 +258,7 @@ export default class Results extends Component {
     const styles = require('./Results.less');
     const icons = require('../Styles/icons.less');
     const { results } = captions;
+    const { feedback } = this.state;
     return (
       <ResultsCarcas ref="carcas">
         <div className={styles.matrix}>
@@ -221,6 +273,9 @@ export default class Results extends Component {
         </div>
         {this.renderNext(styles, icons, results)}
         {this.renderFooter(styles, icons)}
+        {feedback &&
+          <Feedback handleCloseFeedback={::this.handleCloseFeedback} />
+        }
       </ResultsCarcas>
     );
   }

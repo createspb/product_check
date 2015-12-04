@@ -13,7 +13,7 @@ import {
     Results,
     Admin,
     Login,
-    NotFound,
+    NotFound
   } from 'components';
 
 export default (store) => {

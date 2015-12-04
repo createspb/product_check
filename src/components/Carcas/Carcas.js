@@ -15,6 +15,12 @@ export default class Carcas extends Component {
     this.wrapClass = this.styles.containerLeft;
   }
 
+  componentWillReceiveProps() {
+    setTimeout(() => {
+      $(document).scrollTo(0);
+    }, 500);
+  }
+
   // Animations
   setBackgroundClass(className) {
     $(this.refs.bgLayer1).css({
@@ -97,7 +103,7 @@ export default class Carcas extends Component {
 
   renderBackgrounds(styles) {
     return (
-      <div>
+      <div className={styles.backgroundWrap}>
         <div
           ref="bgLayer0"
           className={[styles.background, this.backgroundClass].join(' ')}

@@ -1,8 +1,11 @@
+import $ from 'jquery';
 import React, { Component, PropTypes } from 'react';
-import captions from '../../data/captions';
 import { isLoaded, load } from 'redux/modules/questions';
 import { pushState } from 'redux-router';
 import { connect } from 'react-redux';
+// import MobileDetect from 'mobile-detect';
+
+import captions from '../../data/captions';
 import { Carcas } from '..';
 
 @connect(
@@ -16,6 +19,13 @@ export default class Welcome extends Component {
 
   componentDidMount() {
     this.refs.carcas.bottomToCenter();
+    // if (window) {
+    //   const md = new MobileDetect(window.navigator.userAgent);
+    //   ga('send', 'event', 'welcome'); // eslint-disable-line
+    //   if (md.mobile() || md.phone() || md.tablet()) {
+    //     this.props.pushState(null, '/mobile');
+    //   }
+    // }
   }
 
   handleButton(event) {
@@ -23,6 +33,10 @@ export default class Welcome extends Component {
     this.refs.carcas.animateToTop(
       () => this.props.pushState(null, '/warning')
     );
+  }
+
+  handleExternalLink(event) {
+    ga('send', 'event', 'externalLink', $(event.currentTarget).attr('href')); // eslint-disable-line
   }
 
   static fetchData(getState, dispatch) {
@@ -35,6 +49,7 @@ export default class Welcome extends Component {
     const icons = require('../Styles/icons.less');
     return (
       <Carcas ref="carcas">
+        <i className={icons.mainMobile}></i>
         <h1 className={styles.h1}>{welcome.h1}</h1>
         <div className={styles.company}>
           {welcome.from}
@@ -42,12 +57,14 @@ export default class Welcome extends Component {
             className={styles.a}
             target="_blank"
             href="http://createdigital.me/"
+            onClick={::this.handleExternalLink}
           >{welcome.companyName}</a>
           {welcome.and}
           <a
             className={styles.a}
             target="_blank"
             href="http://digitalchange.me/"
+            onClick={::this.handleExternalLink}
           >{welcome.companyPartner}</a>
         </div>
         <p
