@@ -148,7 +148,7 @@ export default class Matrix extends Component {
     return (
       <div
         className={styles.after}
-        dangerouslySetInnerHTML={{__html: elem.text}}
+        dangerouslySetInnerHTML={{__html: elem}}
       />
     );
   }
