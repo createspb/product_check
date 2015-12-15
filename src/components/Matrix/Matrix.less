@@ -295,6 +295,10 @@
   font-size: 14px;
   line-height: 17px;
   color: rgba(255, 255, 255, .7);
+
+  &:not(:first-of-type) {
+    margin-top: 22px;
+  }
 }
 
 // Elem statuses
@@ -335,7 +339,7 @@
   font-size: 14px;
   line-height: 17px;
   padding: 7px 10px 0;
-  margin: 20px 0 0 0;
+  margin: 8px 0 0 0;
   i {
     float: left;
     margin: 0;
@@ -348,4 +352,9 @@
     padding: 15px 10px 0;
     margin: 40px 0 0 0;
   }
+}
+
+.recomendationsButton {
+  .transparentButton;
+  height: 68px;
 }

@@ -68,9 +68,30 @@ export default class Buttons extends Component {
         className={styles.transparentButton}
         onClick={::this.handleExternalLink}
       >
-        <i className={icons.matrix1}></i>
         {results.articleTitle}
       </a>
+    );
+  }
+
+  /* TODO: need to use single component*/
+  renderRecomendatoinsButton(styles, icons, results) {
+    return (
+      <a
+        href="http://createdigital.me/blog/2015/12/11/rekomendacii-k-prorabotke-idei-vashego-produkta/"
+        target="_blank"
+        className={styles.recomendationsButton}
+        onClick={::this.handleExternalLink}
+      >
+        {results.recomendationsTitle}
+      </a>
+    );
+  }
+
+  renderArticlesTitle(styles, results) {
+    return (
+      <div className={styles.progressP}>
+        {results.articlesListTitle}
+      </div>
     );
   }
 
@@ -102,7 +123,13 @@ export default class Buttons extends Component {
             dangerouslySetInnerHTML={{__html: lvlCaption}}
           />
           {this.props.level === 0 &&
+            this.renderArticlesTitle(styles, results)
+          }
+          {this.props.level === 0 &&
             this.renderArticleButton(styles, icons, results)
+          }
+          {this.props.level === 0 &&
+            this.renderRecomendatoinsButton(styles, icons, results)
           }
         </div>
       </div>
