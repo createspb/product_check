@@ -122,6 +122,10 @@ export default class Results extends Component {
     return $(this.input).val();
   }
 
+  clearSubscribeVal() {
+    $(this.input).val('');
+  }
+
   handleError() {
     const styles = require('./Results.less');
     $(this.input).addClass(styles.error);
@@ -136,6 +140,7 @@ export default class Results extends Component {
       return this.handleError();
     }
     this.props.addSubscribe(this.subscribeVal());
+    this.clearSubscribeVal();
   }
 
   renderNext(styles, icons, results) {
