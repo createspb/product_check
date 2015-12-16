@@ -126,10 +126,10 @@ export default class Buttons extends Component {
             this.renderArticlesTitle(styles, results)
           }
           {this.props.level === 0 &&
-            this.renderArticleButton(styles, icons, results)
+            this.renderRecomendatoinsButton(styles, icons, results)
           }
           {this.props.level === 0 &&
-            this.renderRecomendatoinsButton(styles, icons, results)
+            this.renderArticleButton(styles, icons, results)
           }
         </div>
       </div>
