@@ -10,7 +10,8 @@ import {
   repeatTest } from 'redux/modules/answers';
 import {
   isLoaded as isLoadedMatrix,
-  load as loadMatrix } from 'redux/modules/matrix';
+  load as loadMatrix,
+  addSubscribe } from 'redux/modules/matrix';
 import { pushState } from 'redux-router';
 import captions from '../../data/captions';
 import { ResultsCarcas, Matrix, Feedback } from '..';
@@ -19,12 +20,14 @@ import { emailValidation } from '../../utils/validation';
 @connect(
   state => ({
     questions: state.questions.questions,
-    answers: state.answers
+    answers: state.answers,
+    email: state.email
   }),
   {pushState,
    isLoadedQuestions, loadQuestions,
    isLoadedMatrix, loadMatrix,
-   isLoadedAnswers, loadAnswers, repeatTest})
+   isLoadedAnswers, loadAnswers,
+   repeatTest, addSubscribe})
 
 export default class Results extends Component {
 
@@ -32,7 +35,8 @@ export default class Results extends Component {
     questions: PropTypes.object,
     answers: PropTypes.object,
     pushState: PropTypes.func.isRequired,
-    repeatTest: PropTypes.func.isRequired
+    repeatTest: PropTypes.func.isRequired,
+    addSubscribe: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -131,7 +135,7 @@ export default class Results extends Component {
     if (this.subscribeVal() === '' || emailValidation(this.subscribeVal())) {
       return this.handleError();
     }
-    console.log(this.subscribeVal());
+    this.props.addSubscribe(this.subscribeVal());
   }
 
   renderNext(styles, icons, results) {

@@ -6,6 +6,11 @@ const LOAD_BY_ANSWERS = 'matrix/LOAD_BY_ANSWERS';
 const LOAD_BY_ANSWERS_SUCCESS = 'matrix/LOAD_BY_ANSWERS_SUCCESS';
 const LOAD_BY_ANSWERS_FAIL = 'matrix/LOAD_BY_ANSWERS_FAIL';
 
+
+const SUBSCRIBE = 'results/SUBSCRIBE';
+const SUBSCRIBE_SUCCESS = 'results/SUBSCRIBE_SUCCESS';
+const SUBSCRIBE_FAIL = 'results/SUBSCRIBE_FAIL';
+
 const initialState = {
   loaded: false
 };
@@ -50,6 +55,25 @@ export default function reducer(state = initialState, action = {}) {
         loaded: false,
         errorByAnswers: action.error
       };
+    case SUBSCRIBE:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        email: action.result
+      };
+    case SUBSCRIBE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        errorSubscribe: action.error
+      };
     default:
       return state;
   }
@@ -73,6 +97,15 @@ export function loadByAnswers(answers) {
       data: {
         answers: answers
       }
+    })
+  };
+}
+
+export function addSubscribe(email) {
+  return {
+    types: [SUBSCRIBE, SUBSCRIBE_SUCCESS, SUBSCRIBE_FAIL],
+    promise: (client) => client.post('/storeSubscribe', {
+      data: { email }
     })
   };
 }

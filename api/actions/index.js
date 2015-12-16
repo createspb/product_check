@@ -7,6 +7,7 @@ export questions from './questions';
 export matrix from './matrix';
 export storeAnswer from './storeAnswer';
 export storeProductName from './storeProductName';
+export storeSubscribe from './storeSubscribe';
 export getAnswers from './getAnswers';
 export setAllYes from './setAllYes';
 export results from './results';
