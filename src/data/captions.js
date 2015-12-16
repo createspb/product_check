@@ -73,6 +73,9 @@ export default {
     repeat: 'Повторить попытку',
     feedback: 'Помогите сделать сервис лучше',
     feedbackButton: 'Обратная связь',
+    subscribeTitle: 'Подпишитесь на рассылку о прибыльных продуктах',
+    subscribePh: 'Введите ваш e-mail',
+    subscribeBtn: 'Подписаться',
   },
   login: {
     placeholderName: 'Логин',

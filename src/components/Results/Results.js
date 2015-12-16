@@ -14,6 +14,7 @@ import {
 import { pushState } from 'redux-router';
 import captions from '../../data/captions';
 import { ResultsCarcas, Matrix, Feedback } from '..';
+import { emailValidation } from '../../utils/validation';
 
 @connect(
   state => ({
@@ -24,6 +25,7 @@ import { ResultsCarcas, Matrix, Feedback } from '..';
    isLoadedQuestions, loadQuestions,
    isLoadedMatrix, loadMatrix,
    isLoadedAnswers, loadAnswers, repeatTest})
+
 export default class Results extends Component {
 
   static propTypes = {
@@ -89,26 +91,6 @@ export default class Results extends Component {
     return Promise.all(promises);
   }
 
-  // renderArticleButton(styles, icons, results) {
-  //   return (
-  //     <a
-  //       href="http://createdigital.me/blog/2015/10/19/matrica-cifrovogo-produkta-vvodnaya/"
-  //       target="_blank"
-  //       className={styles.article}
-  //     >
-  //       <i className={icons.matrix}></i>
-  //       <div className={styles.articleData}>
-  //         <div className={styles.articleTitle}>
-  //           {results.articleTitle}
-  //         </div>
-  //         <div className={styles.articleDescription}>
-  //           {results.articleDescription}
-  //         </div>
-  //       </div>
-  //     </a>
-  //   );
-  // }
-
   handleRepeatButton(event) {
     event.stopPropagation();
     this.props.repeatTest();
@@ -132,18 +114,24 @@ export default class Results extends Component {
     });
   }
 
-  renderArticleButton(styles, icons, results) {
-    return (
-      <a
-        href="http://createdigital.me/blog/2015/10/19/matrica-cifrovogo-produkta-vvodnaya/"
-        target="_blank"
-        className={styles.transparentButton}
-        onClick={::this.handleExternalLink}
-      >
-        <i className={icons.matrix1}></i>
-        {results.articleTitle}
-      </a>
-    );
+  subscribeVal() {
+    return $(this.input).val();
+  }
+
+  handleError() {
+    const styles = require('./Results.less');
+    $(this.input).addClass(styles.error);
+  }
+
+  handleSubscribeClick(event) {
+    const styles = require('./Results.less');
+
+    event.stopPropagation();
+    $(this.input).removeClass(styles.error);
+    if (this.subscribeVal() === '' || emailValidation(this.subscribeVal())) {
+      return this.handleError();
+    }
+    console.log(this.subscribeVal());
   }
 
   renderNext(styles, icons, results) {
@@ -207,13 +195,34 @@ export default class Results extends Component {
     );
   }
 
-  // <div className={styles.left}>
-  //   <p className={styles.p}>{results.nextLeft}</p>
-  //   {this.renderArticleButton(styles, icons, results)}
-  // </div>
+  renderSubscribeForm(styles, icons) {
+    return (
+      <div className = {styles.subscribe}>
+        <p className = {styles.subscribeTitle}>
+          {captions.results.subscribeTitle}
+        </p>
+        <div className = {styles.subscribeForm}>
+          <input
+            ref = {ref => this.input = ref}
+            type = {"text"}
+            placeholder = {captions.results.subscribePh}
+            className = {styles.subscribeInput}
+          />
+          <button
+            className = {styles.subscribeBtn}
+            onClick = {::this.handleSubscribeClick}
+          >
+            <i className = {icons.subscribe}></i>
+            {captions.results.subscribeBtn}
+        </button>
+        </div>
+      </div>
+    );
+  }
 
   renderFooter(styles, icons) {
     const { welcome, results } = captions;
+
     return (
       <div className={styles.footer}>
         <div className={styles.license}>
@@ -272,6 +281,7 @@ export default class Results extends Component {
           />
         </div>
         {this.renderNext(styles, icons, results)}
+        {this.renderSubscribeForm(styles, icons)}
         {this.renderFooter(styles, icons)}
         {feedback &&
           <Feedback handleCloseFeedback={::this.handleCloseFeedback} />
