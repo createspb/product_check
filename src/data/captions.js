@@ -42,7 +42,7 @@ export default {
     and: ' и ',
     companyPartner: 'Digital Change',
     companyPartnerLong: 'Digital Change',
-    text: `Проверьте, готовы&nbsp;ли вы&nbsp;к&nbsp;созданию продукта и&nbsp;инвестициям. Десять вопросов, ответы на&nbsp;которые определят успех или провал идеи.`,
+    text: `Проверьте, готовы&nbsp;ли вы&nbsp;к&nbsp;созданию продукта и&nbsp;инвестициям. Профессиональный тест из&nbsp;десяти вопросов, ответы на&nbsp;которые определят успех или провал идеи.`,
     button: 'Поехали'
   },
   questionCaptions: {
