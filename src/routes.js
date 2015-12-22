@@ -1,6 +1,6 @@
 import React from 'react';
-// import {IndexRoute, Route} from 'react-router';
-import { Route } from 'react-router';
+import {IndexRoute, Route} from 'react-router';
+// import { Route } from 'react-router';
 import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
 import {
     App,
@@ -51,9 +51,9 @@ export default (store) => {
   };
 
   return (
-    <Route component={App}>
-      <Route component={Home}>
-        <Route path="/" component={Welcome} />
+    <Route component={App} path="/">
+      <IndexRoute component={Home} />
+        <IndexRoute  component={Welcome} />
         <Route path="warning" component={Warning} />
         <Route path="questions/:questionId/:back" component={Question} />
         <Route path="questions/:questionId" component={Question} />
@@ -62,7 +62,6 @@ export default (store) => {
         <Route path="results" component={Results} />
         <Route onEnter={requireUnlogin} path="login" component={Login} />
         <Route onEnter={requireLogin} path="admin" component={Admin} />
-      </Route>
       <Route path="*" component={NotFound} />
     </Route>
   );

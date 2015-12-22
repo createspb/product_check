@@ -74,9 +74,7 @@ app.use((req, res) => {
   }
 
   store.dispatch(match(req.originalUrl, (error, redirectLocation, routerState) => {
-    console.log('Store dispatch');
     if (redirectLocation) {
-      console.log('here' + redirectLocation);
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {
       console.error('ROUTER ERROR:', pretty.render(error));
