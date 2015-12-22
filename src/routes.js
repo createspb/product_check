@@ -11,10 +11,11 @@ import {
     Subresults,
     ProductName,
     Results,
-    Admin,
     Login,
     NotFound
   } from 'components';
+
+    // Admin,
 
 export default (store) => {
 
@@ -33,22 +34,22 @@ export default (store) => {
     }
   };
 
-  const requireLogin = (nextState, replaceState, cb) => {
-    function checkAuth() {
-      const { auth: { user }} = store.getState();
-      if (!user) {
-        // oops, not logged in, so can't be here!
-        replaceState(null, '/login');
-      }
-      cb();
-    }
-
-    if (!isAuthLoaded(store.getState())) {
-      store.dispatch(loadAuth()).then(checkAuth);
-    } else {
-      checkAuth();
-    }
-  };
+  // const requireLogin = (nextState, replaceState, cb) => {
+  //   function checkAuth() {
+  //     const { auth: { user }} = store.getState();
+  //     if (!user) {
+  //       // oops, not logged in, so can't be here!
+  //       replaceState(null, '/login');
+  //     }
+  //     cb();
+  //   }
+  //
+  //   if (!isAuthLoaded(store.getState())) {
+  //     store.dispatch(loadAuth()).then(checkAuth);
+  //   } else {
+  //     checkAuth();
+  //   }
+  // };
 
   return (
     <Route component={App}>
@@ -61,13 +62,14 @@ export default (store) => {
         <Route path="name" component={ProductName} />
         <Route path="results" component={Results} />
         <Route onEnter={requireUnlogin} path="login" component={Login} />
-        <Route onEnter={requireLogin} path="admin" component={Admin} />
       </Route>
       <Route path="*" component={NotFound} />
     </Route>
   );
 
 };
+
+// <Route onEnter={requireLogin} path="admin" component={Admin} />
 
 // import React from 'react';
 // import {IndexRoute, Route} from 'react-router';
