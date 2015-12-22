@@ -31,7 +31,6 @@ export default class Warning extends React.Component {
     const styles = require('./Warning.less');
     const icons = require('../Styles/icons.less');
     const { label, p, p1, button, info } = captions.warning;
-    console.log('Step4');
     return (
       <Carcas ref="carcas">
         <h2 className={styles.h2}>
