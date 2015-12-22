@@ -18,7 +18,9 @@ export default class Welcome extends Component {
   }
 
   componentDidMount() {
-    this.refs.carcas.bottomToCenter();
+    const carcasStyles = require('../Carcas/Carcas.less');
+    this.refs.carcas.setContainerClass(carcasStyles.animateFromBottom);
+    // this.refs.carcas.bottomToCenter();
     // if (window) {
     //   const md = new MobileDetect(window.navigator.userAgent);
     //   ga('send', 'event', 'welcome'); // eslint-disable-line
@@ -47,6 +49,7 @@ export default class Welcome extends Component {
     const { welcome } = captions;
     const styles = require('./Welcome.less');
     const icons = require('../Styles/icons.less');
+    console.log('Step3');
     return (
       <Carcas ref="carcas">
         <i className={icons.mainMobile}></i>

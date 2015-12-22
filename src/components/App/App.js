@@ -21,6 +21,7 @@ export default class App extends Component {
 
   render() {
     const reset = require('../Styles/reset.less');
+    console.log('Step1');
     return (
       <div className={reset.app}>
         {this.props.children}
