@@ -73,7 +73,7 @@ export default {
     repeat: 'Повторить попытку',
     feedback: 'Помогите сделать сервис лучше',
     feedbackButton: 'Обратная связь',
-    subscribeTitle: 'Подпишитесь на&nbsp;рассылку о&nbsp;том, как делать востребованные и&nbsp;прибыльные продукты',
+    subscribeTitle: 'Подпишитесь на&nbsp;рассылку о&nbsp;практиках продуктовой разработки',
     subscribePh: 'Введите ваш e-mail',
     subscribeBtn: 'Подписаться',
   },
