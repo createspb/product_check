@@ -207,8 +207,8 @@ export default class Results extends Component {
   renderSubscribeForm(styles, icons) {
     return (
       <div className = {styles.subscribe}>
-        <p className = {styles.subscribeTitle}>
-          {captions.results.subscribeTitle}
+        <p className = {styles.subscribeTitle}
+        dangerouslySetInnerHTML={{__html: captions.results.subscribeTitle}}>
         </p>
         <div className = {styles.subscribeForm}>
           <input

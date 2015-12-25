@@ -67,8 +67,8 @@ export default class Buttons extends Component {
         target="_blank"
         className={styles.transparentButton}
         onClick={::this.handleExternalLink}
+        dangerouslySetInnerHTML={{__html: results.articleTitle}}
       >
-        {results.articleTitle}
       </a>
     );
   }
@@ -81,16 +81,18 @@ export default class Buttons extends Component {
         target="_blank"
         className={styles.recomendationsButton}
         onClick={::this.handleExternalLink}
+        dangerouslySetInnerHTML={{__html: results.recomendationsTitle}}
       >
-        {results.recomendationsTitle}
       </a>
     );
   }
 
   renderArticlesTitle(styles, results) {
     return (
-      <div className={styles.progressP}>
-        {results.articlesListTitle}
+      <div
+        className={styles.progressP}
+        dangerouslySetInnerHTML={{__html: results.articlesListTitle}}
+      >
       </div>
     );
   }
