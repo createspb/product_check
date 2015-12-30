@@ -14,7 +14,7 @@ export default class Admin extends Component {
     const { results } = this.props;
     let countYes = 0;
     for (const result of results) {
-      if (result.answers && result.answers[num].value === 'yes') {
+      if (result.answers && result.answers[num] && result.answers[num].value === 'yes') {
         countYes++;
       }
     }
