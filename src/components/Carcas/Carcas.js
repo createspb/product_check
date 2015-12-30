@@ -4,6 +4,7 @@ import $ from 'jquery';
 export default class Carcas extends Component {
 
   static propTypes = {
+    backId: PropTypes.number,
     children: PropTypes.any,
     full: PropTypes.bool
   };
@@ -12,6 +13,9 @@ export default class Carcas extends Component {
     super(props);
     this.styles = require('./Carcas.less');
     this.backgroundClass = this.styles.c0;
+    if (props.backId && props.backId > 0) {
+      this.backgroundClass = this.styles['c' + props.backId];
+    }
     this.wrapClass = this.styles.containerLeft;
   }
 
