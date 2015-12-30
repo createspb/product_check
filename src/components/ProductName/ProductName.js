@@ -24,6 +24,7 @@ export default class ProductName extends Component {
   }
 
   componentDidMount() {
+    this.refs.carcas.setBackgroundClass(10);
     this.refs.carcas.bottomToCenter();
     if (window) {
       ga('send', 'event', 'productName'); // eslint-disable-line
@@ -72,7 +73,7 @@ export default class ProductName extends Component {
     const styles = require('./ProductName.less');
     const { name } = captions;
     return (
-      <Carcas ref="carcas">
+      <Carcas ref="carcas" backId={9}>
         <h2 className={styles.h2}>{name.label}</h2>
         <input
           ref={ref => this.input = ref}

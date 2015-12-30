@@ -169,8 +169,10 @@ export default class Question extends Component {
 
   render() {
     const { question, questionsCount, prev, answer } = this.state;
+    const backId = this.state.questionId - 1;
+
     return (
-      <Carcas ref="carcas">
+      <Carcas ref="carcas" backId = {backId}>
         <div onWheel={::this.handleWheel}>
           <QuestionInformation
             handleBack={::this.handleBack}

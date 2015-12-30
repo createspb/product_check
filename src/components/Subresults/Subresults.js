@@ -28,6 +28,7 @@ export default class Subresults extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = this.constructParams(props);
   }
 
   componentDidMount() {
@@ -35,6 +36,13 @@ export default class Subresults extends React.Component {
       ga('send', 'event', 'subresults', 'subresults_' + this.nextQuestionId()); // eslint-disable-line
     }
     this.refs.carcas.bottomToCenter();
+    this.refs.carcas.setBackgroundClass(this.state.questionId - 1);
+  }
+
+  constructParams(props) {
+    const questionId = parseInt(props.params.questionId, 10) - 1;
+
+    return { questionId };
   }
 
   handleButton(event) {
@@ -109,8 +117,9 @@ export default class Subresults extends React.Component {
     const styles = require('./Subresults.less');
     const { label, button, other, q, fr } = captions.subresults;
     const ps = this.subresult();
+    const backId = this.state.questionId - 1;
     return (
-      <Carcas ref="carcas">
+      <Carcas ref="carcas" backId={backId}>
         <h2 className={styles.h2}>
           {label}
           <span className={styles.span}>
