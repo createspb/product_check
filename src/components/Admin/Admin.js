@@ -301,7 +301,7 @@ export default class Admin extends Component {
           />
         }
 
-        {!activeResult && !activeSummary
+        {!activeResult && !activeSummary && !activeSubscribes
         && this.renderResultsPagination(styles)}
 
         {activeResult &&
