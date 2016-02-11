@@ -13,3 +13,4 @@ export setAllYes from './setAllYes';
 export results from './results';
 export repeat from './repeat';
 export send from './send';
+export subscribes from './subscribes';

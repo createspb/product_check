@@ -2,8 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { logout } from 'redux/modules/auth';
 import { pushState } from 'redux-router';
-import { ResultsCarcas, AdminTable, AdminResult, AdminSummary } from '..';
+import { ResultsCarcas, AdminTable, AdminResult, AdminSummary,
+  AdminSubscribes } from '..';
 import { load, isLoaded, remove } from 'redux/modules/results';
+import {
+  load as loadSubscribes,
+  isLoaded as isLoadedSubscribes,
+  remove as removeSubscribe } from 'redux/modules/subscribes';
 import {
   isLoaded as isLoadedQuestions,
   load as loadQuestions } from 'redux/modules/questions';
@@ -15,10 +20,13 @@ import $ from 'jquery';
   state => ({
     user: state.auth.user,
     results: state.results.data,
-    questions: state.questions.questions
+    questions: state.questions.questions,
+    subscribes: state.subscribes.data
   }),
   { logout, pushState, load, isLoaded,
-    isLoadedQuestions, loadQuestions, remove })
+    isLoadedQuestions, loadQuestions, remove,
+    loadSubscribes, isLoadedSubscribes, removeSubscribe })
+
 export default class Admin extends Component {
 
   static propTypes = {
@@ -28,6 +36,8 @@ export default class Admin extends Component {
     remove: PropTypes.func.isRequired,
     questions: PropTypes.object,
     results: PropTypes.array,
+    subscribes: PropTypes.array,
+    removeSubscribe: PropTypes.func
   };
 
   constructor(props) {
@@ -36,7 +46,9 @@ export default class Admin extends Component {
       activeResultId: false,
       activeResult: false,
       activeSummary: false,
-      page: 0,
+      activeSubscribes: false,
+      resultsPage: 0,
+      subscribesPage: 0,
       countOnPage: 10
     };
   }
@@ -53,12 +65,19 @@ export default class Admin extends Component {
 
   static fetchData(getState, dispatch) {
     const promises = [];
+
     if (!isLoaded(getState())) {
       promises.push(dispatch(load()));
     }
+
+    if (!isLoadedSubscribes(getState())) {
+      promises.push(dispatch(loadSubscribes()));
+    }
+
     if (!isLoadedQuestions(getState())) {
       promises.push(dispatch(loadQuestions()));
     }
+
     return Promise.all(promises);
   }
 
@@ -76,6 +95,10 @@ export default class Admin extends Component {
     this.props.remove(id);
   }
 
+  handleRemoveSubscribe(id) {
+    this.props.removeSubscribe(id);
+  }
+
   handleLogout(event) {
     event.preventDefault();
     this.props.logout();
@@ -86,7 +109,8 @@ export default class Admin extends Component {
     this.setState({
       activeResultId: false,
       activeResult: false,
-      activeSummary: false
+      activeSummary: false,
+      activeSubscribes: false
     });
   }
 
@@ -98,11 +122,27 @@ export default class Admin extends Component {
     });
   }
 
-  handlePage(event) {
+  handleSubscribes(event) {
     event.preventDefault();
     event.stopPropagation();
     this.setState({
-      page: parseInt($(event.currentTarget).data('id'), 10)
+      activeSubscribes: true
+    });
+  }
+
+  handleResultsPage(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({
+      resulstsPage: parseInt($(event.currentTarget).data('id'), 10)
+    });
+  }
+
+  handleSubscribesPage(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({
+      subscribesPage: parseInt($(event.currentTarget).data('id'), 10)
     });
   }
 
@@ -113,8 +153,15 @@ export default class Admin extends Component {
     });
   }
 
+  paginatedSubscribes(page) {
+    return _.filter(this.props.subscribes, (e, k) => {
+      return k >= (page * this.state.countOnPage) &&
+             k < ((page + 1) * this.state.countOnPage);
+    });
+  }
+
   renderSubtitle(styles, adminCaptions) {
-    const { activeResult, activeSummary } = this.state;
+    const { activeResult, activeSummary, activeSubscribes } = this.state;
     if (activeResult) {
       return (
         <span className={styles.fade}>
@@ -131,11 +178,20 @@ export default class Admin extends Component {
         </span>
       );
     }
+    if (activeSubscribes) {
+      return (
+        <span className={styles.fade}>
+          <em> &rarr; </em>
+          {adminCaptions.subscribes}
+        </span>
+      );
+    }
     return false;
   }
 
   renderHeader(styles, adminCaptions) {
-    const { activeResult, activeSummary } = this.state;
+    const { activeResult, activeSummary, activeSubscribes } = this.state;
+
     return (
       <header className={styles.header}>
         <h2 className={styles.h2}>
@@ -143,7 +199,7 @@ export default class Admin extends Component {
           {this.renderSubtitle(styles, adminCaptions)}
         </h2>
         {(() => {
-          if (!activeResult && !activeSummary) {
+          if (!activeResult && !activeSummary && !activeSubscribes) {
             return (
               <div>
                 <button
@@ -154,12 +210,16 @@ export default class Admin extends Component {
                   className={styles.button}
                   onClick={::this.handleSummary}
                 >{adminCaptions.summary}</button>
+                <button
+                  className={styles.button}
+                  onClick={::this.handleSubscribes}
+                >{adminCaptions.subscribes}</button>
               </div>
             );
           }
         })()}
         {(() => {
-          if (activeResult || activeSummary) {
+          if (activeResult || activeSummary || activeSubscribes) {
             return (
               <button
                 className={styles.button}
@@ -172,7 +232,7 @@ export default class Admin extends Component {
     );
   }
 
-  renderPagination(styles) {
+  renderResultsPagination(styles) {
     const pages = _.range(Math.ceil(
       _.size(this.props.results) / this.state.countOnPage
     ));
@@ -184,9 +244,35 @@ export default class Admin extends Component {
             <a
               data-id={key}
               key={key}
-              onClick={::this.handlePage}
+              onClick={::this.handleResultsPage}
               className={
-                (key === this.state.page) ?
+                (key === this.state.resultsPage) ?
+                styles.paginationActive :
+                styles.paginationPassive
+              }
+              href="#"
+            >{page + 1}</a>
+          );
+        })}
+      </div>
+    );
+  }
+
+  renderSubscribesPagination(styles) {
+    const pages = _.range(Math.ceil(
+      _.size(this.props.subscribes) / this.state.countOnPage
+    ));
+    if (_.size(pages) === 1) { return false; }
+    return (
+      <div className={styles.pagination}>
+        {_.map(pages, (page, key) => {
+          return (
+            <a
+              data-id={key}
+              key={key}
+              onClick={::this.handleSubscribesPage}
+              className={
+                (key === this.state.subscribesPage) ?
                 styles.paginationActive :
                 styles.paginationPassive
               }
@@ -201,27 +287,46 @@ export default class Admin extends Component {
   render() {
     const adminCaptions = captions.admin;
     const styles = require('./Admin.less');
-    const { activeResult, activeSummary } = this.state;
+    const { activeResult, activeSummary, activeSubscribes } = this.state;
+
     return (
       <ResultsCarcas ref="carcas">
         {this.renderHeader(styles, adminCaptions)}
-        {!activeResult && !activeSummary &&
+
+        {!activeResult && !activeSummary && !activeSubscribes &&
           <AdminTable
             handleOpenResult={::this.handleOpenResult}
             handleRemoveResult={::this.handleRemoveResult}
-            results={this.paginatedResults(this.state.page)}
+            results={this.paginatedResults(this.state.resultsPage)}
           />
         }
-        {!activeResult && !activeSummary && this.renderPagination(styles)}
+
+        {!activeResult && !activeSummary
+        && this.renderResultsPagination(styles)}
+
         {activeResult &&
           <AdminResult result={activeResult} />
         }
+
         {activeSummary &&
           <AdminSummary
             questions={this.props.questions}
             results={this.props.results}
           />
         }
+
+        {!activeResult && !activeSummary && activeSubscribes &&
+          <AdminSubscribes
+            subscribes = {this.paginatedSubscribes(this.state.subscribesPage)}
+            handleRemoveSubscribe = {::this.handleRemoveSubscribe}
+            subscribesFull =
+            {this.paginatedSubscribes(this.state.subscribesPage)}
+          />
+        }
+
+        {!activeResult && !activeSummary && activeSubscribes
+        && this.renderSubscribesPagination(styles)}
+
       </ResultsCarcas>
     );
   }

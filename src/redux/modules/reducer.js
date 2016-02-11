@@ -9,6 +9,7 @@ import matrix from './matrix';
 import productName from './productName';
 import results from './results';
 import feedback from './feedback';
+import subscribes from './subscribes';
 
 export default combineReducers({
   router: routerStateReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   matrix,
   productName,
   results,
-  feedback
+  feedback,
+  subscribes
 });
