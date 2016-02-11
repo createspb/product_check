@@ -19,7 +19,7 @@ export default class Admin extends Component {
         );
       }).toString();
 
-      return ('data:attachment/csv' + encodeURI(csvContent));
+      return ('data:attachment/csv,' + encodeURI(csvContent));
     }
   }
 

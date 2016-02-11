@@ -319,8 +319,7 @@ export default class Admin extends Component {
           <AdminSubscribes
             subscribes = {this.paginatedSubscribes(this.state.subscribesPage)}
             handleRemoveSubscribe = {::this.handleRemoveSubscribe}
-            subscribesFull =
-            {this.paginatedSubscribes(this.state.subscribesPage)}
+            subscribesFull = {this.props.subscribes}
           />
         }
 
