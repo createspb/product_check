@@ -17,6 +17,21 @@
     padding: 15px 5px;
     border-bottom: 1px solid rgba(255, 255, 255, .2);
   }
+
+  tbody {
+    tr {
+      cursor: pointer;
+      &:nth-child(2n) {
+        background: rgba(255, 255, 255, .1);
+      }
+      &:hover {
+        background: rgba(255, 255, 255, .05);
+        &:nth-child(2n) {
+          background: rgba(255, 255, 255, .15);
+        }
+      }
+    }
+  }
 }
 
 .idCol {
