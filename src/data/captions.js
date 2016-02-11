@@ -28,12 +28,14 @@ export default {
     title: 'Панель администрирования',
     logout: 'Выход',
     summary: 'Сводка',
-    close: 'Закрыть'
+    close: 'Закрыть',
+    subscribes: 'Подписки'
   },
   adminTable: {
     n: '#',
     title: 'Название продукта',
-    date: 'Дата'
+    date: 'Дата',
+    email: 'Email'
   },
   welcome: {
     h1: 'АУДИТ ИДЕИ ПРОДУКТА',
