@@ -19,7 +19,7 @@ if (process.env.DATABASE_URL) {
     }
   })
 } else {
-  var sequelize = new Sequelize('obsvtr', 'juicyigor', '', {
+  var sequelize = new Sequelize('obsvtr3000', 'd5fg6idjjok6ha', 'yLjMxb6fc1leBx5ElHV05GrKJH', {
     host: 'localhost',
     dialect: 'postgres'
   });
