@@ -1,10 +1,10 @@
 {
   "dev": {
     "driver": "pg",
-    "user": "juicyigor",
-    "password": "",
+    "user": "d5fg6idjjok6ha",
+    "password": "yLjMxb6fc1leBx5ElHV05GrKJH",
     "host": "localhost",
-    "database": "obsvtr",
+    "database": "obsvtr3000",
     "schema": "my_schema"
   }
 }
