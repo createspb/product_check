@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 
 app.use((req, res) => {
 
-  req.sessionOptions.maxAge = 1000 * 60 * 60 * 24 
+  req.sessionOptions.maxAge = 1000 * 60 * 60 * 24
   const matcher = req.url.split('?')[0].split('/').slice(1);
 
   let action = false;
